@@ -1,0 +1,174 @@
+# ============================================================================
+# Web订餐管理系统 - Spring Boot 应用配置文件
+# 基于文档：docs/tech/Web订餐管理系统.docx 技术栈要求
+# 适配项目：Spring Boot 3.5.5 + MyBatis-Plus 3.5.14 + MySQL 8.0 + Spring Security
+# ============================================================================
+
+# 1. 服务器配置（文档3.1节"B/S结构"+技术栈"Tomcat"）
+server:
+  port: 8080  # 端口，适配常规Web访问
+  servlet:
+    context-path: /WebOrderSystem  # 项目访问根路径，贴合B/S结构跳转
+  tomcat:
+    uri-encoding: UTF-8  # 避免中文乱码（订单地址、菜品名等含中文）
+    max-threads: 200     # 最大线程数，提高并发处理能力
+    accept-count: 100    # 等待队列长度
+    max-connections: 10000  # 最大连接数
+
+# 2. 数据库配置（文档5.1节"MySQL数据库"+表设计）
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL 8.0驱动
+    url: jdbc:mysql://localhost:3306/web_order?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&characterEncoding=utf8&useUnicode=true
+    # 数据库名web_order，与设计一致；时区设置为上海；字符编码UTF-8
+    username: root  # 本地MySQL用户名（需根据实际环境修改）
+    password: 123456  # 本地MySQL密码（需根据实际环境修改）
+    type: com.zaxxer.hikari.HikariDataSource  # 连接池，保证性能
+    hikari:
+      pool-name: WebOrderHikariCP
+      minimum-idle: 5          # 最小空闲连接数
+      maximum-pool-size: 20    # 最大连接池大小
+      auto-commit: true        # 自动提交
+      idle-timeout: 30000      # 空闲超时时间(毫秒)
+      connection-timeout: 30000 # 连接超时时间(毫秒)
+      max-lifetime: 1800000    # 连接最大生命周期(毫秒)
+
+  # 3. Web配置
+  web:
+    resources:
+      static-locations: classpath:/static/,classpath:/public/,file:uploads/
+      # 静态资源位置，包含文件上传目录（文档6.2.2节图片上传需求）
+  
+  # 4. 文件上传配置（文档6.2.2节图片上传功能）
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB      # 单个文件最大大小
+      max-request-size: 50MB   # 请求最大大小
+      file-size-threshold: 2KB # 文件写入磁盘的阈值
+
+  # 5. JSON配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null  # 不序列化null值
+
+  # 6. Spring Security配置（项目已包含Security依赖）
+  security:
+    user:
+      name: admin     # 默认用户名
+      password: admin # 默认密码
+      roles: ADMIN    # 默认角色
+
+# 7. MyBatis-Plus配置（适配文档表CRUD，替代JPA）
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml  # Mapper XML文件路径（存储自定义SQL）
+  type-aliases-package: tech.chhsich.backend.entity  # 实体类别名包（简化XML配置）
+  configuration:
+    map-underscore-to-camel-case: true  # 下划线转驼峰（如数据库imgpath→实体类imgPath）
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 打印SQL日志（调试表操作）
+    cache-enabled: true                 # 开启二级缓存
+    lazy-loading-enabled: true          # 开启延迟加载
+    multiple-result-sets-enabled: true  # 开启多结果集
+    use-column-label: true              # 使用列标签
+    auto-mapping-behavior: partial      # 自动映射策略
+  global-config:
+    db-config:
+      id-type: AUTO          # 主键自增（匹配表主键规则）
+      table-underline: true  # 表名下划线
+      capital-mode: false    # 关闭大写模式
+      logic-delete-field: deleted  # 逻辑删除字段
+      logic-delete-value: 1        # 逻辑删除值
+      logic-not-delete-value: 0    # 逻辑未删除值
+
+# 8. 日志配置（便于调试文档功能，如订单提交、菜品查询）
+logging:
+  level:
+    root: INFO
+    tech.chhsich.backend: DEBUG         # 项目包日志级别
+    tech.chhsich.backend.mapper: DEBUG  # Mapper接口日志级别（查看SQL执行详情）
+    org.springframework.web: INFO       # Web请求日志（排查接口访问问题）
+    org.springframework.security: DEBUG # Security日志
+    com.zaxxer.hikari: INFO             # 连接池日志
+    org.mybatis: DEBUG                  # MyBatis日志
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n'
+  file:
+    name: logs/web-order-system.log  # 日志文件路径
+
+# 9. Actuator监控配置（便于生产环境监控）
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# 10. OpenAPI文档配置（项目已包含springdoc依赖）
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operationsSorter: method
+    tagsSorter: alpha
+  info:
+    title: Web订餐管理系统API文档
+    version: 1.0.0
+    description: 基于Spring Boot 3.5.5开发的Web订餐管理系统
+
+# 11. 应用自定义配置
+app:
+  # 文件上传配置
+  upload:
+    path: uploads/images/  # 图片上传路径（文档6.2.2节需求）
+    max-size: 10485760    # 最大文件大小 10MB
+    allowed-types: jpg,jpeg,png,gif  # 允许的文件类型
+  
+  # 订单配置
+  order:
+    timeout: 30  # 订单超时时间（分钟）
+    auto-confirm: false  # 是否自动确认订单
+  
+  # 缓存配置
+  cache:
+    enabled: true
+    ttl: 3600  # 缓存过期时间（秒）
+
+# 12. 环境配置
+---
+# 开发环境配置
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/web_order?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&characterEncoding=utf8&useUnicode=true
+    username: root
+    password: 123456
+logging:
+  level:
+    root: DEBUG
+
+---
+# 生产环境配置
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://production-host:3306/web_order?useSSL=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true
+    username: ${DB_USERNAME:weborder}
+    password: ${DB_PASSWORD:your_secure_password}
+    hikari:
+      maximum-pool-size: 50
+logging:
+  level:
+    root: WARN
+    tech.chhsich.backend: INFO
