@@ -29,7 +29,7 @@ public class Administrators {//管理员用户实体类
     @Column(name = "password",nullable = false,length = 255)
     private String password;
 
-    @Column(name = "nickname",nullable = false,length = 255)
+    @Column(name = "phone",nullable = false,length = 255)
     private String phone;
 
     @Column(name = "qq",nullable = false,length = 255)
