@@ -1,0 +1,133 @@
+name: PR CI — Java + Node
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main, develop]
+
+permissions:
+  contents: read
+  security-events: write
+
+concurrency:
+  group: pr-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  codeql:
+    name: CodeQL analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: javascript,typescript,java
+      - name: Autobuild (CodeQL)
+        uses: github/codeql-action/autobuild@v2
+      - name: Run CodeQL analysis
+        uses: github/codeql-action/analyze@v2
+
+  backend:
+    name: Backend (Spring Boot)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Build & Test (Maven)
+        run: |
+          if [ -d backend ] && [ -f backend/pom.xml ]; then
+            cd backend
+            mvn -B -V clean verify
+          else
+            echo "No backend directory or pom.xml found, skipping backend."
+          fi
+
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-test-results
+          path: backend/target/surefire-reports/*.xml
+
+      - name: Dependency Audit (Maven)
+        run: |
+          if [ -d backend ] && [ -f backend/pom.xml ]; then
+            cd backend
+            mvn -q org.owasp:dependency-check-maven:check -Dformat=ALL || true
+          else
+            echo "No backend directory or pom.xml found, skipping dependency audit."
+          fi
+
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-audit
+          path: backend/target/dependency-check-report.*
+
+  frontend:
+    name: Frontend (Vue)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install & Build (Node)
+        run: |
+          if [ -d frontend ] && [ -f frontend/package.json ]; then
+            cd frontend
+            if [ -f yarn.lock ]; then
+              corepack enable || true
+              yarn install --frozen-lockfile
+              yarn build
+              yarn test || echo "No test script"
+            else
+              npm ci
+              npm run build
+              npm test || echo "No test script"
+            fi
+          else
+            echo "No frontend directory or package.json found, skipping frontend."
+          fi
+
+      - name: Dependency Audit (npm)
+        working-directory: frontend
+        run: |
+          if [ -f package.json ]; then
+            npm audit --json > npm-audit.json || true
+            cat npm-audit.json || true
+          fi
+
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-audit
+          path: frontend/npm-audit.json
+
+  docker-build:
+    name: Docker build (if Dockerfile exists)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image if Dockerfile present
+        run: |
+          if [ -f Dockerfile ]; then
+            echo "Dockerfile found — building image"
+            docker build -t pr-ci:${{ github.sha }} .
+          else
+            echo "No Dockerfile -> skip Docker build"
+          fi

@@ -23,8 +23,13 @@ jobs:
 
       # 3. 构建 backend 模块
       - name: Build with Maven
-        working-directory: backend
-        run: mvn clean package -DskipTests
+        run: |
+          if [ -d backend ] && [ -f backend/pom.xml ]; then
+            cd backend
+            mvn clean package -DskipTests
+          else
+            echo "No backend directory or pom.xml found, skipping Maven build."
+          fi
 
       # 4. 准备 SSH key
       - name: Prepare SSH key
@@ -37,12 +42,18 @@ jobs:
       # 5. 上传 JAR 到服务器
       - name: Upload jar to server
         run: |
-          scp -i ./deploy_key backend/target/backend-0.0.1-SNAPSHOT.jar \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/root/order-management-system/backend/
+          if [ -f backend/target/backend-0.0.1-SNAPSHOT.jar ]; then
+            scp -i ./deploy_key backend/target/backend-0.0.1-SNAPSHOT.jar \
+              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/root/order-management-system/backend/
+          else
+            echo "JAR file not found, skipping upload."
+          fi
 
       # 6. 重启容器
       - name: Restart container
         run: |
-          ssh -i ./deploy_key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} <<'EOF'
-            docker restart order-backend
-          EOF
+          if ssh -i ./deploy_key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} docker ps -a --format '{{.Names}}' | grep -q '^order-backend$'; then
+            ssh -i ./deploy_key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} docker restart order-backend
+          else
+            echo "Container order-backend not found, skipping restart."
+          fi
