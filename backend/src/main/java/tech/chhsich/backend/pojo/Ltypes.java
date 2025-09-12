@@ -16,7 +16,7 @@ public class Ltypes {//分类信息实体类
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "catename", nullable = false, length = 255)
+    @Column(name = "catelock", nullable = false, length = 255)
     private Integer catelock;//0未删除，1已删除
 
     @Column(name = "catename", nullable = false, length = 255)
