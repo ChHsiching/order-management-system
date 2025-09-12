@@ -44,8 +44,14 @@ jobs:
           java-version: '17'
 
       - name: Build & Test (Maven)
-        working-directory: backend
-        run: mvn -B -V clean verify
+        run: |
+          if [ -d backend ] && [ -f backend/pom.xml ]; then
+            cd backend
+            mvn -B -V clean verify
+          else
+            echo "No backend directory or pom.xml found, skipping backend."
+          fi
+
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
@@ -54,8 +60,13 @@ jobs:
           path: backend/target/surefire-reports/*.xml
 
       - name: Dependency Audit (Maven)
-        working-directory: backend
-        run: mvn -q org.owasp:dependency-check-maven:check -Dformat=ALL || true
+        run: |
+          if [ -d backend ] && [ -f backend/pom.xml ]; then
+            cd backend
+            mvn -q org.owasp:dependency-check-maven:check -Dformat=ALL || true
+          else
+            echo "No backend directory or pom.xml found, skipping dependency audit."
+          fi
 
       - name: Upload audit report
         uses: actions/upload-artifact@v4
@@ -76,9 +87,9 @@ jobs:
           node-version: '18'
 
       - name: Install & Build (Node)
-        working-directory: frontend
         run: |
-          if [ -f package.json ]; then
+          if [ -d frontend ] && [ -f frontend/package.json ]; then
+            cd frontend
             if [ -f yarn.lock ]; then
               corepack enable || true
               yarn install --frozen-lockfile
@@ -90,7 +101,7 @@ jobs:
               npm test || echo "No test script"
             fi
           else
-            echo "No package.json found, skipping frontend."
+            echo "No frontend directory or package.json found, skipping frontend."
           fi
 
       - name: Dependency Audit (npm)
