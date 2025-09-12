@@ -37,7 +37,7 @@ jobs:
       # 5. 上传 JAR 到服务器
       - name: Upload jar to server
         run: |
-          scp -i ./deploy_key target/backend-0.0.1-SNAPSHOT.jar \
+          scp -i ./deploy_key backend/target/backend-0.0.1-SNAPSHOT.jar \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/root/order-management-system/backend/
 
       # 6. 重启容器
