@@ -20,4 +20,7 @@ public interface AdministratorMapper extends BaseMapper<Administrator> {
 
     @Select("SELECT COUNT(*) FROM administrators WHERE phone = #{phone}")
     boolean existsByPhone(@Param("phone") String phone);
+
+    @Select("SELECT * FROM administrators WHERE username = #{username}")
+    Administrator findByUsername(@Param("username") String username);
 }

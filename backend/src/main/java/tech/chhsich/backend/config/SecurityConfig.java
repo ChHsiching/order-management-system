@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -25,10 +27,13 @@ public class SecurityConfig {
                                 "/swagger-resources/**",
                                 "/swagger-config/**"
                         ).permitAll()
-                        // 放行API路径
-                        .requestMatchers("/api/**").permitAll()
-                        // 放行Actuator监控端点
-                        .requestMatchers("/actuator/**").permitAll()
+                        // 公开接口
+                        .requestMatchers("/api/user/register", "/api/user/login").permitAll()
+                        .requestMatchers("/api/menu/**", "/api/categories/**").permitAll()
+                        // 需要认证的接口
+                        .requestMatchers("/api/orders/**").authenticated()
+                        // 管理员接口
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form.disable())
@@ -36,4 +41,10 @@ public class SecurityConfig {
 
         return http.build();
     }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
 }

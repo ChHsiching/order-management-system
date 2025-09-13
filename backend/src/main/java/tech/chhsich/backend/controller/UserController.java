@@ -3,7 +3,11 @@ package tech.chhsich.backend.controller;
 import tech.chhsich.backend.entity.Administrator;
 import tech.chhsich.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -50,10 +54,19 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "获取成功")
     @ApiResponse(responseCode = "404", description = "用户不存在")
     @GetMapping("/{username}")
-    public ResponseEntity<?> getUserInfo(
-            @Parameter(description = "用户名", required = true) @PathVariable String username) {
+    public ResponseEntity<?> getUserInfo(@PathVariable String username) {
+        // 1. 验证当前用户身份
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!auth.getName().equals(username) && !auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("无权访问其他用户信息");
+        }
+
+        // 2. 获取用户信息
         Administrator user = userService.getUserByUsername(username);
         if (user != null) {
+            // 3. 过滤敏感信息
+            user.setPassword(null);
+            user.setQq(null); // QQ号也可能属于敏感信息
             return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.notFound().build();
