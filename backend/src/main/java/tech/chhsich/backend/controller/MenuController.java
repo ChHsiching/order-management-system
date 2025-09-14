@@ -15,20 +15,20 @@ import java.util.List;
 @RequestMapping("/menu")
 @Validated
 public class MenuController {
-    
+
     @Autowired
     private MenuCategoryService categoryService;
-    
     @Autowired
     private MenuService menuService;
 
-    // ==================== 菜单类别管理 ====================
-    
+//    获取所有菜单类别接口
     @GetMapping("/categories")
     public ResponseMessage getAllCategories() {
         List<Ltypes> categories = categoryService.getAllCategories();
         return ResponseMessage.success(categories);
     }
+
+//     根据ID获取特定菜单类别接口
 
     @GetMapping("/categories/{id}")
     public ResponseMessage getCategoryById(@PathVariable Long id) {
@@ -40,6 +40,7 @@ public class MenuController {
         }
     }
 
+//     新增菜单类别接口
     @PostMapping("/categories")
     public ResponseMessage addCategory(
             @RequestParam String catename,
@@ -53,6 +54,7 @@ public class MenuController {
         return categoryService.addCategory(category);
     }
 
+//    更新菜单类别接口
     @PutMapping("/categories/{id}")
     public ResponseMessage updateCategory(
             @PathVariable Long id,
@@ -69,25 +71,31 @@ public class MenuController {
         return categoryService.updateCategory(category);
     }
 
+
+//     删除菜单类别接口
+//     删除指定ID的菜单类别
     @DeleteMapping("/categories/{id}")
     public ResponseMessage deleteCategory(@PathVariable Long id) {
         return categoryService.deleteCategory(id);
     }
 
-    // ==================== 菜品管理 ====================
 
+//     获取所有菜品信息接口
     @GetMapping("/items")
     public ResponseMessage getAllMenus() {
         List<Menu> menus = menuService.getAllMenus();
         return ResponseMessage.success(menus);
     }
 
+//     根据类别获取菜品接口
     @GetMapping("/items/category/{categoryId}")
     public ResponseMessage getMenusByCategory(@PathVariable Long categoryId) {
         List<Menu> menus = menuService.getMenusByCategory(categoryId);
         return ResponseMessage.success(menus);
     }
 
+
+//    根据ID获取特定菜品接口
     @GetMapping("/items/{id}")
     public ResponseMessage getMenuById(@PathVariable Long id) {
         Menu menu = menuService.getMenuById(id);
@@ -98,12 +106,15 @@ public class MenuController {
         }
     }
 
+//     获取推荐菜品接口
     @GetMapping("/items/recommended")
     public ResponseMessage getRecommendedMenus() {
         List<Menu> menus = menuService.getRecommendedMenus();
         return ResponseMessage.success(menus);
     }
 
+
+//     新增菜品接口
     @PostMapping("/items")
     public ResponseMessage addMenu(
             @RequestParam String name,
@@ -133,6 +144,8 @@ public class MenuController {
         return menuService.addMenu(menu);
     }
 
+//     更新菜品信息接口
+//     修改指定ID的菜品详细信息
     @PutMapping("/items/{id}")
     public ResponseMessage updateMenu(
             @PathVariable Long id,
@@ -165,6 +178,8 @@ public class MenuController {
         return menuService.updateMenu(menu);
     }
 
+//    删除菜品接口
+//    删除指定ID的菜品
     @DeleteMapping("/items/{id}")
     public ResponseMessage deleteMenu(@PathVariable Long id) {
         return menuService.deleteMenu(id);

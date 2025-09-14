@@ -14,10 +14,11 @@ import java.util.List;
 @RequestMapping("/admin")
 @Validated
 public class AdminController {
-    
+
     @Autowired
     private AdminService adminService;
 
+//    管理员登录接口
     @PostMapping("/login")
     public ResponseMessage login(
             @RequestParam String username,
@@ -25,7 +26,8 @@ public class AdminController {
         return adminService.login(username, password);
     }
 
-    @PutMapping("/password")
+//管理员密码修改接口
+    @PutMapping("/update")
     public ResponseMessage updatePassword(
             HttpServletRequest request,
             @RequestParam String oldPassword,
@@ -34,12 +36,15 @@ public class AdminController {
         return adminService.updatePassword(username, oldPassword, newPassword);
     }
 
+//     获取所有会员信息接口
     @GetMapping("/members")
     public ResponseMessage getAllMembers() {
         List<Administrators> members = adminService.getAllMembers();
         return ResponseMessage.success(members);
     }
 
+//     根据用户名查询特定会员信息接口
+//     获取指定用户名的会员详细信息
     @GetMapping("/members/{username}")
     public ResponseMessage getMemberByUsername(@PathVariable String username) {
         Administrators member = adminService.getMemberByUsername(username);
@@ -50,6 +55,8 @@ public class AdminController {
         }
     }
 
+//     删除会员账户接口
+//     根据用户名删除指定的会员账户
     @DeleteMapping("/members/{username}")
     public ResponseMessage deleteMember(@PathVariable String username) {
         return adminService.deleteMember(username);
