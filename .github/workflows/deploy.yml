@@ -39,9 +39,14 @@ jobs:
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
 
-          # 测试SSH key格式
-          echo "Testing SSH key format..."
-          head -1 ./deploy_key
+          # 验证SSH key文件存在且可读
+          echo "Validating SSH key file..."
+          if [ -f ./deploy_key ] && [ -r ./deploy_key ]; then
+            echo "SSH key file is present and readable"
+          else
+            echo "SSH key file validation failed"
+            exit 1
+          fi
 
           # 添加主机到known_hosts
           ssh-keyscan -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || echo "Host key scan failed, continuing anyway"
