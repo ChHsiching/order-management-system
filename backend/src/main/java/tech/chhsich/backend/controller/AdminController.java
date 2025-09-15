@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import tech.chhsich.backend.pojo.Administrators;
-import tech.chhsich.backend.pojo.ResponseMessage;
+import tech.chhsich.backend.entity.Administrators;
+import tech.chhsich.backend.entity.ResponseMessage;
 import tech.chhsich.backend.service.AdminService;
 
 import java.util.List;

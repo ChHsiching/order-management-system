@@ -1,7 +1,7 @@
 package tech.chhsich.backend.mapper;
 
 import org.apache.ibatis.annotations.*;
-import tech.chhsich.backend.pojo.Administrators;
+import tech.chhsich.backend.entity.Administrators;
 
 import java.util.List;
 

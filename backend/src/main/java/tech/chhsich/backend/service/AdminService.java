@@ -1,7 +1,7 @@
 package tech.chhsich.backend.service;
 
-import tech.chhsich.backend.pojo.Administrators;
-import tech.chhsich.backend.pojo.ResponseMessage;
+import tech.chhsich.backend.entity.Administrators;
+import tech.chhsich.backend.entity.ResponseMessage;
 
 import java.util.List;
 

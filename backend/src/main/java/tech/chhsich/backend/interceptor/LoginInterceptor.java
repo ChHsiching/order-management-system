@@ -7,7 +7,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
-import tech.chhsich.backend.pojo.ResponseMessage;
+import tech.chhsich.backend.entity.ResponseMessage;
 import tech.chhsich.backend.utils.JwUtil;
 
 import java.util.Map;
