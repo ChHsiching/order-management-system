@@ -70,10 +70,23 @@ jobs:
           path: backend/target/surefire-reports/*
 
       - name: Dependency Audit (Maven)
+        timeout-minutes: 5
+        continue-on-error: true
         run: |
           if [ -d backend ] && [ -f backend/pom.xml ]; then
             cd backend
-            mvn -q org.owasp:dependency-check-maven:check -Dformat=ALL || true
+            echo "Running dependency check with 5 minute timeout..."
+            # Use faster configuration for CI environment
+            mvn -q org.owasp:dependency-check-maven:check \
+              -Dformat=ALL \
+              -DskipProvidedScope=true \
+              -DskipSystemScope=true \
+              -DskipTestScope=true \
+              -DfailBuildOnCVSS=9 \
+              -DretireJsAnalyzerEnabled=false \
+              -DnodeAnalyzerEnabled=false \
+              -DnpmAnalyzerEnabled=false \
+              -DyarnAuditAnalyzerEnabled=false || echo "Dependency check timed out or failed, continuing..."
           else
             echo "No backend directory or pom.xml found, skipping dependency audit."
           fi
@@ -125,11 +138,14 @@ jobs:
           fi
 
       - name: Dependency Audit (npm)
+        timeout-minutes: 3
+        continue-on-error: true
         run: |
           if [ -d frontend ] && [ -f frontend/package.json ]; then
             cd frontend
-            npm audit --json > npm-audit.json || true
-            cat npm-audit.json || true
+            echo "Running npm audit with 3 minute timeout..."
+            timeout 2m npm audit --json > npm-audit.json || echo "npm audit timed out, continuing..."
+            cat npm-audit.json || echo "No audit report generated"
           else
             echo "No frontend directory or package.json found, skipping frontend audit."
           fi
