@@ -59,8 +59,7 @@ jobs:
         continue-on-error: true
         run: |
           echo "Testing SSH connection to ${{ secrets.SERVER_HOST }}..."
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-              -i ./deploy_key \
+          ssh -i ./deploy_key \
               -o ConnectTimeout=10 \
               ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
               "echo 'SSH connection successful' && exit"
@@ -75,14 +74,12 @@ jobs:
             ls -la backend/target/backend-0.0.1-SNAPSHOT.jar
 
             echo "Creating remote directory..."
-            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-                -i ./deploy_key \
+            ssh -i ./deploy_key \
                 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
                 "mkdir -p /root/order-management-system/backend/"
 
             echo "Uploading JAR file..."
-            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-                -o ConnectTimeout=30 \
+            scp -o ConnectTimeout=30 \
                 -i ./deploy_key \
                 backend/target/backend-0.0.1-SNAPSHOT.jar \
                 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/root/order-management-system/backend/
@@ -98,22 +95,19 @@ jobs:
         continue-on-error: true
         run: |
           echo "Checking for order-backend container..."
-          if ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-             -i ./deploy_key \
+          if ssh -i ./deploy_key \
              -o ConnectTimeout=10 \
              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
              "docker ps -a --format '{{.Names}}' | grep -q '^order-backend$'"; then
             echo "Container found, restarting..."
-            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-               -i ./deploy_key \
+            ssh -i ./deploy_key \
                -o ConnectTimeout=10 \
                ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
                "docker restart order-backend"
             echo "Container restart initiated"
           else
             echo "Container order-backend not found, listing available containers:"
-            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null \
-               -i ./deploy_key \
+            ssh -i ./deploy_key \
                -o ConnectTimeout=10 \
                ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
                "docker ps -a" || echo "Cannot list containers"
