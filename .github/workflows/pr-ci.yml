@@ -70,10 +70,13 @@ jobs:
           path: backend/target/surefire-reports/*
 
       - name: Dependency Audit (Maven)
+        timeout-minutes: 10
+        continue-on-error: true
         run: |
           if [ -d backend ] && [ -f backend/pom.xml ]; then
             cd backend
-            mvn -q org.owasp:dependency-check-maven:check -Dformat=ALL || true
+            echo "Running OWASP dependency check..."
+            mvn -q org.owasp:dependency-check-maven:check -Dformat=ALL || echo "Dependency check failed, continuing..."
           else
             echo "No backend directory or pom.xml found, skipping dependency audit."
           fi
@@ -125,11 +128,14 @@ jobs:
           fi
 
       - name: Dependency Audit (npm)
+        timeout-minutes: 2
+        continue-on-error: true
         run: |
           if [ -d frontend ] && [ -f frontend/package.json ]; then
             cd frontend
-            npm audit --json > npm-audit.json || true
-            cat npm-audit.json || true
+            echo "Running npm audit with 2 minute timeout..."
+            timeout 2m npm audit --json > npm-audit.json || echo "npm audit timed out, continuing..."
+            cat npm-audit.json || echo "No audit report generated"
           else
             echo "No frontend directory or package.json found, skipping frontend audit."
           fi

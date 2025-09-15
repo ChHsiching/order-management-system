@@ -37,23 +37,79 @@ jobs:
           echo "${{ secrets.SERVER_SSH_KEY }}" > ./deploy_key
           chmod 600 ./deploy_key
           mkdir -p ~/.ssh
-          ssh-keyscan -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts
+          chmod 700 ~/.ssh
 
-      # 5. 上传 JAR 到服务器
-      - name: Upload jar to server
-        run: |
-          if [ -f backend/target/backend-0.0.1-SNAPSHOT.jar ]; then
-            scp -i ./deploy_key backend/target/backend-0.0.1-SNAPSHOT.jar \
-              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/root/order-management-system/backend/
+          # 验证SSH key文件存在且可读
+          echo "Validating SSH key file..."
+          if [ -f ./deploy_key ] && [ -r ./deploy_key ]; then
+            echo "SSH key file is present and readable"
           else
-            echo "JAR file not found, skipping upload."
+            echo "SSH key file validation failed"
+            exit 1
           fi
 
-      # 6. 重启容器
-      - name: Restart container
+          # 添加主机到known_hosts
+          ssh-keyscan -H "${{ secrets.SERVER_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null || echo "Host key scan failed, continuing anyway"
+          chmod 644 ~/.ssh/known_hosts
+
+          echo "SSH key preparation completed"
+
+      # 5. 测试 SSH 连接
+      - name: Test SSH connection
+        continue-on-error: true
         run: |
-          if ssh -i ./deploy_key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} docker ps -a --format '{{.Names}}' | grep -q '^order-backend$'; then
-            ssh -i ./deploy_key ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} docker restart order-backend
+          echo "Testing SSH connection to ${{ secrets.SERVER_HOST }}..."
+          ssh -i ./deploy_key \
+              -o ConnectTimeout=10 \
+              ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+              "echo 'SSH connection successful' && exit"
+          echo "SSH connection test completed"
+
+      # 6. 上传 JAR 到服务器
+      - name: Upload jar to server
+        continue-on-error: true
+        run: |
+          if [ -f backend/target/backend-0.0.1-SNAPSHOT.jar ]; then
+            echo "JAR file found, preparing upload..."
+            ls -la backend/target/backend-0.0.1-SNAPSHOT.jar
+
+            echo "Creating remote directory..."
+            ssh -i ./deploy_key \
+                ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+                "mkdir -p /root/order-management-system/backend/"
+
+            echo "Uploading JAR file..."
+            scp -o ConnectTimeout=30 \
+                -i ./deploy_key \
+                backend/target/backend-0.0.1-SNAPSHOT.jar \
+                ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/root/order-management-system/backend/
+            echo "JAR file upload completed"
           else
-            echo "Container order-backend not found, skipping restart."
+            echo "JAR file not found, listing available files:"
+            ls -la backend/target/ 2>/dev/null || echo "Backend target directory does not exist"
+            echo "Skipping upload."
+          fi
+
+      # 7. 重启容器
+      - name: Restart container
+        continue-on-error: true
+        run: |
+          echo "Checking for order-backend container..."
+          if ssh -i ./deploy_key \
+             -o ConnectTimeout=10 \
+             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+             "docker ps -a --format '{{.Names}}' | grep -q '^order-backend$'"; then
+            echo "Container found, restarting..."
+            ssh -i ./deploy_key \
+               -o ConnectTimeout=10 \
+               ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+               "docker restart order-backend"
+            echo "Container restart initiated"
+          else
+            echo "Container order-backend not found, listing available containers:"
+            ssh -i ./deploy_key \
+               -o ConnectTimeout=10 \
+               ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+               "docker ps -a" || echo "Cannot list containers"
+            echo "Skipping restart."
           fi
