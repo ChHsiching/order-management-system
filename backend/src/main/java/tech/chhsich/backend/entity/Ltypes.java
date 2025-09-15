@@ -1,70 +1,28 @@
-package tech.chhsich.backend.pojo;
+package tech.chhsich.backend.entity;
 
-import jakarta.persistence.*;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name="ltypes", uniqueConstraints = @UniqueConstraint(columnNames = "catename"))
+@TableName("ltypes")
 public class Ltypes {//分类信息实体类
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long Id;
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
-    @Column(name = "catelock", nullable = false, length = 255)
-    private Integer Catelock;//0未删除，1已删除
+    @TableField("catelock")
+    private Integer catelock;//0未删除，1已删除
 
-    @Column(name = "catename", nullable = false, length = 255)
-    private String Catename;
+    @TableField("catename")
+    private String catename;
 
-    @Column(name = "address", nullable = false, length = 255)
-    private String Address;
+    @TableField("address")
+    private String address;
 
-    @Column(name = "productname", nullable = false, length = 255)
-    private String ProductName;
-
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }
-
-    public Integer getCatelock() {
-        return Catelock;
-    }
-
-    public void setCatelock(Integer catelock) {
-        Catelock = catelock;
-    }
-
-    public String getCatename() {
-        return Catename;
-    }
-
-    public void setCatename(String catename) {
-        Catename = catename;
-    }
-
-    public String getAddress() {
-        return Address;
-    }
-
-    public void setAddress(String address) {
-        Address = address;
-    }
-
-    public String getProductName() {
-        return ProductName;
-    }
-
-    public void setProductName(String productName) {
-        ProductName = productName;
-    }
+    @TableField("productname")
+    private String productName;
 }

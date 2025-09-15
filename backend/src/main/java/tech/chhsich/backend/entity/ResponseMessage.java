@@ -1,4 +1,4 @@
-package tech.chhsich.backend.pojo;
+package tech.chhsich.backend.entity;
 
 public class ResponseMessage {
     private int code;
