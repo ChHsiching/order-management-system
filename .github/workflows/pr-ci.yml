@@ -54,10 +54,20 @@ jobs:
 
 
       - name: Upload test results
+        run: |
+          if [ -d backend ] && [ -d backend/target/surefire-reports ]; then
+            echo "Found test results, uploading..."
+          else
+            echo "No test results directory found, creating empty artifact"
+            mkdir -p backend/target/surefire-reports
+            touch backend/target/surefire-reports/placeholder.txt
+          fi
+
+      - name: Upload test results artifact
         uses: actions/upload-artifact@v4
         with:
           name: backend-test-results
-          path: backend/target/surefire-reports/*.xml
+          path: backend/target/surefire-reports/*
 
       - name: Dependency Audit (Maven)
         run: |
@@ -69,6 +79,16 @@ jobs:
           fi
 
       - name: Upload audit report
+        run: |
+          if [ -d backend ] && [ -d backend/target ]; then
+            echo "Found audit reports, uploading..."
+          else
+            echo "No audit reports directory found, creating empty artifact"
+            mkdir -p backend/target
+            touch backend/target/dependency-check-report.placeholder
+          fi
+
+      - name: Upload audit report artifact
         uses: actions/upload-artifact@v4
         with:
           name: backend-audit
@@ -105,18 +125,30 @@ jobs:
           fi
 
       - name: Dependency Audit (npm)
-        working-directory: frontend
         run: |
-          if [ -f package.json ]; then
+          if [ -d frontend ] && [ -f frontend/package.json ]; then
+            cd frontend
             npm audit --json > npm-audit.json || true
             cat npm-audit.json || true
+          else
+            echo "No frontend directory or package.json found, skipping frontend audit."
           fi
 
       - name: Upload audit report
+        run: |
+          if [ -d frontend ] && [ -f frontend/npm-audit.json ]; then
+            echo "Found frontend audit report, uploading..."
+          else
+            echo "No frontend audit report found, creating empty artifact"
+            mkdir -p frontend
+            touch frontend/npm-audit.placeholder
+          fi
+
+      - name: Upload audit report artifact
         uses: actions/upload-artifact@v4
         with:
           name: frontend-audit
-          path: frontend/npm-audit.json
+          path: frontend/npm-audit.*
 
   docker-build:
     name: Docker build (if Dockerfile exists)
