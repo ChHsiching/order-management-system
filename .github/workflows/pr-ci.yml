@@ -128,12 +128,12 @@ jobs:
           fi
 
       - name: Dependency Audit (npm)
-        timeout-minutes: 3
+        timeout-minutes: 2
         continue-on-error: true
         run: |
           if [ -d frontend ] && [ -f frontend/package.json ]; then
             cd frontend
-            echo "Running npm audit with 3 minute timeout..."
+            echo "Running npm audit with 2 minute timeout..."
             timeout 2m npm audit --json > npm-audit.json || echo "npm audit timed out, continuing..."
             cat npm-audit.json || echo "No audit report generated"
           else
