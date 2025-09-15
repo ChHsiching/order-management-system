@@ -85,7 +85,7 @@ jobs:
           else
             echo "No audit reports directory found, creating empty artifact"
             mkdir -p backend/target
-            touch backend/target/placeholder.txt
+            touch backend/target/dependency-check-report.placeholder
           fi
 
       - name: Upload audit report artifact
@@ -141,14 +141,14 @@ jobs:
           else
             echo "No frontend audit report found, creating empty artifact"
             mkdir -p frontend
-            touch frontend/placeholder.txt
+            touch frontend/npm-audit.placeholder
           fi
 
       - name: Upload audit report artifact
         uses: actions/upload-artifact@v4
         with:
           name: frontend-audit
-          path: frontend/npm-audit.json
+          path: frontend/npm-audit.*
 
   docker-build:
     name: Docker build (if Dockerfile exists)
