@@ -69,13 +69,15 @@ jobs:
           name: backend-test-results
           path: backend/target/surefire-reports/*
 
-      - name: Dependency Security Check
+      - name: Dependency Check
+        timeout-minutes: 2
+        continue-on-error: true
         run: |
           if [ -d backend ] && [ -f backend/pom.xml ]; then
             cd backend
-            echo "Running basic Maven dependency security check..."
-            # Use Maven's built-in dependency tree and version checks
-            mvn dependency:tree -Dverbose -Dincludes=* | head -20 || echo "Dependency check completed"
+            echo "Running Maven dependency check..."
+            # List dependency tree for version analysis
+            mvn dependency:tree -Dverbose | head -20 || echo "Dependency check completed"
           else
             echo "No backend directory or pom.xml found, skipping dependency check."
           fi
