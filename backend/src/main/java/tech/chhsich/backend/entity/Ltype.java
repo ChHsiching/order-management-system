@@ -1,18 +1,28 @@
 package tech.chhsich.backend.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
+import lombok.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("ltypes")
-public class Ltype {
+public class Ltype {//分类信息实体类
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    private Integer catelock;
-    private String catename;
+    @TableField("catelock")
+    private Integer cateLock;//0未删除，1已删除
+
+    @TableField("catename")
+    private String cateName;
+
+    @TableField("address")
     private String address;
-    private String productname;
+
+    @TableField("productname")
+    private String productName;
 }

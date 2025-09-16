@@ -4,14 +4,17 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
+import lombok.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("the_order_entry")
-public class OrderEntry {
+public class OrderEntry {//订单条目实体类
     @TableId(type = IdType.AUTO)
     private Long id;
 
+    @TableField("price")
     private Double price;
 
     @TableField("productid")
