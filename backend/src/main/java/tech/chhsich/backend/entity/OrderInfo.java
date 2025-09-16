@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("cg_info")
-public class Cginfo {//订单信息实体类
+public class OrderInfo {//订单信息实体类
     @TableId(type = IdType.AUTO)
     private Long id;
 

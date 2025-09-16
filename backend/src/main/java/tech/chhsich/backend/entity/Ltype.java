@@ -9,23 +9,20 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("the_order_entry")
-public class TheOrderEntry {//订单条目实体类
+@TableName("ltypes")
+public class Ltype {//分类信息实体类
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    @TableField("price")
-    private Double price;
+    @TableField("catelock")
+    private Integer cateLock;//0未删除，1已删除
 
-    @TableField("productid")
-    private Long productId;
+    @TableField("catename")
+    private String cateName;
+
+    @TableField("address")
+    private String address;
 
     @TableField("productname")
     private String productName;
-
-    @TableField("productnum")
-    private Integer productNum;
-
-    @TableField("orderid")
-    private String orderId;
 }

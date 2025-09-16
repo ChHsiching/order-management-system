@@ -1,10 +1,9 @@
 package tech.chhsich.backend.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import tech.chhsich.backend.mapper.AdminMapper;
-import tech.chhsich.backend.entity.Administrators;
+import tech.chhsich.backend.entity.Administrator;
 import tech.chhsich.backend.entity.ResponseMessage;
 import tech.chhsich.backend.service.AdminService;
 import tech.chhsich.backend.utils.JwUtil;
@@ -16,9 +15,12 @@ import java.util.Map;
 
 @Service
 public class AdminServiceImpl implements AdminService {
-    
-    @Autowired
-    private AdminMapper adminMapper;
+
+    private final AdminMapper adminMapper;
+
+    public AdminServiceImpl(AdminMapper adminMapper) {
+        this.adminMapper = adminMapper;
+    }
     
     @Override
     public ResponseMessage login(String username, String password) {
@@ -30,19 +32,27 @@ public class AdminServiceImpl implements AdminService {
         String md5Password = Md5Util.getMD5String(password);
         
         // 根据用户名和密码查询用户
-        Administrators admin = adminMapper.getAdminByUsernameAndPassword(username, md5Password);
-        
+        Administrator admin = adminMapper.getAdminByUsernameAndPassword(username, md5Password);
+
         if (admin != null) {
             // 登录成功，生成令牌(jwt)
             Map<String, Object> claims = new HashMap<>();
             claims.put("username", admin.getUsername());
             claims.put("role", admin.getRole());
             String token = JwUtil.getToken(claims);
-            
-            // 返回成功响应，包含token
+
+            // 创建安全的用户信息对象（不包含敏感信息）
+            Map<String, Object> safeUserInfo = new HashMap<>();
+            safeUserInfo.put("username", admin.getUsername());
+            safeUserInfo.put("email", admin.getEmail());
+            safeUserInfo.put("phone", admin.getPhone());
+            safeUserInfo.put("role", admin.getRole());
+            safeUserInfo.put("createTime", admin.getCreateTime());
+
+            // 返回成功响应，包含token和安全的用户信息
             Map<String, Object> data = new HashMap<>();
             data.put("token", token);
-            data.put("user", admin);
+            data.put("user", safeUserInfo);
             return ResponseMessage.success(data);
         } else {
             return ResponseMessage.error("用户名或密码错误");
@@ -69,27 +79,27 @@ public class AdminServiceImpl implements AdminService {
     }
     
     @Override
-    public List<Administrators> getAllMembers() {
+    public List<Administrator> getAllMembers() {
         return adminMapper.getAllMembers();
     }
-    
+
     @Override
     public ResponseMessage deleteMember(String username) {
         if (!StringUtils.hasLength(username)) {
             return ResponseMessage.error("用户名不能为空");
         }
-        
+
         int result = adminMapper.deleteMember(username);
-        
+
         if (result > 0) {
             return ResponseMessage.success("会员删除成功");
         } else {
             return ResponseMessage.error("会员不存在或删除失败");
         }
     }
-    
+
     @Override
-    public Administrators getMemberByUsername(String username) {
+    public Administrator getMemberByUsername(String username) {
         return adminMapper.getMemberByUsername(username);
     }
 }

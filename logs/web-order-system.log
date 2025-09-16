@@ -1,0 +1,652 @@
+2025-09-12 12:11:02.353 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 22492 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:11:02.358 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:11:02.359 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:11:02.414 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-09-12 12:11:02.414 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-09-12 12:11:03.243 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:11:03.243 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:11:03.243 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:11:03.245 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:11:03.245 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:11:03.245 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:11:03.248 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:11:03.248 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:11:03.248 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:11:03.248 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:11:03.248 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:11:03.248 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:11:03.250 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:11:03.250 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:11:03.250 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:11:03.582 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:11:03.596 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:11:03.597 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:11:03.659 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:11:03.659 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1244 ms
+2025-09-12 12:11:03.964 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:11:03.965 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:11:03.965 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:11:03.965 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:11:04.015 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:11:04.015 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:11:04.017 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:11:04.017 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:11:04.018 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:11:04.495 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:11:04.557 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:11:04.641 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@19959ad0
+2025-09-12 12:11:04.762 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:11:04.792 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:11:04.800 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 3.006 seconds (process running for 3.755)
+2025-09-12 12:22:55.046 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-12 12:22:55.046 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-12 12:22:55.048 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-09-12 12:22:55.066 [http-nio-8080-exec-1] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:22:55.071 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:22:55.111 [http-nio-8080-exec-1] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:22:55.111 [http-nio-8080-exec-1] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:22:55.117 [http-nio-8080-exec-1] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error
+2025-09-12 12:22:55.118 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:22:55.118 [http-nio-8080-exec-1] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:22:55.118 [http-nio-8080-exec-1] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:22:57.126 [http-nio-8080-exec-2] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:22:57.126 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:22:57.127 [http-nio-8080-exec-2] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:22:57.127 [http-nio-8080-exec-2] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:22:57.128 [http-nio-8080-exec-2] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error
+2025-09-12 12:22:57.128 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:22:57.128 [http-nio-8080-exec-2] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:22:57.129 [http-nio-8080-exec-2] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:22:57.744 [http-nio-8080-exec-3] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:22:57.744 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:22:57.745 [http-nio-8080-exec-3] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:22:57.745 [http-nio-8080-exec-3] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:22:57.746 [http-nio-8080-exec-3] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error
+2025-09-12 12:22:57.746 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:22:57.746 [http-nio-8080-exec-3] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:22:57.747 [http-nio-8080-exec-3] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:22:57.964 [http-nio-8080-exec-6] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:22:57.964 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:22:57.965 [http-nio-8080-exec-6] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:22:57.965 [http-nio-8080-exec-6] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:22:57.966 [http-nio-8080-exec-6] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error
+2025-09-12 12:22:57.967 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:22:57.967 [http-nio-8080-exec-6] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:22:57.967 [http-nio-8080-exec-6] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:23:58.975 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:23:59.075 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-12 12:24:09.531 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 17100 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:24:09.532 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:24:09.533 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:24:09.577 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-09-12 12:24:09.577 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-09-12 12:24:10.193 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:24:10.193 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:24:10.193 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:24:10.193 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:24:10.194 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:24:10.194 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:24:10.196 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:24:10.196 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:24:10.196 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:24:10.196 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:24:10.197 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:24:10.197 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:24:10.197 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:24:10.197 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:24:10.197 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:24:10.484 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:24:10.497 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:24:10.497 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:24:10.542 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:24:10.542 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 965 ms
+2025-09-12 12:24:10.768 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:24:10.768 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:24:10.768 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:24:10.768 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:24:10.812 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:24:10.812 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:24:10.814 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:24:10.814 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:24:10.814 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:24:11.264 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:24:11.316 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:24:11.397 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5816c0d3
+2025-09-12 12:24:11.507 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:24:11.540 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:24:11.549 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 2.482 seconds (process running for 3.079)
+2025-09-12 12:24:18.923 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-12 12:24:18.924 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-12 12:24:18.924 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+2025-09-12 12:24:18.938 [http-nio-8080-exec-1] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:24:18.943 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:18.947 [http-nio-8080-exec-1] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:24:18.947 [http-nio-8080-exec-1] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:24:18.951 [http-nio-8080-exec-1] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error
+2025-09-12 12:24:18.952 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:18.953 [http-nio-8080-exec-1] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:24:18.953 [http-nio-8080-exec-1] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:24:20.677 [http-nio-8080-exec-2] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:24:20.677 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:20.678 [http-nio-8080-exec-2] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:24:20.678 [http-nio-8080-exec-2] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:24:20.679 [http-nio-8080-exec-2] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error
+2025-09-12 12:24:20.679 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:20.679 [http-nio-8080-exec-2] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:24:20.680 [http-nio-8080-exec-2] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:24:21.106 [http-nio-8080-exec-3] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:24:21.106 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:21.107 [http-nio-8080-exec-3] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:24:21.107 [http-nio-8080-exec-3] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:24:21.108 [http-nio-8080-exec-3] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error
+2025-09-12 12:24:21.108 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:21.109 [http-nio-8080-exec-3] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:24:21.109 [http-nio-8080-exec-3] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:24:21.279 [http-nio-8080-exec-4] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:24:21.279 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:21.280 [http-nio-8080-exec-4] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:24:21.280 [http-nio-8080-exec-4] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:24:21.282 [http-nio-8080-exec-4] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error
+2025-09-12 12:24:21.282 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:21.284 [http-nio-8080-exec-4] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:24:21.284 [http-nio-8080-exec-4] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:24:21.433 [http-nio-8080-exec-5] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:24:21.433 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:21.434 [http-nio-8080-exec-5] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:24:21.434 [http-nio-8080-exec-5] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:24:21.434 [http-nio-8080-exec-5] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error
+2025-09-12 12:24:21.435 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:21.435 [http-nio-8080-exec-5] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:24:21.435 [http-nio-8080-exec-5] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:24:21.568 [http-nio-8080-exec-6] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:24:21.569 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:21.569 [http-nio-8080-exec-6] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:24:21.570 [http-nio-8080-exec-6] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:24:21.570 [http-nio-8080-exec-6] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error
+2025-09-12 12:24:21.572 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:24:21.572 [http-nio-8080-exec-6] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:24:21.572 [http-nio-8080-exec-6] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:26:43.783 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-09-12 12:26:43.787 [Thread-5] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:26:43.900 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-12 12:26:44.002 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 17100 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:26:44.002 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:26:44.003 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:26:44.247 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:26:44.247 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:26:44.247 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:26:44.247 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:26:44.247 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:26:44.248 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:26:44.248 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:26:44.248 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:26:44.249 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:26:44.249 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:26:44.249 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:26:44.249 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:26:44.250 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:26:44.250 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:26:44.250 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:26:44.298 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:26:44.298 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:26:44.300 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:26:44.313 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:26:44.313 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 308 ms
+2025-09-12 12:26:44.355 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:44.355 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:44.355 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:44.355 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:44.370 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:44.371 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:44.371 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:44.371 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:44.371 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:44.655 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:26:44.665 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:26:44.685 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@36112f12
+2025-09-12 12:26:44.710 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:26:44.721 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:26:44.725 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 0.759 seconds (process running for 156.255)
+2025-09-12 12:26:44.727 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-09-12 12:26:46.124 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-09-12 12:26:46.125 [Thread-7] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:26:46.197 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-12 12:26:46.254 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 17100 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:26:46.254 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:26:46.254 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:26:46.397 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:26:46.397 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:26:46.397 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:26:46.397 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:26:46.398 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:26:46.398 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:26:46.398 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:26:46.398 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:26:46.399 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:26:46.399 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:26:46.399 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:26:46.399 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:26:46.399 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:26:46.399 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:26:46.400 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:26:46.432 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:26:46.433 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:26:46.433 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:26:46.444 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:26:46.444 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 189 ms
+2025-09-12 12:26:46.472 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:46.473 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:46.473 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:46.473 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:46.483 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:46.483 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:46.483 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:46.483 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:46.483 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:26:46.772 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:26:46.783 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:26:46.803 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6341ddb7
+2025-09-12 12:26:46.831 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:26:46.842 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:26:46.847 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 0.612 seconds (process running for 158.377)
+2025-09-12 12:26:46.848 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-09-12 12:27:11.719 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-09-12 12:27:11.721 [Thread-11] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:27:11.870 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-12 12:27:11.981 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 17100 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:27:11.981 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:27:11.981 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:27:12.258 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:27:12.258 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:27:12.258 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:27:12.258 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:27:12.258 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:27:12.258 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:27:12.259 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:27:12.259 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:27:12.259 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:27:12.259 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:27:12.260 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:27:12.260 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:27:12.261 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:27:12.261 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:27:12.261 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:27:12.317 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:27:12.318 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:27:12.318 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:27:12.334 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:27:12.334 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 351 ms
+2025-09-12 12:27:12.380 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:12.380 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:12.380 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:12.382 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:12.393 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:12.393 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:12.393 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:12.394 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:12.394 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:12.703 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:27:12.718 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:27:12.750 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5366512b
+2025-09-12 12:27:12.796 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:27:12.809 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:27:12.814 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 0.876 seconds (process running for 184.343)
+2025-09-12 12:27:12.816 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-09-12 12:27:14.250 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-09-12 12:27:14.251 [Thread-15] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:27:14.344 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-12 12:27:14.409 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 17100 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:27:14.409 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:27:14.409 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:27:14.596 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:27:14.596 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:27:14.596 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:27:14.596 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:27:14.596 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:27:14.596 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:27:14.597 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:27:14.597 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:27:14.597 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:27:14.597 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:27:14.597 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:27:14.597 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:27:14.597 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:27:14.597 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:27:14.599 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:27:14.633 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:27:14.634 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:27:14.634 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:27:14.649 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:27:14.650 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 239 ms
+2025-09-12 12:27:14.679 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:14.679 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:14.679 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:14.680 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:14.690 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:14.691 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:14.691 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:14.691 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:14.691 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:14.930 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:27:14.942 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:27:14.964 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@70b6ffb
+2025-09-12 12:27:14.996 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:27:15.009 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:27:15.013 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 0.625 seconds (process running for 186.543)
+2025-09-12 12:27:15.013 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-09-12 12:27:54.119 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-09-12 12:27:54.120 [Thread-19] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:27:54.237 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-12 12:27:54.306 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 17100 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:27:54.306 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:27:54.306 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:27:54.480 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:27:54.480 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:27:54.480 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:27:54.480 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:27:54.480 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:27:54.480 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:27:54.480 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:27:54.480 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:27:54.481 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:27:54.481 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:27:54.481 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:27:54.481 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:27:54.482 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:27:54.482 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:27:54.482 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:27:54.521 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:27:54.521 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:27:54.521 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:27:54.535 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:27:54.535 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 227 ms
+2025-09-12 12:27:54.568 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:54.568 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:54.568 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:54.569 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:54.581 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:54.581 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:54.581 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:54.581 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:54.582 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:54.865 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:27:54.876 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:27:54.895 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@62e1fa8b
+2025-09-12 12:27:54.925 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:27:54.939 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:27:54.945 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 0.66 seconds (process running for 226.475)
+2025-09-12 12:27:54.946 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-09-12 12:27:56.347 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-09-12 12:27:56.347 [Thread-23] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:27:56.418 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-12 12:27:56.469 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 17100 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:27:56.469 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:27:56.469 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:27:56.612 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:27:56.612 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:27:56.612 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:27:56.613 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:27:56.613 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:27:56.613 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:27:56.613 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:27:56.613 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:27:56.613 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:27:56.613 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:27:56.614 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:27:56.614 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:27:56.614 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:27:56.614 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:27:56.614 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:27:56.645 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:27:56.645 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:27:56.646 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:27:56.658 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:27:56.658 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 188 ms
+2025-09-12 12:27:56.688 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:56.688 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:56.688 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:56.688 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:56.697 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:56.697 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:56.697 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:56.697 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:56.697 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:27:56.910 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:27:56.917 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:27:56.934 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@39c49aa3
+2025-09-12 12:27:56.956 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:27:56.965 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:27:56.968 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 0.519 seconds (process running for 228.499)
+2025-09-12 12:27:56.969 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-09-12 12:28:42.183 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2025-09-12 12:28:42.183 [Thread-27] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:28:42.288 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-12 12:28:42.352 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 17100 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:28:42.353 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:28:42.353 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:28:42.587 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:28:42.587 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:28:42.587 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:28:42.587 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:28:42.587 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:28:42.587 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:28:42.588 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:28:42.588 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:28:42.588 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:28:42.588 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:28:42.588 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:28:42.588 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:28:42.589 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:28:42.589 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:28:42.589 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:28:42.642 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:28:42.644 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:28:42.644 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:28:42.663 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:28:42.663 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 309 ms
+2025-09-12 12:28:42.698 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:42.698 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:42.699 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:42.699 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:42.710 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:42.710 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:42.710 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:42.710 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:42.710 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:42.986 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:28:42.997 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:28:43.017 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@447cf0b6
+2025-09-12 12:28:43.042 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:28:43.051 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:28:43.055 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 0.723 seconds (process running for 274.586)
+2025-09-12 12:28:43.056 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-09-12 12:28:44.456 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2025-09-12 12:28:44.457 [Thread-31] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:28:44.532 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-12 12:28:44.583 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 17100 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:28:44.583 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:28:44.583 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:28:44.718 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:28:44.718 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:28:44.718 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:28:44.718 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:28:44.719 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:28:44.719 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:28:44.719 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:28:44.719 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:28:44.719 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:28:44.719 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:28:44.720 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:28:44.720 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:28:44.720 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:28:44.720 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:28:44.720 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:28:44.756 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:28:44.756 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:28:44.756 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:28:44.769 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:28:44.769 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 185 ms
+2025-09-12 12:28:44.803 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:44.804 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:44.804 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:44.804 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:44.815 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:44.815 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:44.815 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:44.815 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:44.815 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:28:45.051 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:28:45.059 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:28:45.074 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@1ff0f654
+2025-09-12 12:28:45.097 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:28:45.106 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:28:45.109 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 0.543 seconds (process running for 276.639)
+2025-09-12 12:28:45.110 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-09-12 12:29:06.982 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:29:07.058 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-12 12:29:31.636 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 3396 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:29:31.638 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:29:31.640 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:29:31.686 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-09-12 12:29:31.688 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-09-12 12:29:32.367 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:29:32.368 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:29:32.368 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:29:32.368 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:29:32.368 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:29:32.368 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:29:32.371 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:29:32.371 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:29:32.372 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:29:32.372 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:29:32.372 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:29:32.372 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:29:32.372 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:29:32.372 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:29:32.373 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:29:32.655 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:29:32.668 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:29:32.668 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:29:32.709 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:29:32.709 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1021 ms
+2025-09-12 12:29:32.940 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:29:32.941 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:29:32.941 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:29:32.941 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:29:32.989 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:29:32.989 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:29:32.989 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:29:32.991 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:29:32.991 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:29:33.431 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:29:33.482 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:29:33.557 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5816c0d3
+2025-09-12 12:29:33.667 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:29:33.696 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:29:33.706 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 2.572 seconds (process running for 3.191)
+2025-09-12 12:29:47.846 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-12 12:29:47.846 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-12 12:29:47.847 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-09-12 12:29:47.866 [http-nio-8080-exec-1] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:29:47.873 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:29:47.879 [http-nio-8080-exec-1] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:29:47.879 [http-nio-8080-exec-1] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:29:47.884 [http-nio-8080-exec-1] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error
+2025-09-12 12:29:47.884 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:29:47.885 [http-nio-8080-exec-1] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:29:47.885 [http-nio-8080-exec-1] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:30:06.628 [http-nio-8080-exec-3] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html?continue
+2025-09-12 12:30:06.655 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:30:06.748 [http-nio-8080-exec-3] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/swagger-ui.html?continue to session
+2025-09-12 12:30:06.749 [http-nio-8080-exec-3] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:30:06.750 [http-nio-8080-exec-3] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error?continue
+2025-09-12 12:30:06.751 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:30:06.753 [http-nio-8080-exec-3] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:30:06.754 [http-nio-8080-exec-3] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:30:17.241 [http-nio-8080-exec-5] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error?continue
+2025-09-12 12:30:17.242 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:30:17.243 [http-nio-8080-exec-5] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:30:17.244 [http-nio-8080-exec-5] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:30:17.245 [http-nio-8080-exec-5] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /error?continue
+2025-09-12 12:30:17.246 [http-nio-8080-exec-5] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Loaded matching saved request http://localhost:8080/WebOrderSystem/error?continue
+2025-09-12 12:30:17.247 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:30:17.256 [http-nio-8080-exec-5] DEBUG o.s.s.web.savedrequest.HttpSessionRequestCache - Saved request http://localhost:8080/WebOrderSystem/error?continue to session
+2025-09-12 12:30:17.256 [http-nio-8080-exec-5] DEBUG o.s.s.w.authentication.Http403ForbiddenEntryPoint - Pre-authenticated entry point called. Rejecting access
+2025-09-12 12:31:35.254 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:31:35.327 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-09-12 12:31:39.805 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Starting BackendApplication using Java 17.0.12 with PID 5256 (D:\java面向对象\order-management-system-main\backend\target\classes started by 30313 in D:\java面向对象\order-management-system-main)
+2025-09-12 12:31:39.808 [restartedMain] DEBUG tech.chhsich.backend.BackendApplication - Running with Spring Boot v3.5.5, Spring v6.2.10
+2025-09-12 12:31:39.809 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-12 12:31:39.853 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-09-12 12:31:39.853 [restartedMain] INFO  o.s.b.d.env.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-09-12 12:31:40.516 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\AdministratorMapper.class]
+2025-09-12 12:31:40.517 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\LtypeMapper.class]
+2025-09-12 12:31:40.517 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\MenuMapper.class]
+2025-09-12 12:31:40.517 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderEntryMapper.class]
+2025-09-12 12:31:40.517 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Identified candidate component class: file [D:\java面向对象\order-management-system-main\backend\target\classes\tech\chhsich\backend\mapper\OrderInfoMapper.class]
+2025-09-12 12:31:40.518 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'administratorMapper' and 'tech.chhsich.backend.mapper.AdministratorMapper' mapperInterface
+2025-09-12 12:31:40.519 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'administratorMapper'.
+2025-09-12 12:31:40.519 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'ltypeMapper' and 'tech.chhsich.backend.mapper.LtypeMapper' mapperInterface
+2025-09-12 12:31:40.520 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'ltypeMapper'.
+2025-09-12 12:31:40.520 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'menuMapper' and 'tech.chhsich.backend.mapper.MenuMapper' mapperInterface
+2025-09-12 12:31:40.520 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'menuMapper'.
+2025-09-12 12:31:40.520 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderEntryMapper' and 'tech.chhsich.backend.mapper.OrderEntryMapper' mapperInterface
+2025-09-12 12:31:40.521 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderEntryMapper'.
+2025-09-12 12:31:40.521 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Creating MapperFactoryBean with name 'orderInfoMapper' and 'tech.chhsich.backend.mapper.OrderInfoMapper' mapperInterface
+2025-09-12 12:31:40.521 [restartedMain] DEBUG org.mybatis.spring.mapper.ClassPathMapperScanner - Enabling autowire by type for MapperFactoryBean with name 'orderInfoMapper'.
+2025-09-12 12:31:40.784 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-12 12:31:40.795 [restartedMain] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-12 12:31:40.795 [restartedMain] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.44]
+2025-09-12 12:31:40.837 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring embedded WebApplicationContext
+2025-09-12 12:31:40.837 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 984 ms
+2025-09-12 12:31:41.057 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByPhone] is ignored, because it exists, maybe from xml file
+2025-09-12 12:31:41.059 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByUsername] is ignored, because it exists, maybe from xml file
+2025-09-12 12:31:41.059 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.existsByEmail] is ignored, because it exists, maybe from xml file
+2025-09-12 12:31:41.059 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.AdministratorMapper.findByUsernameAndPassword] is ignored, because it exists, maybe from xml file
+2025-09-12 12:31:41.102 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:31:41.104 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.updateSales] is ignored, because it exists, maybe from xml file
+2025-09-12 12:31:41.104 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryIdAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:31:41.104 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByNewStuijianAndProductLock] is ignored, because it exists, maybe from xml file
+2025-09-12 12:31:41.104 [restartedMain] ERROR c.baomidou.mybatisplus.core.MybatisConfiguration - mapper[tech.chhsich.backend.mapper.MenuMapper.findByCategoryId] is ignored, because it exists, maybe from xml file
+2025-09-12 12:31:41.519 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2025-09-12 12:31:41.569 [restartedMain] DEBUG o.s.security.web.DefaultSecurityFilterChain - Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2025-09-12 12:31:41.636 [restartedMain] INFO  c.b.m.e.spring.MybatisPlusApplicationContextAware - Register ApplicationContext instances org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5816c0d3
+2025-09-12 12:31:41.732 [restartedMain] INFO  o.s.b.d.autoconfigure.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-09-12 12:31:41.763 [restartedMain] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/WebOrderSystem'
+2025-09-12 12:31:41.770 [restartedMain] INFO  tech.chhsich.backend.BackendApplication - Started BackendApplication in 2.413 seconds (process running for 3.014)
+2025-09-12 12:31:49.565 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/WebOrderSystem] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-12 12:31:49.565 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-12 12:31:49.566 [http-nio-8080-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-09-12 12:31:49.582 [http-nio-8080-exec-1] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2025-09-12 12:31:49.591 [http-nio-8080-exec-1] DEBUG org.springframework.security.web.FilterChainProxy - Secured GET /swagger-ui.html
+2025-09-12 12:31:49.644 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:31:49.652 [http-nio-8080-exec-2] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui/index.html
+2025-09-12 12:31:49.653 [http-nio-8080-exec-2] DEBUG org.springframework.security.web.FilterChainProxy - Secured GET /swagger-ui/index.html
+2025-09-12 12:31:49.659 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:31:49.703 [http-nio-8080-exec-3] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-ui.css
+2025-09-12 12:31:49.704 [http-nio-8080-exec-3] DEBUG org.springframework.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-ui.css
+2025-09-12 12:31:49.707 [http-nio-8080-exec-4] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui/index.css
+2025-09-12 12:31:49.707 [http-nio-8080-exec-7] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-initializer.js
+2025-09-12 12:31:49.708 [http-nio-8080-exec-6] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-ui-standalone-preset.js
+2025-09-12 12:31:49.708 [http-nio-8080-exec-7] DEBUG org.springframework.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-initializer.js
+2025-09-12 12:31:49.708 [http-nio-8080-exec-6] DEBUG org.springframework.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-ui-standalone-preset.js
+2025-09-12 12:31:49.708 [http-nio-8080-exec-5] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-ui-bundle.js
+2025-09-12 12:31:49.708 [http-nio-8080-exec-4] DEBUG org.springframework.security.web.FilterChainProxy - Secured GET /swagger-ui/index.css
+2025-09-12 12:31:49.710 [http-nio-8080-exec-5] DEBUG org.springframework.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-ui-bundle.js
+2025-09-12 12:31:49.713 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:31:49.715 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:31:49.718 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:31:49.731 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:31:49.736 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:31:49.856 [http-nio-8080-exec-8] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /api-docs/swagger-config
+2025-09-12 12:31:49.856 [http-nio-8080-exec-8] DEBUG org.springframework.security.web.FilterChainProxy - Secured GET /api-docs/swagger-config
+2025-09-12 12:31:49.862 [http-nio-8080-exec-9] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /swagger-ui/favicon-32x32.png
+2025-09-12 12:31:49.863 [http-nio-8080-exec-9] DEBUG org.springframework.security.web.FilterChainProxy - Secured GET /swagger-ui/favicon-32x32.png
+2025-09-12 12:31:49.866 [http-nio-8080-exec-9] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:31:49.877 [http-nio-8080-exec-8] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:31:49.885 [http-nio-8080-exec-10] DEBUG org.springframework.security.web.FilterChainProxy - Securing GET /api-docs
+2025-09-12 12:31:49.885 [http-nio-8080-exec-10] DEBUG org.springframework.security.web.FilterChainProxy - Secured GET /api-docs
+2025-09-12 12:31:50.193 [http-nio-8080-exec-10] INFO  org.springdoc.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 300 ms
+2025-09-12 12:31:50.222 [http-nio-8080-exec-10] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2025-09-12 12:45:55.588 [SpringApplicationShutdownHook] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12 12:45:55.692 [tomcat-shutdown] INFO  o.s.boot.web.embedded.tomcat.GracefulShutdown - Graceful shutdown complete

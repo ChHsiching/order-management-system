@@ -1,10 +1,9 @@
 package tech.chhsich.backend.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import tech.chhsich.backend.entity.Administrators;
+import tech.chhsich.backend.entity.Administrator;
 import tech.chhsich.backend.entity.ResponseMessage;
 import tech.chhsich.backend.service.AdminService;
 
@@ -15,8 +14,11 @@ import java.util.List;
 @Validated
 public class AdminController {
 
-    @Autowired
-    private AdminService adminService;
+    private final AdminService adminService;
+
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
+    }
 
 //    管理员登录接口
     @PostMapping("/login")
@@ -39,7 +41,7 @@ public class AdminController {
 //     获取所有会员信息接口
     @GetMapping("/members")
     public ResponseMessage getAllMembers() {
-        List<Administrators> members = adminService.getAllMembers();
+        List<Administrator> members = adminService.getAllMembers();
         return ResponseMessage.success(members);
     }
 
@@ -47,7 +49,7 @@ public class AdminController {
 //     获取指定用户名的会员详细信息
     @GetMapping("/members/{username}")
     public ResponseMessage getMemberByUsername(@PathVariable String username) {
-        Administrators member = adminService.getMemberByUsername(username);
+        Administrator member = adminService.getMemberByUsername(username);
         if (member != null) {
             return ResponseMessage.success(member);
         } else {

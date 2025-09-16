@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("administrators")
-public class Administrators {//管理员用户实体类
+public class Administrator {//管理员用户实体类
     @TableId(type = IdType.INPUT)
     private String username;
 
@@ -32,5 +32,5 @@ public class Administrators {//管理员用户实体类
     private String qq;
 
     @TableField("role")
-    private Integer Role;//0会员，1管理员，2接单员
+    private Integer role;//0会员，1管理员，2接单员
 }
