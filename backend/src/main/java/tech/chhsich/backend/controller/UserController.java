@@ -2,10 +2,8 @@ package tech.chhsich.backend.controller;
 
 import tech.chhsich.backend.entity.Administrator;
 import tech.chhsich.backend.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,19 +50,17 @@ public class UserController {
         }
     }
 
-    @Operation(summary = "获取用户信息", description = "根据用户名获取用户详细信息")
+    @Operation(summary = "获取用户信息", description = "获取当前登录用户的详细信息")
     @ApiResponse(responseCode = "200", description = "获取成功")
     @ApiResponse(responseCode = "404", description = "用户不存在")
-    @GetMapping("/{username}")
-    public ResponseEntity<?> getUserInfo(@PathVariable String username) {
-        // 1. 验证当前用户身份
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUserInfo() {
+        // 1. 获取当前认证用户信息
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (!auth.getName().equals(username) && !auth.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("无权访问其他用户信息");
-        }
+        String currentUsername = auth.getName();
 
         // 2. 获取用户信息
-        Administrator user = userService.getUserByUsername(username);
+        Administrator user = userService.getUserByUsername(currentUsername);
         if (user != null) {
             // 3. 过滤敏感信息
             user.setPassword(null);

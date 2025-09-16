@@ -41,10 +41,18 @@ public class AdminServiceImpl implements AdminService {
             claims.put("role", admin.getRole());
             String token = JwUtil.getToken(claims);
 
-            // 返回成功响应，包含token
+            // 创建安全的用户信息对象（不包含敏感信息）
+            Map<String, Object> safeUserInfo = new HashMap<>();
+            safeUserInfo.put("username", admin.getUsername());
+            safeUserInfo.put("email", admin.getEmail());
+            safeUserInfo.put("phone", admin.getPhone());
+            safeUserInfo.put("role", admin.getRole());
+            safeUserInfo.put("createTime", admin.getCreateTime());
+
+            // 返回成功响应，包含token和安全的用户信息
             Map<String, Object> data = new HashMap<>();
             data.put("token", token);
-            data.put("user", admin);
+            data.put("user", safeUserInfo);
             return ResponseMessage.success(data);
         } else {
             return ResponseMessage.error("用户名或密码错误");

@@ -42,7 +42,15 @@ public class UserService {
     public Administrator login(String username, String password) {
         Administrator user = adminMapper.findByUsername(username);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            return user;
+            // 创建安全的用户副本（不包含密码）
+            Administrator safeUser = new Administrator();
+            safeUser.setUsername(user.getUsername());
+            safeUser.setEmail(user.getEmail());
+            safeUser.setPhone(user.getPhone());
+            safeUser.setRole(user.getRole());
+            safeUser.setCreateTime(user.getCreateTime());
+            safeUser.setQq(user.getQq());
+            return safeUser;
         }
         throw new RuntimeException("用户名或密码错误");
     }

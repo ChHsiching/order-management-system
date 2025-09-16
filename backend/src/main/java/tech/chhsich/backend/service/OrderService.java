@@ -8,6 +8,8 @@ import tech.chhsich.backend.mapper.OrderInfoMapper;
 import tech.chhsich.backend.mapper.OrderEntryMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -120,7 +122,11 @@ public class OrderService {
     }
 
     public static class OrderItemRequest {
+        @NotNull(message = "菜品ID不能为空")
         private Long menuId;
+
+        @NotNull(message = "数量不能为空")
+        @Min(value = 1, message = "数量必须大于0")
         private Integer quantity;
 
         // Getters and Setters
