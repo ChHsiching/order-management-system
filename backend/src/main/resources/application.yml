@@ -22,7 +22,7 @@ spring:
     url: jdbc:mysql://localhost:3306/web_order?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&characterEncoding=utf8&useUnicode=true
     # 数据库名web_order，与设计一致；时区设置为上海；字符编码UTF-8
     username: root  # 本地MySQL用户名（需根据实际环境修改）
-    password: zhao12345678  # 本地MySQL密码（需根据实际环境修改）
+    password: 123456  # 本地MySQL密码（需根据实际环境修改）
     type: com.zaxxer.hikari.HikariDataSource  # 连接池，保证性能
     hikari:
       pool-name: WebOrderHikariCP
@@ -151,7 +151,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/web_order?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&characterEncoding=utf8&useUnicode=true
     username: root
-    password: zhao12345678
+    password: 123456
 logging:
   level:
     root: DEBUG
