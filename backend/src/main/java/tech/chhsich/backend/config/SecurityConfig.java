@@ -11,16 +11,26 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    /**
+     * Builds and returns the application's SecurityFilterChain.
+     *
+     * Configures CSRF protection using a cookie-backed repository with the request attribute name "_csrf" and
+     * excludes CSRF checks for public endpoints such as user registration/login, menu/categories, and API docs.
+     * Disables Spring Security's CORS configuration to rely on WebConfig's global CORS settings, enforces stateless (JWT) session management,
+     * and defines route-based authorization:
+     * - Public: Swagger/API docs, /api/user/register, /api/user/login, /api/menu/**, /api/categories/**
+     * - Authenticated: /api/orders/** and all other unspecified routes
+     * - Admin-only: /api/admin/**
+     * Disables form login and HTTP Basic authentication, and applies security headers (XSS block, CSP "default-src 'self'", same-origin frame options).
+     *
+     * @return the configured SecurityFilterChain
+     * @throws Exception if configuring the HttpSecurity object fails
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // 创建CSRF token处理器
@@ -37,8 +47,8 @@ public class SecurityConfig {
                         .ignoringRequestMatchers("/api/menu/**", "/api/categories/**")
                         .ignoringRequestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**")
                 )
-                // 配置CORS
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                // 配置CORS - 使用WebConfig中的全局CORS配置
+                .cors(cors -> cors.disable())
                 // 设置无状态会话管理（JWT认证）
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
@@ -74,19 +84,12 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-
+  
+    /**
+     * Provides a BCrypt-based PasswordEncoder for hashing and verifying user passwords.
+     *
+     * @return a PasswordEncoder implementation using BCrypt
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

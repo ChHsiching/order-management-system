@@ -13,6 +13,18 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Handles ResourceNotFoundException and returns a 404 Not Found response with a structured JSON body.
+     *
+     * The response body (in insertion order) contains:
+     * - timestamp: current LocalDateTime
+     * - status: 404
+     * - error: "Not Found"
+     * - message: the exception's message
+     * - path: request.getDescription(false)
+     *
+     * @return ResponseEntity containing the constructed body and HTTP 404 Not Found status.
+     */
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> handleResourceNotFoundException(
             ResourceNotFoundException ex, WebRequest request) {
@@ -27,6 +39,20 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Handles DuplicateResourceException by returning a 409 Conflict HTTP response with a structured JSON body.
+     *
+     * The response body preserves field order and contains:
+     * - "timestamp": the time the error was produced
+     * - "status": HTTP status code (409)
+     * - "error": short reason phrase ("Conflict")
+     * - "message": the exception message
+     * - "path": request description obtained from the WebRequest
+     *
+     * @param ex the DuplicateResourceException whose message is placed in the response "message" field
+     * @param request the current web request; used to populate the response "path" field
+     * @return a ResponseEntity whose body is a LinkedHashMap with the fields above and whose status is 409 Conflict
+     */
     @ExceptionHandler(DuplicateResourceException.class)
     public ResponseEntity<Object> handleDuplicateResourceException(
             DuplicateResourceException ex, WebRequest request) {
@@ -41,6 +67,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
 
+    /**
+     * Handles IllegalArgumentException across controllers and returns an HTTP 400 response.
+     *
+     * <p>Builds a JSON-compatible response body with the following fields (in insertion order):
+     * <ul>
+     *   <li>timestamp: current LocalDateTime</li>
+     *   <li>status: 400</li>
+     *   <li>error: "Bad Request"</li>
+     *   <li>message: the exception's message</li>
+     *   <li>path: value from {@code request.getDescription(false)}</li>
+     * </ul>
+     *
+     * @param request used to extract the request description for the {@code path} field
+     * @return a ResponseEntity whose body is the described map and whose status is 400 BAD_REQUEST
+     */
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Object> handleIllegalArgumentException(
             IllegalArgumentException ex, WebRequest request) {
@@ -55,6 +96,18 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Handles uncaught RuntimeException instances and returns a structured 500 Internal Server Error response.
+     *
+     * The response body is a LinkedHashMap with insertion order:
+     * timestamp (LocalDateTime.now()), status (500), error ("Internal Server Error"),
+     * message ("An unexpected error occurred"), and path (derived from the provided WebRequest).
+     * The original exception message is not exposed to clients.
+     *
+     * @param ex the RuntimeException that was thrown
+     * @param request the current web request; used to populate the response "path" field
+     * @return a ResponseEntity containing the response body and HttpStatus.INTERNAL_SERVER_ERROR
+     */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Object> handleRuntimeException(
             RuntimeException ex, WebRequest request) {

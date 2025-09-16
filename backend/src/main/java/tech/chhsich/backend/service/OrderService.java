@@ -22,6 +22,11 @@ public class OrderService {
     private final UserService userService;
     private final MenuMapper menuMapper;
 
+    /**
+     * Constructs an OrderService with the required persistence mappers and user service.
+     *
+     * These dependencies are used to create and manage orders, order entries, and to validate users.
+     */
     public OrderService(OrderInfoMapper orderInfoMapper, OrderEntryMapper orderEntryMapper,
                        UserService userService, MenuMapper menuMapper) {
         this.orderInfoMapper = orderInfoMapper;
@@ -30,6 +35,21 @@ public class OrderService {
         this.menuMapper = menuMapper;
     }
 
+    /**
+     * Creates a new order for the given user by validating the user, validating and pricing each requested menu item,
+     * persisting the order and its entries, and updating menu sales.
+     *
+     * <p>The method generates a new order ID, sets create time and initial status (0 = pending), calculates the total
+     * price from each item's hot price and quantity, inserts the order and its OrderEntry records, and increments the
+     * corresponding Menu.sales for each ordered item.</p>
+     *
+     * @param username the username of the purchaser
+     * @param items a list of OrderItemRequest describing menu IDs and quantities to include in the order
+     * @param address delivery address for the order
+     * @param phone contact phone number for the order
+     * @return the persisted OrderInfo containing the generated orderId, totalPrice, and other persisted fields
+     * @throws RuntimeException if the user does not exist or if any referenced menu item is missing or marked off-shelf
+     */
     @Transactional
     public OrderInfo createOrder(String username, List<OrderItemRequest> items, String address, String phone) {
         // 检查用户是否存在
@@ -83,18 +103,46 @@ public class OrderService {
         return order;
     }
 
+    /**
+     * Retrieves all orders belonging to the specified user.
+     *
+     * @param username the username whose orders should be returned
+     * @return a list of OrderInfo objects for the user; an empty list if the user has no orders
+     */
     public List<OrderInfo> getUserOrders(String username) {
         return orderInfoMapper.findByUsername(username);
     }
 
+    /**
+     * Retrieves an order by its order identifier.
+     *
+     * @param orderid the order identifier (e.g., produced by {@code generateOrderId})
+     * @return the matching OrderInfo, or {@code null} if no order with the given id exists
+     */
     public OrderInfo getOrderById(String orderid) {
         return orderInfoMapper.findByOrderid(orderid);
     }
 
+    /**
+     * Retrieves all order line items for the specified order.
+     *
+     * @param orderid the order identifier (e.g. the value produced by {@code generateOrderId})
+     * @return a list of {@code OrderEntry} records belonging to the order; may be empty if the order has no items
+     */
     public List<OrderEntry> getOrderItems(String orderid) {
         return orderEntryMapper.findByOrderid(orderid);
     }
 
+    /**
+     * Attempts to cancel a pending order identified by the given order ID.
+     *
+     * If the order exists and its status is 0 (pending), this method sets the status
+     * to 2 (canceled), persists the change, and returns true. If the order does not
+     * exist or is not pending, no change is made and the method returns false.
+     *
+     * @param orderid the order identifier
+     * @return true if the order was found and successfully cancelled; false otherwise
+     */
     @Transactional
     public boolean cancelOrder(String orderid) {
         OrderInfo order = orderInfoMapper.findByOrderid(orderid);
@@ -106,6 +154,15 @@ public class OrderService {
         return false;
     }
 
+    /**
+     * Update the status of an existing order.
+     *
+     * If an order with the given `orderid` exists, sets its status to `status` and persists the change.
+     *
+     * @param orderid the unique identifier of the order to update
+     * @param status  the new status code to set on the order
+     * @return true if the order was found and updated; false if no such order exists
+     */
     @Transactional
     public boolean updateOrderStatus(String orderid, Integer status) {
         OrderInfo order = orderInfoMapper.findByOrderid(orderid);
@@ -117,6 +174,14 @@ public class OrderService {
         return false;
     }
 
+    /**
+     * Generates a new order identifier.
+     *
+     * The identifier is "ORD" followed by the first 12 hexadecimal characters of a UUID
+     * (dashes removed) in uppercase, e.g. "ORD3F1A2B4C5D6E".
+     *
+     * @return a newly generated order ID string
+     */
     private String generateOrderId() {
         return "ORD" + UUID.randomUUID().toString().replace("-", "").substring(0, 12).toUpperCase();
     }
@@ -129,11 +194,32 @@ public class OrderService {
         @Min(value = 1, message = "数量必须大于0")
         private Integer quantity;
 
-        // Getters and Setters
+        /**
+ * Returns the menu (product) identifier for this order item.
+ *
+ * @return the menuId
+ */
         public Long getMenuId() { return menuId; }
-        public void setMenuId(Long menuId) { this.menuId = menuId; }
+        /**
+ * Set the menu item identifier for this OrderItemRequest.
+ *
+ * @param menuId the menu item's database ID; must not be null
+ */
+public void setMenuId(Long menuId) { this.menuId = menuId; }
 
-        public Integer getQuantity() { return quantity; }
-        public void setQuantity(Integer quantity) { this.quantity = quantity; }
+        /**
+ * Returns the ordered quantity for this item.
+ *
+ * @return the number of units requested (minimum 1)
+ */
+public Integer getQuantity() { return quantity; }
+        /**
+ * Sets the quantity for this order item.
+ *
+ * The value must be non-null and at least 1 (enforced by the {@code @NotNull} and {@code @Min(1)} constraints on the field).
+ *
+ * @param quantity the quantity of the menu item
+ */
+public void setQuantity(Integer quantity) { this.quantity = quantity; }
     }
 }
