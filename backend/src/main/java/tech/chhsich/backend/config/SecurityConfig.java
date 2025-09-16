@@ -11,11 +11,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -26,7 +21,7 @@ public class SecurityConfig {
      *
      * Configures CSRF protection using a cookie-backed repository with the request attribute name "_csrf" and
      * excludes CSRF checks for public endpoints such as user registration/login, menu/categories, and API docs.
-     * Enables CORS using the configured CorsConfigurationSource, enforces stateless (JWT) session management,
+     * Disables Spring Security's CORS configuration to rely on WebConfig's global CORS settings, enforces stateless (JWT) session management,
      * and defines route-based authorization:
      * - Public: Swagger/API docs, /api/user/register, /api/user/login, /api/menu/**, /api/categories/**
      * - Authenticated: /api/orders/** and all other unspecified routes
@@ -52,8 +47,8 @@ public class SecurityConfig {
                         .ignoringRequestMatchers("/api/menu/**", "/api/categories/**")
                         .ignoringRequestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**")
                 )
-                // 配置CORS
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                // 配置CORS - 使用WebConfig中的全局CORS配置
+                .cors(cors -> cors.disable())
                 // 设置无状态会话管理（JWT认证）
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
@@ -89,28 +84,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * Creates a CorsConfigurationSource that allows cross-origin requests for the application.
-     *
-     * <p>The returned source registers a CORS configuration for all paths ("/**") with:
-     * allowed origin patterns set to "*", allowed methods GET/POST/PUT/DELETE/OPTIONS,
-     * all headers allowed, and credentials supported.</p>
-     *
-     * @return a CorsConfigurationSource configured for the application's CORS policy
-     */
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-
+  
     /**
      * Provides a BCrypt-based PasswordEncoder for hashing and verifying user passwords.
      *
