@@ -2,8 +2,7 @@
 package tech.chhsich.backend.service;
 
 import tech.chhsich.backend.entity.Administrator;
-import tech.chhsich.backend.mapper.AdministratorMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import tech.chhsich.backend.mapper.AdminMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -11,20 +10,22 @@ import java.time.LocalDateTime;
 @Service
 public class UserService {
 
-    @Autowired
-    private AdministratorMapper administratorMapper;
+    private final AdminMapper adminMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserService(AdminMapper adminMapper, PasswordEncoder passwordEncoder) {
+        this.adminMapper = adminMapper;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public Administrator registerUser(Administrator user) {
-        if (administratorMapper.existsByUsername(user.getUsername())) {
+        if (adminMapper.existsByUsername(user.getUsername())) {
             throw new RuntimeException("用户名已存在");
         }
-        if (administratorMapper.existsByEmail(user.getEmail())) {
+        if (adminMapper.existsByEmail(user.getEmail())) {
             throw new RuntimeException("邮箱已存在");
         }
-        if (administratorMapper.existsByPhone(user.getPhone())) {
+        if (adminMapper.existsByPhone(user.getPhone())) {
             throw new RuntimeException("手机号已存在");
         }
 
@@ -34,12 +35,12 @@ public class UserService {
 
         user.setRole(0);
         user.setCreateTime(LocalDateTime.now());
-        administratorMapper.insert(user);
+        adminMapper.insert(user);
         return user;
     }
 
     public Administrator login(String username, String password) {
-        Administrator user = administratorMapper.findByUsername(username);
+        Administrator user = adminMapper.findByUsername(username);
         if (user != null && passwordEncoder.matches(password, user.getPassword())) {
             return user;
         }
@@ -47,6 +48,6 @@ public class UserService {
     }
 
     public Administrator getUserByUsername(String username) {
-        return administratorMapper.findByUsername(username);
+        return adminMapper.findByUsername(username);
     }
 }

@@ -2,7 +2,6 @@ package tech.chhsich.backend.controller;
 
 import tech.chhsich.backend.entity.Ltype;
 import tech.chhsich.backend.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -17,8 +16,11 @@ import java.util.List;
 @Tag(name = "分类管理", description = "菜品分类查询接口")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @Operation(summary = "获取所有分类", description = "获取所有可用的菜品分类")
     @GetMapping

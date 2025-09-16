@@ -6,7 +6,6 @@ import tech.chhsich.backend.entity.OrderEntry;
 import tech.chhsich.backend.mapper.MenuMapper;
 import tech.chhsich.backend.mapper.OrderInfoMapper;
 import tech.chhsich.backend.mapper.OrderEntryMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
@@ -16,20 +15,18 @@ import java.util.UUID;
 @Service
 public class OrderService {
 
-    @Autowired
-    private OrderInfoMapper orderInfoMapper;
+    private final OrderInfoMapper orderInfoMapper;
+    private final OrderEntryMapper orderEntryMapper;
+    private final UserService userService;
+    private final MenuMapper menuMapper;
 
-    @Autowired
-    private OrderEntryMapper orderEntryMapper;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private MenuMapper menuMapper;
-
-    @Autowired
-    private CategoryService categoryService;
+    public OrderService(OrderInfoMapper orderInfoMapper, OrderEntryMapper orderEntryMapper,
+                       UserService userService, MenuMapper menuMapper) {
+        this.orderInfoMapper = orderInfoMapper;
+        this.orderEntryMapper = orderEntryMapper;
+        this.userService = userService;
+        this.menuMapper = menuMapper;
+    }
 
     @Transactional
     public OrderInfo createOrder(String username, List<OrderItemRequest> items, String address, String phone) {
@@ -39,7 +36,7 @@ public class OrderService {
         }
 
         OrderInfo order = new OrderInfo();
-        order.setOrderid(generateOrderId());
+        order.setOrderId(generateOrderId());
         order.setUsername(username);
         order.setAddress(address);
         order.setPhone(phone);
@@ -55,7 +52,7 @@ public class OrderService {
                 throw new RuntimeException("商品不存在或已下架: " + item.getMenuId());
             }
 
-            totalPrice += menu.getPrice2() * item.getQuantity();
+            totalPrice += menu.getHotPrice() * item.getQuantity();
         }
 
         order.setTotalPrice(totalPrice);
@@ -70,14 +67,14 @@ public class OrderService {
             OrderEntry entry = new OrderEntry();
             entry.setProductId(menu.getId());
             entry.setProductName(menu.getName());
-            entry.setPrice(menu.getPrice2()); // 使用热销价
+            entry.setPrice(menu.getHotPrice()); // 使用热销价
             entry.setProductNum(item.getQuantity());
-            entry.setOrderId(order.getOrderid());
+            entry.setOrderId(order.getOrderId());
 
             orderEntryMapper.insert(entry);
 
             // 更新销量
-            menu.setXiaoliang((menu.getXiaoliang() != null ? menu.getXiaoliang() : 0) + item.getQuantity());
+            menu.setSales((menu.getSales() != null ? menu.getSales() : 0) + item.getQuantity());
             menuMapper.updateById(menu);
         }
 

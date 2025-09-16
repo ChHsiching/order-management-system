@@ -2,7 +2,6 @@ package tech.chhsich.backend.service;
 
 import tech.chhsich.backend.entity.Menu;
 import tech.chhsich.backend.mapper.MenuMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -10,11 +9,13 @@ import java.util.List;
 public class MenuService {
     // 定义状态常量
     private static final Integer PRODUCT_STATUS_ACTIVE = 0;
-    private static final Integer PRODUCT_STATUS_DELETED = 1;
     private static final Integer PRODUCT_STATUS_RECOMMENDED = 1;
 
-    @Autowired
-    private MenuMapper menuMapper; // 只保留MyBatis的mapper依赖
+    private final MenuMapper menuMapper; // 只保留MyBatis的mapper依赖
+
+    public MenuService(MenuMapper menuMapper) {
+        this.menuMapper = menuMapper;
+    }
 
     public List<Menu> getMenusByCategory(Long categoryId) {
         return menuMapper.findByCategoryIdAndProductLock(categoryId, PRODUCT_STATUS_ACTIVE);

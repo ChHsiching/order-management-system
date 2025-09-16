@@ -2,7 +2,6 @@ package tech.chhsich.backend.controller;
 
 import tech.chhsich.backend.entity.Administrator;
 import tech.chhsich.backend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,8 +18,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "用户管理", description = "用户注册、登录和信息查询接口")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @Operation(summary = "用户注册", description = "注册新用户")
     @ApiResponse(responseCode = "200", description = "注册成功")

@@ -3,7 +3,6 @@ package tech.chhsich.backend.controller;
 import lombok.Data;
 import tech.chhsich.backend.entity.OrderInfo;
 import tech.chhsich.backend.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,8 +21,11 @@ import java.util.List;
 @Tag(name = "订单管理", description = "订单创建、查询和管理接口")
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     // 创建订单请求DTO
     @Data
