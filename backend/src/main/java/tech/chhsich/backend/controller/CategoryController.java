@@ -18,10 +18,20 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    /**
+     * Creates a CategoryController wired with the required CategoryService.
+     */
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
+    /**
+     * Retrieve all available dish categories.
+     *
+     * Returns an HTTP 200 response containing a list of Ltype objects representing all categories.
+     *
+     * @return ResponseEntity<List<Ltype>> with the list of categories (HTTP 200)
+     */
     @Operation(summary = "获取所有分类", description = "获取所有可用的菜品分类")
     @GetMapping
     public ResponseEntity<List<Ltype>> getAllCategories() {
@@ -29,6 +39,12 @@ public class CategoryController {
         return ResponseEntity.ok(categories);
     }
 
+    /**
+     * Retrieve a category by its ID.
+     *
+     * @param id the category's identifier
+     * @return a ResponseEntity containing the found Ltype with HTTP 200, or an empty response with HTTP 404 if not found
+     */
     @Operation(summary = "根据ID获取分类", description = "根据分类ID获取详细信息")
     @ApiResponse(responseCode = "200", description = "获取成功")
     @ApiResponse(responseCode = "404", description = "分类不存在")
@@ -43,6 +59,15 @@ public class CategoryController {
         }
     }
 
+    /**
+     * Retrieves a category by its name.
+     *
+     * Looks up a category with the given name and returns it with HTTP 200 if found;
+     * returns HTTP 404 if no matching category exists.
+     *
+     * @param catename the category name to look up
+     * @return ResponseEntity containing the found category (200) or an empty body with 404 if not found
+     */
     @Operation(summary = "根据名称获取分类", description = "根据分类名称获取详细信息")
     @ApiResponse(responseCode = "200", description = "获取成功")
     @ApiResponse(responseCode = "404", description = "分类不存在")

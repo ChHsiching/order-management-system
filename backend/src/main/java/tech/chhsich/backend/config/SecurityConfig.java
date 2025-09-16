@@ -21,6 +21,21 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    /**
+     * Builds and returns the application's SecurityFilterChain.
+     *
+     * Configures CSRF protection using a cookie-backed repository with the request attribute name "_csrf" and
+     * excludes CSRF checks for public endpoints such as user registration/login, menu/categories, and API docs.
+     * Enables CORS using the configured CorsConfigurationSource, enforces stateless (JWT) session management,
+     * and defines route-based authorization:
+     * - Public: Swagger/API docs, /api/user/register, /api/user/login, /api/menu/**, /api/categories/**
+     * - Authenticated: /api/orders/** and all other unspecified routes
+     * - Admin-only: /api/admin/**
+     * Disables form login and HTTP Basic authentication, and applies security headers (XSS block, CSP "default-src 'self'", same-origin frame options).
+     *
+     * @return the configured SecurityFilterChain
+     * @throws Exception if configuring the HttpSecurity object fails
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // 创建CSRF token处理器
@@ -74,6 +89,15 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Creates a CorsConfigurationSource that allows cross-origin requests for the application.
+     *
+     * <p>The returned source registers a CORS configuration for all paths ("/**") with:
+     * allowed origin patterns set to "*", allowed methods GET/POST/PUT/DELETE/OPTIONS,
+     * all headers allowed, and credentials supported.</p>
+     *
+     * @return a CorsConfigurationSource configured for the application's CORS policy
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -87,6 +111,11 @@ public class SecurityConfig {
         return source;
     }
 
+    /**
+     * Provides a BCrypt-based PasswordEncoder for hashing and verifying user passwords.
+     *
+     * @return a PasswordEncoder implementation using BCrypt
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

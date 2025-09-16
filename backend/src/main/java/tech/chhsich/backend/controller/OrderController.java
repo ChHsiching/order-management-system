@@ -23,6 +23,11 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    /**
+     * Create a new OrderController wired with an OrderService.
+     *
+     * The provided OrderService is used to perform order-related operations delegated by this controller.
+     */
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
@@ -45,6 +50,14 @@ public class OrderController {
         private String phone;
     }
 
+    /**
+     * Create a new order from the provided request payload.
+     *
+     * The request is validated with Jakarta Bean Validation annotations on the DTO.
+     *
+     * @param request the order creation payload (username, items, address, phone)
+     * @return 200 OK with the created OrderInfo on success; 400 Bad Request with an error message on failure
+     */
     @Operation(summary = "创建订单", description = "创建新的订单")
     @ApiResponse(responseCode = "200", description = "订单创建成功")
     @ApiResponse(responseCode = "400", description = "订单创建失败")
@@ -63,6 +76,14 @@ public class OrderController {
         }
     }
 
+    /**
+     * Retrieve all orders for a given user.
+     *
+     * Returns the list of OrderInfo for the specified username.
+     *
+     * @param username the username whose orders are requested
+     * @return a ResponseEntity containing a list of OrderInfo (HTTP 200)
+     */
     @Operation(summary = "获取用户订单", description = "根据用户名获取所有订单")
     @GetMapping("/user/{username}")
     public ResponseEntity<List<OrderInfo>> getUserOrders(
@@ -71,6 +92,14 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
+    /**
+     * Retrieve order details by order ID.
+     *
+     * Returns the order when found (HTTP 200) or a 404 response when no order exists with the given ID.
+     *
+     * @param orderId the ID of the order to retrieve
+     * @return a ResponseEntity containing the OrderInfo (200) or a 404 Not Found response if not present
+     */
     @Operation(summary = "获取订单详情", description = "根据订单ID获取订单详细信息")
     @ApiResponse(responseCode = "200", description = "获取成功")
     @ApiResponse(responseCode = "404", description = "订单不存在")
@@ -85,6 +114,15 @@ public class OrderController {
         }
     }
 
+    /**
+     * Retrieve all items for a given order.
+     *
+     * Returns HTTP 200 with the order's items on success, or HTTP 400 with the exception message
+     * if retrieval fails.
+     *
+     * @param orderId the ID of the order whose items should be fetched
+     * @return ResponseEntity containing the list of order items on success or an error message on failure
+     */
     @Operation(summary = "获取订单项", description = "根据订单ID获取所有订单项")
     @ApiResponse(responseCode = "200", description = "获取成功")
     @ApiResponse(responseCode = "400", description = "获取失败")
