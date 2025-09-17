@@ -1,47 +1,23 @@
 Web Order Management System Test Framework Log
-测试开始时间: 2025-09-17 12:36:04
-[0;32m[SUCCESS][0m 2025-09-17 12:36:04 - 测试框架初始化完成
-[0;34m[INFO][0m 2025-09-17 12:36:04 - 准备测试环境...
-[0;32m[SUCCESS][0m 2025-09-17 12:36:04 - 测试环境准备完成
-[0;34m[INFO][0m 2025-09-17 12:36:04 - 开始测试: 数据库测试
+测试开始时间: 2025-09-17 12:47:50
+[0;32m[SUCCESS][0m 2025-09-17 12:47:50 - 测试框架初始化完成
+[0;34m[INFO][0m 2025-09-17 12:47:50 - 准备测试环境...
+[0;32m[SUCCESS][0m 2025-09-17 12:47:50 - 测试环境准备完成
+[0;34m[INFO][0m 2025-09-17 12:47:50 - 开始测试: API测试
 ======================================
-[0;34m[INFO][0m 2025-09-17 12:36:04 - 运行数据库测试: db_integrity_test.sh
-[0;34m[INFO][0m 2025-09-17 12:36:04 - 开始测试: 数据库完整性测试
+[0;34m[INFO][0m 2025-09-17 12:47:50 - 运行API测试: basic_api_test.sh
+[0;34m[INFO][0m 2025-09-17 12:47:50 - 开始测试: 基础API测试
 ======================================
-[0;34m[INFO][0m 2025-09-17 12:36:04 - 准备测试环境...
-[0;32m[SUCCESS][0m 2025-09-17 12:36:04 - 测试环境准备完成
-[0;34m[INFO][0m 2025-09-17 12:36:04 - 测试用户创建的数据库影响...
-[0;31m[ERROR][0m 2025-09-17 12:36:04 - 用户创建API调用失败，状态码: 400
-[0;34m[INFO][0m 2025-09-17 12:36:04 - 测试订单创建的数据库影响...
-[0;31m[ERROR][0m 2025-09-17 12:36:04 - 订单创建API调用失败，状态码: 403
-[0;34m[INFO][0m 2025-09-17 12:36:04 - 测试外键约束...
-[0;32m[SUCCESS][0m 2025-09-17 12:36:04 - 订单项表外键约束正常，无孤立订单项
-[0;32m[SUCCESS][0m 2025-09-17 12:36:05 - 菜单表外键约束正常，无无效分类引用
-[0;32m[SUCCESS][0m 2025-09-17 12:36:05 - 订单表外键约束正常，无孤立订单
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 测试数据一致性...
-[0;32m[SUCCESS][0m 2025-09-17 12:36:05 - 订单总价计算一致
-[0;32m[SUCCESS][0m 2025-09-17 12:36:05 - 菜品销量统计一致
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 测试事务完整性...
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 验证事务前后数据一致性...
-[0;32m[SUCCESS][0m 2025-09-17 12:36:05 - 事务完整性验证通过
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 测试数据库性能...
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 数据库查询平均响应时间: 7ms
-[0;32m[SUCCESS][0m 2025-09-17 12:36:05 - 数据库性能测试通过，平均响应时间 7ms < 100ms
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 测试数据清理功能...
-[0;31m[ERROR][0m 2025-09-17 12:36:05 - 测试数据创建失败
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 清理测试环境...
-[0;32m[SUCCESS][0m 2025-09-17 12:36:05 - 测试环境清理完成
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 结束测试: 数据库完整性测试 (耗时: 1s)
-======================================
-[1;33m[WARN][0m 2025-09-17 12:36:05 - 数据库测试文件不存在: /home/chhsich/Git/Mine/order-management-system/test-framework/scripts/core/../database/data_validation_test.sh
-[1;33m[WARN][0m 2025-09-17 12:36:05 - 数据库测试文件不存在: /home/chhsich/Git/Mine/order-management-system/test-framework/scripts/core/../database/performance_test.sh
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 结束测试: 数据库测试 (耗时: 1s)
-======================================
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 清理测试环境...
-[0;32m[SUCCESS][0m 2025-09-17 12:36:05 - 测试环境清理完成
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 生成测试报告: reports/test_report_20250917_123605.md
-[0;32m[SUCCESS][0m 2025-09-17 12:36:05 - 测试报告生成完成: reports/test_report_20250917_123605.md
-[0;34m[INFO][0m 2025-09-17 12:36:05 - 测试报告已生成: [0;34m[INFO][0m 2025-09-17 12:36:05 - 生成测试报告: reports/test_report_20250917_123605.md
-[0;32m[SUCCESS][0m 2025-09-17 12:36:05 - 测试报告生成完成: reports/test_report_20250917_123605.md
-reports/test_report_20250917_123605.md
-[0;32m[SUCCESS][0m 2025-09-17 12:36:05 - 测试完成，所有测试通过
+[0;34m[INFO][0m 2025-09-17 12:47:50 - 准备测试环境...
+[0;32m[SUCCESS][0m 2025-09-17 12:47:50 - 测试环境准备完成
+[0;34m[INFO][0m 2025-09-17 12:47:50 - 执行用户相关API测试...
+[0;34m[INFO][0m 2025-09-17 12:47:50 - 执行API测试: 用户注册
+[0;31m[ERROR][0m 2025-09-17 12:47:50 - API测试失败: 用户注册 (期望: 201, 实际: 400)
+[0;31m[ERROR][0m 2025-09-17 12:47:50 - 响应内容: 
+### Error updating database.  Cause: java.sql.SQLException: Field 'phone' doesn't have a default value
+### The error may exist in tech/chhsich/backend/mapper/AdminMapper.java (best guess)
+### The error may involve tech.chhsich.backend.mapper.AdminMapper.insert-Inline
+### The error occurred while setting parameters
+### SQL: INSERT INTO administrators  ( username, createtime, email, password,   role )  VALUES (  ?, ?, ?, ?,   ?  )
+### Cause: java.sql.SQLException: Field 'phone' doesn't have a default value
+; Field 'phone' doesn't have a default value
