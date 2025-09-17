@@ -1,0 +1,670 @@
+# Web订餐管理系统 API端点配置
+
+# API端点定义
+endpoints:
+  # 用户管理API
+  user:
+    register:
+      path: "/api/user/register"
+      method: "POST"
+      description: "用户注册"
+      auth: "none"
+      parameters:
+        username:
+          type: "string"
+          required: true
+          description: "用户名"
+        password:
+          type: "string"
+          required: true
+          description: "密码"
+        email:
+          type: "string"
+          required: true
+          description: "邮箱"
+        phone:
+          type: "string"
+          required: false
+          description: "手机号"
+      expected_status: 201
+
+    login:
+      path: "/api/user/login"
+      method: "POST"
+      description: "用户登录"
+      auth: "none"
+      parameters:
+        username:
+          type: "string"
+          required: true
+          description: "用户名"
+        password:
+          type: "string"
+          required: true
+          description: "密码"
+      expected_status: 200
+
+    me:
+      path: "/api/user/me"
+      method: "GET"
+      description: "获取当前用户信息"
+      auth: "user"
+      expected_status: 200
+
+    update:
+      path: "/api/user/update"
+      method: "PUT"
+      description: "更新用户信息"
+      auth: "user"
+      parameters:
+        email:
+          type: "string"
+          required: false
+          description: "邮箱"
+        phone:
+          type: "string"
+          required: false
+          description: "手机号"
+      expected_status: 200
+
+    change_password:
+      path: "/api/user/password"
+      method: "PUT"
+      description: "修改密码"
+      auth: "user"
+      parameters:
+        old_password:
+          type: "string"
+          required: true
+          description: "原密码"
+        new_password:
+          type: "string"
+          required: true
+          description: "新密码"
+      expected_status: 200
+
+  # 菜单管理API
+  menu:
+    categories:
+      path: "/api/categories"
+      method: "GET"
+      description: "获取分类列表"
+      auth: "none"
+      expected_status: 200
+
+    category_detail:
+      path: "/api/categories/{id}"
+      method: "GET"
+      description: "获取分类详情"
+      auth: "none"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "分类ID"
+      expected_status: 200
+
+    list:
+      path: "/api/menu/list"
+      method: "GET"
+      description: "获取菜品列表"
+      auth: "none"
+      parameters:
+        category_id:
+          type: "integer"
+          required: false
+          description: "分类ID"
+        page:
+          type: "integer"
+          required: false
+          description: "页码"
+        size:
+          type: "integer"
+          required: false
+          description: "每页数量"
+      expected_status: 200
+
+    detail:
+      path: "/api/menu/{id}"
+      method: "GET"
+      description: "获取菜品详情"
+      auth: "none"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "菜品ID"
+      expected_status: 200
+
+    search:
+      path: "/api/menu/search"
+      method: "GET"
+      description: "搜索菜品"
+      auth: "none"
+      parameters:
+        keyword:
+          type: "string"
+          required: true
+          description: "搜索关键词"
+        category_id:
+          type: "integer"
+          required: false
+          description: "分类ID"
+      expected_status: 200
+
+    recommend:
+      path: "/api/menu/recommend"
+      method: "GET"
+      description: "获取推荐菜品"
+      auth: "none"
+      parameters:
+        limit:
+          type: "integer"
+          required: false
+          description: "推荐数量"
+      expected_status: 200
+
+  # 订单管理API
+  order:
+    create:
+      path: "/api/order/create"
+      method: "POST"
+      description: "创建订单"
+      auth: "user"
+      parameters:
+        items:
+          type: "array"
+          required: true
+          description: "订单项列表"
+        total_price:
+          type: "number"
+          required: true
+          description: "总价"
+        address:
+          type: "string"
+          required: true
+          description: "配送地址"
+        phone:
+          type: "string"
+          required: true
+          description: "联系电话"
+      expected_status: 201
+
+    list:
+      path: "/api/order/list"
+      method: "GET"
+      description: "获取订单列表"
+      auth: "user"
+      parameters:
+        status:
+          type: "string"
+          required: false
+          description: "订单状态"
+        page:
+          type: "integer"
+          required: false
+          description: "页码"
+        size:
+          type: "integer"
+          required: false
+          description: "每页数量"
+      expected_status: 200
+
+    detail:
+      path: "/api/order/{id}"
+      method: "GET"
+      description: "获取订单详情"
+      auth: "user"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "订单ID"
+      expected_status: 200
+
+    update_status:
+      path: "/api/order/{id}/status"
+      method: "PUT"
+      description: "更新订单状态"
+      auth: "user"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "订单ID"
+        status:
+          type: "string"
+          required: true
+          description: "订单状态"
+      expected_status: 200
+
+    cancel:
+      path: "/api/order/{id}/cancel"
+      method: "PUT"
+      description: "取消订单"
+      auth: "user"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "订单ID"
+      expected_status: 200
+
+  # 购物车API
+  cart:
+    add:
+      path: "/api/cart/add"
+      method: "POST"
+      description: "添加到购物车"
+      auth: "user"
+      parameters:
+        menu_id:
+          type: "integer"
+          required: true
+          description: "菜品ID"
+        quantity:
+          type: "integer"
+          required: true
+          description: "数量"
+      expected_status: 200
+
+    list:
+      path: "/api/cart/list"
+      method: "GET"
+      description: "获取购物车"
+      auth: "user"
+      expected_status: 200
+
+    update:
+      path: "/api/cart/update"
+      method: "PUT"
+      description: "更新购物车"
+      auth: "user"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "购物车项ID"
+        quantity:
+          type: "integer"
+          required: true
+          description: "数量"
+      expected_status: 200
+
+    remove:
+      path: "/api/cart/{id}"
+      method: "DELETE"
+      description: "删除购物车项"
+      auth: "user"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "购物车项ID"
+      expected_status: 200
+
+    clear:
+      path: "/api/cart/clear"
+      method: "DELETE"
+      description: "清空购物车"
+      auth: "user"
+      expected_status: 200
+
+  # 管理员API
+  admin:
+    users:
+      path: "/api/admin/users"
+      method: "GET"
+      description: "获取用户列表"
+      auth: "admin"
+      parameters:
+        page:
+          type: "integer"
+          required: false
+          description: "页码"
+        size:
+          type: "integer"
+          required: false
+          description: "每页数量"
+        role:
+          type: "string"
+          required: false
+          description: "用户角色"
+      expected_status: 200
+
+    user_detail:
+      path: "/api/admin/users/{id}"
+      method: "GET"
+      description: "获取用户详情"
+      auth: "admin"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "用户ID"
+      expected_status: 200
+
+    user_update:
+      path: "/api/admin/users/{id}"
+      method: "PUT"
+      description: "更新用户信息"
+      auth: "admin"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "用户ID"
+        email:
+          type: "string"
+          required: false
+          description: "邮箱"
+        phone:
+          type: "string"
+          required: false
+          description: "手机号"
+        role:
+          type: "string"
+          required: false
+          description: "用户角色"
+      expected_status: 200
+
+    user_delete:
+      path: "/api/admin/users/{id}"
+      method: "DELETE"
+      description: "删除用户"
+      auth: "admin"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "用户ID"
+      expected_status: 200
+
+    categories_manage:
+      path: "/api/admin/categories"
+      method: "POST"
+      description: "创建分类"
+      auth: "admin"
+      parameters:
+        name:
+          type: "string"
+          required: true
+          description: "分类名称"
+        description:
+          type: "string"
+          required: false
+          description: "分类描述"
+        sort_order:
+          type: "integer"
+          required: false
+          description: "排序"
+      expected_status: 201
+
+    category_update:
+      path: "/api/admin/categories/{id}"
+      method: "PUT"
+      description: "更新分类"
+      auth: "admin"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "分类ID"
+        name:
+          type: "string"
+          required: false
+          description: "分类名称"
+        description:
+          type: "string"
+          required: false
+          description: "分类描述"
+        sort_order:
+          type: "integer"
+          required: false
+          description: "排序"
+      expected_status: 200
+
+    category_delete:
+      path: "/api/admin/categories/{id}"
+      method: "DELETE"
+      description: "删除分类"
+      auth: "admin"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "分类ID"
+      expected_status: 200
+
+    menu_manage:
+      path: "/api/admin/menu"
+      method: "POST"
+      description: "创建菜品"
+      auth: "admin"
+      parameters:
+        name:
+          type: "string"
+          required: true
+          description: "菜品名称"
+        price:
+          type: "number"
+          required: true
+          description: "价格"
+        hot_price:
+          type: "number"
+          required: false
+          description: "特价"
+        category_id:
+          type: "integer"
+          required: true
+          description: "分类ID"
+        description:
+          type: "string"
+          required: false
+          description: "菜品描述"
+        image_url:
+          type: "string"
+          required: false
+          description: "图片URL"
+        sort_order:
+          type: "integer"
+          required: false
+          description: "排序"
+      expected_status: 201
+
+    menu_update:
+      path: "/api/admin/menu/{id}"
+      method: "PUT"
+      description: "更新菜品"
+      auth: "admin"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "菜品ID"
+        name:
+          type: "string"
+          required: false
+          description: "菜品名称"
+        price:
+          type: "number"
+          required: false
+          description: "价格"
+        hot_price:
+          type: "number"
+          required: false
+          description: "特价"
+        category_id:
+          type: "integer"
+          required: false
+          description: "分类ID"
+        description:
+          type: "string"
+          required: false
+          description: "菜品描述"
+        image_url:
+          type: "string"
+          required: false
+          description: "图片URL"
+        sort_order:
+          type: "integer"
+          required: false
+          description: "排序"
+      expected_status: 200
+
+    menu_delete:
+      path: "/api/admin/menu/{id}"
+      method: "DELETE"
+      description: "删除菜品"
+      auth: "admin"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "菜品ID"
+      expected_status: 200
+
+    orders_manage:
+      path: "/api/admin/orders"
+      method: "GET"
+      description: "获取所有订单"
+      auth: "admin"
+      parameters:
+        status:
+          type: "string"
+          required: false
+          description: "订单状态"
+        user_name:
+          type: "string"
+          required: false
+          description: "用户名"
+        page:
+          type: "integer"
+          required: false
+          description: "页码"
+        size:
+          type: "integer"
+          required: false
+          description: "每页数量"
+      expected_status: 200
+
+    order_update:
+      path: "/api/admin/orders/{id}"
+      method: "PUT"
+      description: "更新订单"
+      auth: "admin"
+      parameters:
+        id:
+          type: "integer"
+          required: true
+          description: "订单ID"
+        status:
+          type: "string"
+          required: true
+          description: "订单状态"
+        admin_note:
+          type: "string"
+          required: false
+          description: "管理员备注"
+      expected_status: 200
+
+    stats:
+      path: "/api/admin/stats"
+      method: "GET"
+      description: "获取系统统计信息"
+      auth: "admin"
+      expected_status: 200
+
+# 权限矩阵
+permissions:
+  # 游客权限
+  guest:
+    allowed:
+      - "/api/categories"
+      - "/api/categories/*"
+      - "/api/menu/list"
+      - "/api/menu/*"
+      - "/api/menu/search"
+      - "/api/menu/recommend"
+    denied:
+      - "/api/user/*"
+      - "/api/order/*"
+      - "/api/cart/*"
+      - "/api/admin/*"
+
+  # 会员权限
+  member:
+    allowed:
+      - "/api/categories"
+      - "/api/categories/*"
+      - "/api/menu/list"
+      - "/api/menu/*"
+      - "/api/menu/search"
+      - "/api/menu/recommend"
+      - "/api/user/me"
+      - "/api/user/update"
+      - "/api/user/password"
+      - "/api/order/*"
+      - "/api/cart/*"
+    denied:
+      - "/api/user/register"
+      - "/api/user/login"
+      - "/api/admin/*"
+
+  # 管理员权限
+  admin:
+    allowed:
+      - "*"
+    denied: []
+
+# 测试数据模板
+test_data_templates:
+  user_registration:
+    username: "test_user_{timestamp}"
+    password: "Test123456"
+    email: "test_{timestamp}@example.com"
+    phone: "13800138000"
+
+  user_login:
+    username: "test_user_001"
+    password: "Test123456"
+
+  order_creation:
+    items:
+      - menu_id: 1
+        quantity: 1
+        price: 12.50
+    total_price: 12.50
+    address: "测试地址"
+    phone: "13800138001"
+
+  category_creation:
+    name: "测试分类_{timestamp}"
+    description: "这是一个测试分类"
+    sort_order: 1
+
+  menu_creation:
+    name: "测试菜品_{timestamp}"
+    price: 12.50
+    hot_price: 10.00
+    category_id: 1
+    description: "这是一个测试菜品"
+    image_url: "/images/test.jpg"
+    sort_order: 1
+
+# 错误码定义
+error_codes:
+  200: "成功"
+  201: "创建成功"
+  400: "请求参数错误"
+  401: "未授权"
+  403: "权限不足"
+  404: "资源不存在"
+  500: "服务器内部错误"
+
+# 响应时间阈值
+response_time_thresholds:
+  fast: 200      # 毫秒
+  normal: 1000   # 毫秒
+  slow: 3000     # 毫秒
+  critical: 5000 # 毫秒

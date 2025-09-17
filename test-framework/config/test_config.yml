@@ -1,0 +1,413 @@
+# Web订餐管理系统测试配置
+
+# 测试环境配置
+environment:
+  name: "test"
+  description: "自动化测试环境"
+  debug: true
+  log_level: "INFO"
+
+# 数据库配置
+database:
+  host: "localhost"
+  port: 3306
+  name: "web_order"
+  username: "root"
+  password: "123456"
+  charset: "utf8mb4"
+  connection_timeout: 30
+  max_connections: 20
+
+# API配置
+api:
+  base_url: "http://localhost:8080/WebOrderSystem"
+  timeout: 30
+  retry_count: 3
+  retry_delay: 1
+  verify_ssl: false
+
+# 测试用户配置
+test_users:
+  guest:
+    description: "未登录用户"
+    token: null
+
+  member:
+    username: "test_member"
+    password: "Member123456"
+    email: "member@test.com"
+    phone: "13800138001"
+    role: "member"
+    token: null
+
+  admin:
+    username: "test_admin"
+    password: "Admin123456"
+    email: "admin@test.com"
+    role: "admin"
+    token: null
+
+# 测试数据配置
+test_data:
+  # 用户测试数据
+  users:
+    - username: "test_user_001"
+      password: "Test123456"
+      email: "test001@example.com"
+      phone: "13800138001"
+      role: "member"
+
+    - username: "test_user_002"
+      password: "Test123456"
+      email: "test002@example.com"
+      phone: "13800138002"
+      role: "member"
+
+  # 菜单分类测试数据
+  categories:
+    - name: "测试分类001"
+      description: "这是一个测试分类"
+      sort_order: 1
+
+    - name: "测试分类002"
+      description: "这是另一个测试分类"
+      sort_order: 2
+
+  # 菜品测试数据
+  menu_items:
+    - name: "测试菜品001"
+      price: 12.50
+      hot_price: 10.00
+      category_id: 1
+      description: "这是一个测试菜品"
+      image_url: "/images/test001.jpg"
+      sort_order: 1
+
+    - name: "测试菜品002"
+      price: 25.00
+      hot_price: 20.00
+      category_id: 2
+      description: "这是另一个测试菜品"
+      image_url: "/images/test002.jpg"
+      sort_order: 2
+
+  # 订单测试数据
+  orders:
+    - user_name: "test_user_001"
+      items:
+        - menu_id: 1
+          quantity: 2
+          price: 12.50
+        - menu_id: 2
+          quantity: 1
+          price: 25.00
+      total_price: 50.00
+      address: "测试地址001"
+      phone: "13800138001"
+
+    - user_name: "test_user_002"
+      items:
+        - menu_id: 1
+          quantity: 1
+          price: 12.50
+      total_price: 12.50
+      address: "测试地址002"
+      phone: "13800138002"
+
+# 测试配置
+test_settings:
+  # 并发测试配置
+  concurrency:
+    enabled: false
+    max_workers: 5
+    request_rate: 10
+
+  # 性能测试配置
+  performance:
+    enabled: true
+    response_time_threshold: 1000  # 毫秒
+    max_response_time_threshold: 3000  # 毫秒
+    error_rate_threshold: 0.01  # 1%
+
+  # 数据清理配置
+  cleanup:
+    enabled: true
+    cleanup_after_test: true
+    preserve_test_data: false
+
+  # 重试配置
+  retry:
+    max_attempts: 3
+    delay_between_attempts: 1
+
+  # 超时配置
+  timeouts:
+    api_call: 30
+    database_operation: 10
+    test_execution: 300
+
+# 测试模块配置
+test_modules:
+  # API测试配置
+  api:
+    enabled: true
+    endpoints:
+      - name: "用户注册"
+        method: "POST"
+        path: "/api/user/register"
+        expected_status: 201
+
+      - name: "用户登录"
+        method: "POST"
+        path: "/api/user/login"
+        expected_status: 200
+
+      - name: "获取用户信息"
+        method: "GET"
+        path: "/api/user/me"
+        expected_status: 200
+
+      - name: "创建订单"
+        method: "POST"
+        path: "/api/order/create"
+        expected_status: 201
+
+      - name: "获取订单列表"
+        method: "GET"
+        path: "/api/order/list"
+        expected_status: 200
+
+      - name: "获取分类列表"
+        method: "GET"
+        path: "/api/categories"
+        expected_status: 200
+
+      - name: "获取菜品列表"
+        method: "GET"
+        path: "/api/menu/list"
+        expected_status: 200
+
+  # 权限测试配置
+  security:
+    enabled: true
+    permission_tests:
+      - role: "guest"
+        endpoints:
+          - path: "/api/categories"
+            method: "GET"
+            expected_status: 200
+          - path: "/api/user/me"
+            method: "GET"
+            expected_status: 401
+
+      - role: "member"
+        endpoints:
+          - path: "/api/user/me"
+            method: "GET"
+            expected_status: 200
+          - path: "/api/admin/users"
+            method: "GET"
+            expected_status: 403
+
+      - role: "admin"
+        endpoints:
+          - path: "/api/admin/users"
+            method: "GET"
+            expected_status: 200
+          - path: "/api/admin/categories"
+            method: "POST"
+            expected_status: 201
+
+  # 数据库测试配置
+  database:
+    enabled: true
+    integrity_tests:
+      - name: "用户表完整性"
+        table: "administrators"
+        checks:
+          - type: "count"
+            condition: "username LIKE 'test_%'"
+            expected: 0
+
+      - name: "订单表完整性"
+        table: "cg_info"
+        checks:
+          - type: "count"
+            condition: "user_name LIKE 'test_%'"
+            expected: 0
+
+      - name: "外键约束"
+        table: "the_order_entry"
+        checks:
+          - type: "foreign_key"
+            reference: "cg_info"
+            column: "order_id"
+
+  # 集成测试配置
+  integration:
+    enabled: true
+    business_flows:
+      - name: "用户注册流程"
+        steps:
+          - name: "用户注册"
+            api: "POST /api/user/register"
+            data: '{"username":"test_flow_user","password":"Test123456","email":"flow@test.com"}'
+            expected_status: 201
+
+          - name: "用户登录"
+            api: "POST /api/user/login"
+            data: '{"username":"test_flow_user","password":"Test123456"}'
+            expected_status: 200
+
+          - name: "获取用户信息"
+            api: "GET /api/user/me"
+            expected_status: 200
+
+      - name: "点餐下单流程"
+        steps:
+          - name: "浏览分类"
+            api: "GET /api/categories"
+            expected_status: 200
+
+          - name: "浏览菜品"
+            api: "GET /api/menu/list"
+            expected_status: 200
+
+          - name: "创建订单"
+            api: "POST /api/order/create"
+            data: '{"items":[{"menu_id":1,"quantity":1,"price":12.50}],"total_price":12.50,"address":"测试地址","phone":"13800138001"}'
+            expected_status: 201
+
+          - name: "查询订单"
+            api: "GET /api/order/list"
+            expected_status: 200
+
+# 日志配置
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/test_framework.log"
+  max_file_size: "10MB"
+  backup_count: 5
+
+  # 各模块日志级别
+  loggers:
+    api: "INFO"
+    security: "INFO"
+    database: "INFO"
+    integration: "INFO"
+    performance: "INFO"
+
+# 报告配置
+reporting:
+  enabled: true
+  formats:
+    - "markdown"
+    - "html"
+    - "json"
+
+  output_directory: "reports"
+
+  # 报告包含的内容
+  include:
+    - test_summary
+    - detailed_results
+    - performance_metrics
+    - security_analysis
+    - database_integrity
+    - business_flows
+    - recommendations
+
+  # 报告生成选项
+  options:
+    include_charts: true
+    include_trends: true
+    include_recommendations: true
+    include_error_details: true
+
+# 通知配置
+notifications:
+  enabled: true
+
+  # 邮件通知
+  email:
+    enabled: false
+    smtp_server: "smtp.example.com"
+    smtp_port: 587
+    username: "test@example.com"
+    password: "password"
+    from_address: "test@example.com"
+    to_addresses:
+      - "admin@example.com"
+      - "developer@example.com"
+
+  # 即时消息通知
+  instant_message:
+    enabled: false
+    webhook_url: "https://hooks.example.com/webhook"
+    message_format: "markdown"
+
+  # 通知触发条件
+  triggers:
+    on_test_start: false
+    on_test_complete: true
+    on_test_failure: true
+    on_critical_issue: true
+
+# 持续集成配置
+ci_cd:
+  # GitHub Actions配置
+  github_actions:
+    enabled: true
+    trigger_on:
+      - push_to_develop
+      - pull_request
+      - schedule
+
+    # 质量门禁
+    quality_gates:
+      min_pass_rate: 90
+      max_response_time: 1000
+      max_error_rate: 0.01
+      critical_issues_allowed: 0
+
+    # 分支策略
+    branch_strategy:
+      develop_branch: "develop"
+      main_branch: "main"
+      test_branch_prefix: "test/"
+
+  # 测试环境部署
+  deployment:
+    auto_start_services: true
+    health_check_timeout: 60
+    rollback_on_failure: true
+
+# 插件配置
+plugins:
+  # 性能监控插件
+  performance_monitor:
+    enabled: true
+    collect_metrics:
+      - response_time
+      - memory_usage
+      - cpu_usage
+      - database_connections
+
+  # 安全扫描插件
+  security_scanner:
+    enabled: true
+    scan_types:
+      - sql_injection
+      - xss
+      - csrf
+      - authentication_bypass
+
+  # 数据质量检查插件
+  data_quality:
+    enabled: true
+    checks:
+      - data_consistency
+      - referential_integrity
+      - constraint_validation
+      - data_anomalies
