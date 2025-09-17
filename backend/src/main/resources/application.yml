@@ -54,11 +54,7 @@ spring:
     default-property-inclusion: non_null  # 不序列化null值
 
   # 6. Spring Security配置（项目已包含Security依赖）
-  security:
-    user:
-      name: admin     # 默认用户名
-      password: admin # 默认密码
-      roles: ADMIN    # 默认角色
+  # Default profile: no hardcoded basic user
 
 # 7. MyBatis-Plus配置（适配文档表CRUD，替代JPA）
 mybatis-plus:
@@ -74,8 +70,7 @@ mybatis-plus:
       logic-not-delete-value: 0    # 逻辑未删除值
   configuration:
     map-underscore-to-camel-case: true  # 下划线转驼峰（如数据库imgpath→实体类imgPath）
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 打印SQL日志（调试表操作）
-    cache-enabled: true                 # 开启二级缓存
+    cache-enabled: false                # 默认关闭，按需在dev启用
     lazy-loading-enabled: true          # 开启延迟加载
     multiple-result-sets-enabled: true  # 开启多结果集
     use-column-label: true              # 使用列标签
@@ -152,6 +147,16 @@ spring:
     url: jdbc:mysql://localhost:3306/web_order?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&characterEncoding=utf8&useUnicode=true
     username: root
     password: 123456
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: ADMIN
+# 开发环境特定的MyBatis配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    cache-enabled: true
 logging:
   level:
     root: DEBUG
