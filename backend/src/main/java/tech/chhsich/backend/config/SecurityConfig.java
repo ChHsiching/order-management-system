@@ -1,12 +1,17 @@
 package tech.chhsich.backend.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
@@ -15,6 +20,12 @@ import org.springframework.security.web.header.writers.XXssProtectionHeaderWrite
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Value("${spring.security.user.name:admin}")
+    private String adminUsername;
+
+    @Value("${spring.security.user.password:admin}")
+    private String adminPassword;
 
     /**
      * Builds and returns the application's SecurityFilterChain.
@@ -42,9 +53,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(requestHandler)
-                        // 对公开API豁免CSRF验证
+                        // 对公开API和需要认证的API豁免CSRF验证（前后端分离架构）
                         .ignoringRequestMatchers("/api/user/register", "/api/user/login")
-                        .ignoringRequestMatchers("/api/menu/**", "/api/categories/**")
+                        .ignoringRequestMatchers("/api/menu/**", "/api/categories/**", "/api/cart/**", "/api/orders/**")
                         .ignoringRequestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**")
                 )
                 // 配置CORS - 使用WebConfig中的全局CORS配置
@@ -66,14 +77,14 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/register", "/api/user/login").permitAll()
                         .requestMatchers("/api/menu/**", "/api/categories/**").permitAll()
                         // 需要认证的接口
-                        .requestMatchers("/api/orders/**").authenticated()
+                        .requestMatchers("/api/orders/**", "/api/cart/**").authenticated()
                         // 管理员接口
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                // 禁用basic认证和form登录，使用JWT
+                // 启用basic认证用于测试
                 .formLogin(form -> form.disable())
-                .httpBasic(httpBasic -> httpBasic.disable())
+                .httpBasic(httpBasic -> {})
                 // 添加安全headers
                 .headers(headers -> headers
                         .xssProtection(xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
@@ -84,7 +95,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-  
     /**
      * Provides a BCrypt-based PasswordEncoder for hashing and verifying user passwords.
      *
@@ -93,5 +103,21 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * Provides an in-memory UserDetailsService with admin user from configuration.
+     *
+     * @return a UserDetailsService with configured admin user
+     */
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails adminUser = User.builder()
+                .username(adminUsername)
+                .password(passwordEncoder().encode(adminPassword))
+                .roles("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(adminUser);
     }
 }
