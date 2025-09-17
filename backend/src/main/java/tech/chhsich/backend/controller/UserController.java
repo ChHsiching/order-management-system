@@ -2,14 +2,19 @@ package tech.chhsich.backend.controller;
 
 import tech.chhsich.backend.entity.Administrator;
 import tech.chhsich.backend.service.UserService;
+import tech.chhsich.backend.dto.UserRegistrationRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Email;
 
 @RestController
 @RequestMapping("/api/user")
@@ -41,8 +46,16 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "注册成功")
     @ApiResponse(responseCode = "400", description = "注册失败，用户名/邮箱/手机号已存在")
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody Administrator user) {
+    public ResponseEntity<?> register(@Validated @RequestBody UserRegistrationRequest registrationRequest) {
         try {
+            // 转换DTO为实体类
+            Administrator user = new Administrator();
+            user.setUsername(registrationRequest.getUsername());
+            user.setPassword(registrationRequest.getPassword());
+            user.setEmail(registrationRequest.getEmail());
+            user.setPhone(registrationRequest.getPhone());
+            user.setQq(registrationRequest.getQq());
+
             Administrator newUser = userService.registerUser(user);
             return ResponseEntity.ok(newUser);
         } catch (RuntimeException e) {
