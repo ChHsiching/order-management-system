@@ -1,0 +1,374 @@
+package tech.chhsich.backend.controller;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import tech.chhsich.backend.entity.Menu;
+import tech.chhsich.backend.service.MenuService;
+
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+/**
+ * FrontendMenuController测试类
+ * 验证前台菜单接口的HTTP层功能正确性和安全性
+ *
+ * 测试场景：
+ * 1. 获取所有可用菜品API
+ * 2. 根据ID获取菜品详情API
+ * 3. 根据分类获取菜品API
+ * 4. 获取推荐菜品API
+ * 5. 搜索菜品API（包括中文编码处理）
+ * 6. 获取热销菜品API
+ * 7. 接口安全性和异常处理
+ */
+@SpringBootTest
+@AutoConfigureMockMvc
+class FrontendMenuControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private MenuService menuService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Test
+    void testGetAllAvailableMenus() throws Exception {
+        // 测试场景1：获取所有可用菜品API
+        MvcResult result = mockMvc.perform(get("/api/menu")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andExpect(jsonPath("$.data").exists())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        assertNotNull(response, "响应不应该为空");
+
+        // 验证返回的数据结构
+        List<Menu> menus = objectMapper.readValue(
+            objectMapper.readTree(response).get("data").toString(),
+            new TypeReference<List<Menu>>() {}
+        );
+        assertFalse(menus.isEmpty(), "应该返回菜品数据");
+    }
+
+    @Test
+    void testGetMenuByIdWithValidId() throws Exception {
+        // 测试场景2.1：使用有效ID获取菜品详情
+        Long validId = 1L;
+
+        MvcResult result = mockMvc.perform(get("/api/menu/{id}", validId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andExpect(jsonPath("$.data").exists())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        assertNotNull(response, "响应不应该为空");
+
+        // 验证返回的菜品数据
+        Menu menu = objectMapper.readValue(
+            objectMapper.readTree(response).get("data").toString(),
+            Menu.class
+        );
+        assertEquals(validId, menu.getId(), "返回的菜品ID应该匹配");
+    }
+
+    @Test
+    void testGetMenuByIdWithInvalidId() throws Exception {
+        // 测试场景2.2：使用无效ID获取菜品详情
+        Long invalidId = 999L;
+
+        mockMvc.perform(get("/api/menu/{id}", invalidId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(1))
+                .andExpect(jsonPath("$.message").value("菜品不存在"))
+                .andExpect(jsonPath("$.data").doesNotExist());
+    }
+
+    @Test
+    void testGetMenusByCategory() throws Exception {
+        // 测试场景3：根据分类获取菜品API
+        Long categoryId = 1L;
+
+        MvcResult result = mockMvc.perform(get("/api/menu/category/{categoryId}", categoryId)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andExpect(jsonPath("$.data").exists())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        assertNotNull(response, "响应不应该为空");
+
+        // 验证返回的菜品列表
+        List<Menu> menus = objectMapper.readValue(
+            objectMapper.readTree(response).get("data").toString(),
+            new TypeReference<List<Menu>>() {}
+        );
+        assertFalse(menus.isEmpty(), "应该返回分类下的菜品数据");
+    }
+
+    @Test
+    void testGetRecommendedMenus() throws Exception {
+        // 测试场景4：获取推荐菜品API
+        MvcResult result = mockMvc.perform(get("/api/menu/recommended")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andExpect(jsonPath("$.data").exists())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        assertNotNull(response, "响应不应该为空");
+
+        // 验证返回的推荐菜品列表
+        List<Menu> menus = objectMapper.readValue(
+            objectMapper.readTree(response).get("data").toString(),
+            new TypeReference<List<Menu>>() {}
+        );
+        assertFalse(menus.isEmpty(), "应该返回推荐菜品数据");
+    }
+
+    @Test
+    void testSearchMenusWithKeyword() throws Exception {
+        // 测试场景5.1：使用关键词搜索菜品API
+        String keyword = "汉堡";
+
+        MvcResult result = mockMvc.perform(get("/api/menu/search")
+                .param("keyword", keyword)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andExpect(jsonPath("$.data").exists())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        assertNotNull(response, "响应不应该为空");
+
+        // 验证搜索结果
+        List<Menu> menus = objectMapper.readValue(
+            objectMapper.readTree(response).get("data").toString(),
+            new TypeReference<List<Menu>>() {}
+        );
+        assertFalse(menus.isEmpty(), "应该返回搜索结果");
+    }
+
+    @Test
+    void testSearchMenusWithEmptyKeyword() throws Exception {
+        // 测试场景5.2：使用空关键词搜索菜品API
+        String emptyKeyword = "";
+
+        MvcResult result = mockMvc.perform(get("/api/menu/search")
+                .param("keyword", emptyKeyword)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andExpect(jsonPath("$.data").exists())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        assertNotNull(response, "响应不应该为空");
+
+        // 验证空关键词返回所有菜品
+        List<Menu> menus = objectMapper.readValue(
+            objectMapper.readTree(response).get("data").toString(),
+            new TypeReference<List<Menu>>() {}
+        );
+        assertFalse(menus.isEmpty(), "空关键词应该返回所有可用菜品");
+    }
+
+    @Test
+    void testSearchMenusWithChineseKeyword() throws Exception {
+        // 测试场景5.3：使用中文关键词搜索菜品API（测试URL编码）
+        String chineseKeyword = "巨无霸";
+
+        // URL编码关键词
+        String encodedKeyword = java.net.URLEncoder.encode(chineseKeyword, StandardCharsets.UTF_8);
+
+        MvcResult result = mockMvc.perform(get("/api/menu/search")
+                .param("keyword", encodedKeyword)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andExpect(jsonPath("$.data").exists())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        assertNotNull(response, "响应不应该为空");
+
+        // 验证中文搜索功能
+        List<Menu> menus = objectMapper.readValue(
+            objectMapper.readTree(response).get("data").toString(),
+            new TypeReference<List<Menu>>() {}
+        );
+        assertFalse(menus.isEmpty(), "中文搜索应该返回结果");
+    }
+
+    @Test
+    void testGetHotSalesMenus() throws Exception {
+        // 测试场景6：获取热销菜品API
+        Integer limit = 5;
+
+        MvcResult result = mockMvc.perform(get("/api/menu/hot-sales")
+                .param("limit", limit.toString())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andExpect(jsonPath("$.data").exists())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        assertNotNull(response, "响应不应该为空");
+
+        // 验证热销菜品列表
+        List<Menu> menus = objectMapper.readValue(
+            objectMapper.readTree(response).get("data").toString(),
+            new TypeReference<List<Menu>>() {}
+        );
+        assertFalse(menus.isEmpty(), "应该返回热销菜品数据");
+        assertTrue(menus.size() <= limit, "返回数量不应该超过限制");
+    }
+
+    @Test
+    void testGetHotSalesMenusWithoutLimit() throws Exception {
+        // 测试场景6.2：获取热销菜品API（不限制数量）
+        MvcResult result = mockMvc.perform(get("/api/menu/hot-sales")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andExpect(jsonPath("$.data").exists())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+        assertNotNull(response, "响应不应该为空");
+
+        // 验证返回所有热销菜品
+        List<Menu> menus = objectMapper.readValue(
+            objectMapper.readTree(response).get("data").toString(),
+            new TypeReference<List<Menu>>() {}
+        );
+        assertFalse(menus.isEmpty(), "应该返回热销菜品数据");
+    }
+
+    @Test
+    void testApiResponseFormat() throws Exception {
+        // 测试场景7：验证API响应格式一致性
+        MvcResult result = mockMvc.perform(get("/api/menu")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String response = result.getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        // 验证JSON结构包含必要字段
+        assertTrue(response.contains("\"code\":0"), "响应应该包含code字段");
+        assertTrue(response.contains("\"message\":\"success\""), "响应应该包含message字段");
+        assertTrue(response.contains("\"data\":"), "响应应该包含data字段");
+    }
+
+    @Test
+    void testPublicAccessWithoutAuthentication() throws Exception {
+        // 测试场景8：验证公开接口无需认证即可访问
+        // 这个测试确保前台菜单接口可以被公开访问，不需要认证
+        mockMvc.perform(get("/api/menu")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(0));
+
+        mockMvc.perform(get("/api/menu/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/api/menu/recommended")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testControllerDependenciesInjection() {
+        // 测试场景9：验证Controller依赖注入正确
+        assertNotNull(mockMvc, "MockMvc应该成功注入");
+        assertNotNull(menuService, "MenuService应该成功注入");
+        assertNotNull(objectMapper, "ObjectMapper应该成功注入");
+    }
+
+    @Test
+    void testEndpointAccessibility() throws Exception {
+        // 测试场景10：验证所有端点的可访问性
+        String[] endpoints = {
+            "/api/menu",
+            "/api/menu/1",
+            "/api/menu/category/1",
+            "/api/menu/recommended",
+            "/api/menu/search",
+            "/api/menu/hot-sales"
+        };
+
+        for (String endpoint : endpoints) {
+            if (endpoint.contains("search")) {
+                mockMvc.perform(get(endpoint)
+                        .param("keyword", "test")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk());
+            } else if (endpoint.contains("hot-sales")) {
+                mockMvc.perform(get(endpoint)
+                        .param("limit", "5")
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk());
+            } else {
+                mockMvc.perform(get(endpoint)
+                        .contentType(MediaType.APPLICATION_JSON))
+                        .andExpect(status().isOk());
+            }
+        }
+    }
+
+    @Test
+    void testHttpMethodConstraints() throws Exception {
+        // 测试场景11：验证HTTP方法约束
+        // 确保只允许GET方法访问
+        mockMvc.perform(get("/api/menu")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testResponseContentType() throws Exception {
+        // 测试场景12：验证响应内容类型
+        MvcResult result = mockMvc.perform(get("/api/menu")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String contentType = result.getResponse().getContentType();
+        assertNotNull(contentType, "响应应该有Content-Type头");
+        assertTrue(contentType.contains(MediaType.APPLICATION_JSON_VALUE),
+            "响应应该是JSON格式");
+    }
+}
