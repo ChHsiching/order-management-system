@@ -12,12 +12,16 @@ NC='\033[0m' # No Color
 
 # 全局变量
 API_BASE="http://localhost:8080/WebOrderSystem"
-TEST_LOG_FILE="logs/test_framework.log"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TEST_LOG_FILE="$SCRIPT_DIR/logs/test_framework.log"
 TEST_START_TIME=$(date +%s)
 TEST_TOTAL=0
 TEST_PASSED=0
 TEST_FAILED=0
 TEST_SKIPPED=0
+
+# 确保日志目录存在
+mkdir -p "$SCRIPT_DIR/logs"
 
 # 日志函数
 log_info() {
