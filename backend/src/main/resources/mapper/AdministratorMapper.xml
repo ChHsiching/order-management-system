@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tech.chhsich.backend.mapper.AdministratorMapper">
+
+    <select id="findByUsernameAndPassword" resultType="tech.chhsich.backend.entity.Administrator">
+        SELECT * FROM administrators WHERE username = #{username} AND password = #{password}
+    </select>
+
+    <select id="existsByUsername" resultType="boolean">
+        SELECT COUNT(*) FROM administrators WHERE username = #{username}
+    </select>
+
+    <select id="existsByEmail" resultType="boolean">
+        SELECT COUNT(*) FROM administrators WHERE email = #{email}
+    </select>
+
+    <select id="existsByPhone" resultType="boolean">
+        SELECT COUNT(*) FROM administrators WHERE phone = #{phone}
+    </select>
+
+</mapper>

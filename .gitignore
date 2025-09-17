@@ -1,3 +1,14 @@
 ### Claude ###
 .claude/
 Claude.md
+CLAUDE.md
+
+### VS Code ###
+.vscode/
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
