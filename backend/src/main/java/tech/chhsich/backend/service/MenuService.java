@@ -174,4 +174,44 @@ public class MenuService {
         }
         return true;
     }
+
+    /**
+     * 根据关键词搜索菜品
+     *
+     * 提供菜品名称搜索功能，支持模糊匹配。
+     * 基于项目设计文档第6.3.1节系统主页面实现，
+     * 为用户提供菜品搜索功能。
+     *
+     * @param keyword 搜索关键词
+     * @return 匹配的菜品列表
+     */
+    public List<Menu> searchMenus(String keyword) {
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("productlock", PRODUCT_STATUS_ACTIVE)
+                   .like("name", keyword)
+                   .orderByDesc("xiaoliang");
+        return menuMapper.selectList(queryWrapper);
+    }
+
+    /**
+     * 获取热销菜品列表
+     *
+     * 基于销量字段获取热销菜品，为用户提供热门推荐。
+     * 基于项目设计文档第5.4节菜单信息表设计中的xiaoliang字段。
+     *
+     * @param limit 返回数量限制，如果为null则返回所有热销菜品
+     * @return 按销量排序的菜品列表
+     */
+    public List<Menu> getHotSalesMenus(Integer limit) {
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("productlock", PRODUCT_STATUS_ACTIVE)
+                   .orderByDesc("xiaoliang");
+
+        // 处理limit参数，避免SQL语法错误
+        if (limit != null && limit > 0) {
+            queryWrapper.last("LIMIT " + limit);
+        }
+
+        return menuMapper.selectList(queryWrapper);
+    }
 }
