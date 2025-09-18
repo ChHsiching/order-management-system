@@ -16,12 +16,28 @@ public class ResponseMessage {
         return new ResponseMessage(0, "success", data);
     }
 
+    public static ResponseMessage success(String message, Object data) {
+        return new ResponseMessage(0, message, data);
+    }
+
     public static ResponseMessage success() {
         return new ResponseMessage(0, "success", null);
     }
 
+    public static ResponseMessage success(String message) {
+        return new ResponseMessage(0, message, null);
+    }
+
     public static ResponseMessage error(String message) {
         return new ResponseMessage(1, message, null);
+    }
+
+    public static ResponseMessage error(int code, String message) {
+        return new ResponseMessage(code, message, null);
+    }
+
+    public static ResponseMessage error(int code, String message, Object data) {
+        return new ResponseMessage(code, message, data);
     }
 
     // getter/setter 省略（或用 Lombok）
