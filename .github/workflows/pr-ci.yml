@@ -77,6 +77,16 @@ jobs:
             echo "No database initialization script found, skipping..."
           fi
 
+      - name: Create order history table
+        run: |
+          if [ -f docs/db/03_create_order_history_table.sql ]; then
+            echo "Creating order history table..."
+            mysql -h 127.0.0.1 -uroot -p123456 < docs/db/03_create_order_history_table.sql
+            echo "Order history table created successfully!"
+          else
+            echo "No order history table script found, skipping..."
+          fi
+
       - name: Insert test data
         run: |
           if [ -f docs/db/03_insert_test_data.sql ]; then
