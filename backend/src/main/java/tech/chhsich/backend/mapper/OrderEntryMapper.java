@@ -26,4 +26,14 @@ public interface OrderEntryMapper extends BaseMapper<OrderEntry> {
      */
     @Delete("DELETE FROM the_order_entry WHERE orderid = #{orderid}")
     void deleteByOrderid(String orderid);
+
+    /**
+     * 根据订单ID和菜品ID查找订单条目
+     *
+     * @param orderId 订单ID
+     * @param productId 菜品ID
+     * @return 匹配的订单条目，如果没有匹配则返回null
+     */
+    @Select("SELECT * FROM the_order_entry WHERE orderid = #{orderId} AND product_id = #{productId}")
+    OrderEntry findByOrderIdAndProductId(String orderId, Long productId);
 }
