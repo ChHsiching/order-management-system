@@ -1,6 +1,8 @@
 -- 创建订单历史记录表
 -- 用于记录订单状态变更的完整历史，确保可追溯性
 
+USE `web_order`;
+
 CREATE TABLE IF NOT EXISTS order_history (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     order_id VARCHAR(50) NOT NULL COMMENT '订单ID',
