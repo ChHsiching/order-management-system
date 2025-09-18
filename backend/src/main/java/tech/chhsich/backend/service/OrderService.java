@@ -3,9 +3,12 @@ package tech.chhsich.backend.service;
 import tech.chhsich.backend.entity.Menu;
 import tech.chhsich.backend.entity.OrderInfo;
 import tech.chhsich.backend.entity.OrderEntry;
+import tech.chhsich.backend.enums.OrderStatus;
+import tech.chhsich.backend.exception.OrderStatusTransitionException;
 import tech.chhsich.backend.mapper.MenuMapper;
 import tech.chhsich.backend.mapper.OrderInfoMapper;
 import tech.chhsich.backend.mapper.OrderEntryMapper;
+import tech.chhsich.backend.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.constraints.NotNull;
@@ -21,6 +24,7 @@ public class OrderService {
     private final OrderEntryMapper orderEntryMapper;
     private final UserService userService;
     private final MenuMapper menuMapper;
+    private final OrderStateMachine orderStateMachine;
 
     /**
      * Constructs an OrderService with the required persistence mappers and user service.
@@ -28,11 +32,12 @@ public class OrderService {
      * These dependencies are used to create and manage orders, order entries, and to validate users.
      */
     public OrderService(OrderInfoMapper orderInfoMapper, OrderEntryMapper orderEntryMapper,
-                       UserService userService, MenuMapper menuMapper) {
+                       UserService userService, MenuMapper menuMapper, OrderStateMachine orderStateMachine) {
         this.orderInfoMapper = orderInfoMapper;
         this.orderEntryMapper = orderEntryMapper;
         this.userService = userService;
         this.menuMapper = menuMapper;
+        this.orderStateMachine = orderStateMachine;
     }
 
     /**
@@ -71,7 +76,7 @@ public class OrderService {
         order.setAddress(address);
         order.setPhone(phone);
         order.setCreateTime(LocalDateTime.now());
-        order.setStatus(0); // 0-待受理
+        order.setStatus(OrderStatus.PENDING_PAYMENT.getCode()); // 待支付
 
         double totalPrice = 0;
 
@@ -216,8 +221,9 @@ public class OrderService {
         }
 
         // 检查订单状态，只有特定状态的订单可以删除
-        if (order.getStatus() == 1) {
-            throw new RuntimeException("已受理的订单不能删除，请先取消订单");
+        if (order.getStatus() != OrderStatus.PENDING_PAYMENT.getCode() &&
+            order.getStatus() != OrderStatus.CANCELLED.getCode()) {
+            throw new RuntimeException("只有待支付或已取消的订单才能删除");
         }
 
         try {
@@ -282,5 +288,271 @@ public Integer getQuantity() { return quantity; }
  * @param quantity the quantity of the menu item
  */
 public void setQuantity(Integer quantity) { this.quantity = quantity; }
+    }
+
+    // ========== 订单状态管理方法 ==========
+
+    /**
+     * 支付订单
+     *
+     * @param orderid 订单ID
+     * @return 更新后的订单信息
+     * @throws OrderStatusTransitionException 如果状态转换不合法
+     */
+    @Transactional
+    public OrderInfo payOrder(String orderid) throws OrderStatusTransitionException {
+        OrderInfo order = getOrderByOrderIdOrThrow(orderid);
+        return orderStateMachine.payOrder(order);
+    }
+
+    /**
+     * 开始配送
+     *
+     * @param orderid 订单ID
+     * @return 更新后的订单信息
+     * @throws OrderStatusTransitionException 如果状态转换不合法
+     */
+    @Transactional
+    public OrderInfo startDelivery(String orderid) throws OrderStatusTransitionException {
+        OrderInfo order = getOrderByOrderIdOrThrow(orderid);
+        return orderStateMachine.startDelivery(order);
+    }
+
+    /**
+     * 确认收货
+     *
+     * @param orderid 订单ID
+     * @return 更新后的订单信息
+     * @throws OrderStatusTransitionException 如果状态转换不合法
+     */
+    @Transactional
+    public OrderInfo confirmDelivery(String orderid) throws OrderStatusTransitionException {
+        OrderInfo order = getOrderByOrderIdOrThrow(orderid);
+        return orderStateMachine.confirmDelivery(order);
+    }
+
+    /**
+     * 取消订单
+     *
+     * @param orderid 订单ID
+     * @param reason 取消原因
+     * @return 更新后的订单信息
+     * @throws OrderStatusTransitionException 如果状态转换不合法
+     */
+    @Transactional
+    public OrderInfo cancelOrder(String orderid, String reason) throws OrderStatusTransitionException {
+        OrderInfo order = getOrderByOrderIdOrThrow(orderid);
+        return orderStateMachine.cancelOrder(order, reason);
+    }
+
+    /**
+     * 申请退款
+     *
+     * @param orderid 订单ID
+     * @param reason 退款原因
+     * @return 更新后的订单信息
+     * @throws OrderStatusTransitionException 如果状态转换不合法
+     */
+    @Transactional
+    public OrderInfo requestRefund(String orderid, String reason) throws OrderStatusTransitionException {
+        OrderInfo order = getOrderByOrderIdOrThrow(orderid);
+        return orderStateMachine.requestRefund(order, reason);
+    }
+
+    /**
+     * 完成退款
+     *
+     * @param orderid 订单ID
+     * @param reason 退款完成原因
+     * @return 更新后的订单信息
+     * @throws OrderStatusTransitionException 如果状态转换不合法
+     */
+    @Transactional
+    public OrderInfo completeRefund(String orderid, String reason) throws OrderStatusTransitionException {
+        OrderInfo order = getOrderByOrderIdOrThrow(orderid);
+        return orderStateMachine.completeRefund(order, reason);
+    }
+
+    // ========== 订单条目管理方法 ==========
+
+    /**
+     * 添加订单条目
+     *
+     * @param orderid 订单ID
+     * @param menuId 菜品ID
+     * @param quantity 数量
+     * @return 是否添加成功
+     */
+    @Transactional
+    public boolean addOrderEntry(String orderid, Long menuId, Integer quantity) {
+        OrderInfo order = orderInfoMapper.findByOrderid(orderid);
+        if (order == null) {
+            throw new RuntimeException("订单不存在");
+        }
+
+        // 只有待支付状态可以添加条目
+        if (order.getStatus() != OrderStatus.PENDING_PAYMENT.getCode()) {
+            throw new RuntimeException("只有待支付状态的订单才能添加商品");
+        }
+
+        Menu menu = menuMapper.selectById(menuId);
+        if (menu == null || menu.getProductLock() == 1) {
+            throw new RuntimeException("菜品不存在或已下架");
+        }
+
+        // 检查是否已存在相同菜品
+        OrderEntry existingEntry = orderEntryMapper.findByOrderIdAndProductId(orderid, menuId);
+        if (existingEntry != null) {
+            // 更新数量
+            existingEntry.setProductNum(existingEntry.getProductNum() + quantity);
+            return orderEntryMapper.updateById(existingEntry) > 0;
+        } else {
+            // 新增条目
+            OrderEntry entry = new OrderEntry();
+            entry.setOrderId(orderid);
+            entry.setProductId(menuId);
+            entry.setProductName(menu.getName());
+            entry.setPrice(menu.getHotPrice());
+            entry.setProductNum(quantity);
+            return orderEntryMapper.insert(entry) > 0;
+        }
+    }
+
+    /**
+     * 更新订单条目数量
+     *
+     * @param orderid 订单ID
+     * @param entryId 条目ID
+     * @param newQuantity 新数量
+     * @return 是否更新成功
+     */
+    @Transactional
+    public boolean updateOrderEntryQuantity(String orderid, Long entryId, Integer newQuantity) {
+        OrderInfo order = orderInfoMapper.findByOrderid(orderid);
+        if (order == null) {
+            throw new RuntimeException("订单不存在");
+        }
+
+        // 只有待支付状态可以修改条目
+        if (order.getStatus() != OrderStatus.PENDING_PAYMENT.getCode()) {
+            throw new RuntimeException("只有待支付状态的订单才能修改商品数量");
+        }
+
+        if (newQuantity <= 0) {
+            throw new RuntimeException("商品数量必须大于0");
+        }
+
+        OrderEntry entry = orderEntryMapper.selectById(entryId);
+        if (entry == null || !entry.getOrderId().equals(orderid)) {
+            throw new RuntimeException("订单条目不存在");
+        }
+
+        entry.setProductNum(newQuantity);
+        return orderEntryMapper.updateById(entry) > 0;
+    }
+
+    /**
+     * 删除订单条目
+     *
+     * @param orderid 订单ID
+     * @param entryId 条目ID
+     * @return 是否删除成功
+     */
+    @Transactional
+    public boolean removeOrderEntry(String orderid, Long entryId) {
+        OrderInfo order = orderInfoMapper.findByOrderid(orderid);
+        if (order == null) {
+            throw new RuntimeException("订单不存在");
+        }
+
+        // 只有待支付状态可以删除条目
+        if (order.getStatus() != OrderStatus.PENDING_PAYMENT.getCode()) {
+            throw new RuntimeException("只有待支付状态的订单才能删除商品");
+        }
+
+        OrderEntry entry = orderEntryMapper.selectById(entryId);
+        if (entry == null || !entry.getOrderId().equals(orderid)) {
+            throw new RuntimeException("订单条目不存在");
+        }
+
+        return orderEntryMapper.deleteById(entryId) > 0;
+    }
+
+    /**
+     * 重新计算订单总额
+     *
+     * @param orderid 订单ID
+     * @return 新的订单总额
+     */
+    @Transactional
+    public double recalculateOrderTotal(String orderid) {
+        OrderInfo order = orderInfoMapper.findByOrderid(orderid);
+        if (order == null) {
+            throw new RuntimeException("订单不存在");
+        }
+
+        List<OrderEntry> entries = orderEntryMapper.findByOrderid(orderid);
+        double newTotal = entries.stream()
+                .mapToDouble(entry -> entry.getPrice() * entry.getProductNum())
+                .sum();
+
+        order.setTotalPrice(newTotal);
+        orderInfoMapper.updateById(order);
+
+        return newTotal;
+    }
+
+    // ========== 订单查询方法 ==========
+
+    /**
+     * 获取订单状态描述
+     *
+     * @param statusCode 状态代码
+     * @return 状态描述
+     */
+    public String getOrderStatusDescription(int statusCode) {
+        return OrderStateMachine.getStatusDescription(statusCode);
+    }
+
+    /**
+     * 获取订单的可用状态转换
+     *
+     * @param orderid 订单ID
+     * @return 可转换的状态数组
+     */
+    public OrderStatus[] getAvailableStatusTransitions(String orderid) {
+        OrderInfo order = orderInfoMapper.findByOrderid(orderid);
+        if (order == null) {
+            return new OrderStatus[0];
+        }
+        return orderStateMachine.getAvailableTransitions(order);
+    }
+
+    /**
+     * 检查订单是否为最终状态
+     *
+     * @param orderid 订单ID
+     * @return 如果是最终状态返回true
+     */
+    public boolean isOrderFinalStatus(String orderid) {
+        OrderInfo order = orderInfoMapper.findByOrderid(orderid);
+        return order != null && orderStateMachine.isFinalStatus(order);
+    }
+
+    // ========== 私有辅助方法 ==========
+
+    /**
+     * 根据订单ID获取订单，如果不存在则抛出异常
+     *
+     * @param orderid 订单ID
+     * @return 订单信息
+     * @throws RuntimeException 如果订单不存在
+     */
+    private OrderInfo getOrderByOrderIdOrThrow(String orderid) {
+        OrderInfo order = orderInfoMapper.findByOrderid(orderid);
+        if (order == null) {
+            throw new RuntimeException("订单不存在: " + orderid);
+        }
+        return order;
     }
 }
