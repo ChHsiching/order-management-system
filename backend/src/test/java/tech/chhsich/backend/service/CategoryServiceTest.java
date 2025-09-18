@@ -39,7 +39,7 @@ public class CategoryServiceTest {
     public void testDeleteCategoryWithForeignKeyCheck() {
         // 首先创建一个新的分类
         Ltype category = new Ltype();
-        category.setCateName("测试分类");
+        category.setCateName("外键约束测试分类_" + System.currentTimeMillis());
         category.setAddress("测试地址");
         category.setProductName("测试产品");
         boolean addResult = categoryService.addCategory(category);
@@ -77,7 +77,7 @@ public class CategoryServiceTest {
     public void testDeleteCategoryWithoutAssociations() {
         // 创建一个新的分类
         Ltype category = new Ltype();
-        category.setCateName("独立测试分类");
+        category.setCateName("独立测试分类_" + System.currentTimeMillis());
         category.setAddress("独立测试地址");
         category.setProductName("独立测试产品");
         boolean addResult = categoryService.addCategory(category);

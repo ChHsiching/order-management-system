@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -56,6 +59,7 @@ public class SecurityConfig {
                         // 对公开API和需要认证的API豁免CSRF验证（前后端分离架构）
                         .ignoringRequestMatchers("/api/user/register", "/api/user/login")
                         .ignoringRequestMatchers("/api/menu/**", "/api/categories/**", "/api/cart/**", "/api/orders/**")
+                        .ignoringRequestMatchers("/admin/**", "/api/admin/**")
                         .ignoringRequestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**")
                 )
                 // 配置CORS - 使用WebConfig中的全局CORS配置
@@ -76,10 +80,12 @@ public class SecurityConfig {
                         // 公开接口
                         .requestMatchers("/api/user/register", "/api/user/login").permitAll()
                         .requestMatchers("/api/menu/**", "/api/categories/**").permitAll()
+                        .requestMatchers("/api/admin/login", "/api/admin/info").permitAll()
                         // 需要认证的接口
                         .requestMatchers("/api/orders/**", "/api/cart/**").authenticated()
-                        // 管理员接口
-                        .requestMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")
+                        // 其他管理员接口需要认证和ADMIN角色
+                        .requestMatchers("/api/admin/menuCategory/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 // 启用basic认证用于测试
@@ -119,5 +125,29 @@ public class SecurityConfig {
                 .build();
 
         return new InMemoryUserDetailsManager(adminUser);
+    }
+
+    /**
+     * Provides a DaoAuthenticationProvider configured with password encoder and user details service.
+     *
+     * @return a configured authentication provider
+     */
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+    /**
+     * Provides an AuthenticationManager configured with the authentication provider.
+     *
+     * @return the authentication manager
+     * @throws Exception if configuration fails
+     */
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return new ProviderManager(authenticationProvider());
     }
 }
