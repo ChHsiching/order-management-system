@@ -77,6 +77,26 @@ jobs:
             echo "No database initialization script found, skipping..."
           fi
 
+      - name: Insert test data
+        run: |
+          if [ -f docs/db/03_insert_test_data.sql ]; then
+            echo "Inserting test data..."
+            mysql -h 127.0.0.1 -uroot -p123456 < docs/db/03_insert_test_data.sql
+            echo "Test data inserted successfully!"
+          else
+            echo "No test data script found, skipping..."
+          fi
+
+      - name: Verify test data
+        run: |
+          if [ -f docs/db/04_verify_test_data.sql ]; then
+            echo "Verifying test data..."
+            mysql -h 127.0.0.1 -uroot -p123456 < docs/db/04_verify_test_data.sql
+            echo "Test data verification completed!"
+          else
+            echo "No test data verification script found, skipping..."
+          fi
+
       - name: Build & Test (Maven)
         run: |
           if [ -d backend ] && [ -f backend/pom.xml ]; then

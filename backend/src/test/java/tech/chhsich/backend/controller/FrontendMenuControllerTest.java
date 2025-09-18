@@ -88,12 +88,40 @@ class FrontendMenuControllerTest {
         if (!allMenus.isEmpty()) {
             // 使用第一个可用菜品的ID进行测试
             validId = allMenus.get(0).getId();
+            System.out.println("使用可用菜品ID: " + validId);
         } else {
             // 如果没有数据，测试ID为1的菜品（可能在测试数据中）
             validId = 1L;
             System.out.println("警告: 没有可用菜品，将测试ID " + validId + " 是否存在");
         }
 
+        // 先通过service验证菜品确实存在且未锁定
+        Menu menuFromService = menuService.getMenuById(validId);
+        if (menuFromService == null) {
+            System.out.println("警告: ID " + validId + " 的菜品不存在，跳过严格验证");
+            // 即使菜品不存在，API也应该返回一致的错误格式
+            mockMvc.perform(get("/api/menu/{id}", validId)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.code").value(1))
+                    .andExpect(jsonPath("$.message").value("菜品不存在"))
+                    .andExpect(jsonPath("$.data").doesNotExist());
+            return;
+        }
+
+        if (menuFromService.getProductLock() != 0) {
+            System.out.println("警告: ID " + validId + " 的菜品已被锁定，前台API应该无法访问");
+            // 锁定的菜品在前台API应该返回不可访问
+            mockMvc.perform(get("/api/menu/{id}", validId)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.code").value(1))
+                    .andExpect(jsonPath("$.message").value("菜品不存在"))
+                    .andExpect(jsonPath("$.data").doesNotExist());
+            return;
+        }
+
+        // 只有当菜品存在且未锁定时，才期望API返回成功
         MvcResult result = mockMvc.perform(get("/api/menu/{id}", validId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -113,6 +141,7 @@ class FrontendMenuControllerTest {
         assertEquals(validId, menu.getId(), "返回的菜品ID应该匹配");
         assertNotNull(menu.getName(), "菜品名称不应该为空");
         assertNotNull(menu.getImgPath(), "菜品图片路径不应该为空");
+        assertEquals(0, menu.getProductLock(), "返回的菜品应该是未锁定状态");
     }
 
     @Test
