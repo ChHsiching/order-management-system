@@ -54,7 +54,15 @@ public class OrderService {
     public OrderInfo createOrder(String username, List<OrderItemRequest> items, String address, String phone) {
         // 检查用户是否存在
         if (userService.getUserByUsername(username) == null) {
-            throw new RuntimeException("用户不存在");
+            throw new RuntimeException("用户不存在，无法创建订单");
+        }
+
+        // 验证订单基本信息的完整性
+        if (address == null || address.trim().isEmpty()) {
+            throw new RuntimeException("送货地址不能为空");
+        }
+        if (phone == null || phone.trim().isEmpty()) {
+            throw new RuntimeException("联系电话不能为空");
         }
 
         OrderInfo order = new OrderInfo();
@@ -67,40 +75,60 @@ public class OrderService {
 
         double totalPrice = 0;
 
-        // 计算总价并准备订单项
+        // 预验证所有菜品并计算总价
         for (OrderItemRequest item : items) {
+            if (item.getMenuId() == null) {
+                throw new RuntimeException("菜品ID不能为空");
+            }
+            if (item.getQuantity() == null || item.getQuantity() <= 0) {
+                throw new RuntimeException("菜品数量必须大于0");
+            }
+
             Menu menu = menuMapper.selectById(item.getMenuId());
-            if (menu == null || menu.getProductLock() == 1) {
-                throw new RuntimeException("商品不存在或已下架: " + item.getMenuId());
+            if (menu == null) {
+                throw new RuntimeException("菜品不存在: " + item.getMenuId());
+            }
+            if (menu.getProductLock() == 1) {
+                throw new RuntimeException("菜品已下架，无法购买: " + menu.getName());
             }
 
             totalPrice += menu.getHotPrice() * item.getQuantity();
         }
 
-        order.setTotalPrice(totalPrice);
-
-        // 插入订单主信息
-        orderInfoMapper.insert(order);
-
-        // 插入订单项
-        for (OrderItemRequest item : items) {
-            Menu menu = menuMapper.selectById(item.getMenuId());
-
-            OrderEntry entry = new OrderEntry();
-            entry.setProductId(menu.getId());
-            entry.setProductName(menu.getName());
-            entry.setPrice(menu.getHotPrice()); // 使用热销价
-            entry.setProductNum(item.getQuantity());
-            entry.setOrderId(order.getOrderId());
-
-            orderEntryMapper.insert(entry);
-
-            // 更新销量
-            menu.setSales((menu.getSales() != null ? menu.getSales() : 0) + item.getQuantity());
-            menuMapper.updateById(menu);
+        // 验证总价
+        if (totalPrice <= 0) {
+            throw new RuntimeException("订单总价必须大于0");
         }
 
-        return order;
+        order.setTotalPrice(totalPrice);
+
+        try {
+            // 插入订单主信息
+            orderInfoMapper.insert(order);
+
+            // 插入订单项并更新销量
+            for (OrderItemRequest item : items) {
+                Menu menu = menuMapper.selectById(item.getMenuId());
+
+                OrderEntry entry = new OrderEntry();
+                entry.setProductId(menu.getId());
+                entry.setProductName(menu.getName());
+                entry.setPrice(menu.getHotPrice()); // 使用热销价
+                entry.setProductNum(item.getQuantity());
+                entry.setOrderId(order.getOrderId());
+
+                orderEntryMapper.insert(entry);
+
+                // 更新销量
+                menu.setSales((menu.getSales() != null ? menu.getSales() : 0) + item.getQuantity());
+                menuMapper.updateById(menu);
+            }
+
+            return order;
+        } catch (Exception e) {
+            // 如果订单创建失败，抛出运行时异常让事务回滚
+            throw new RuntimeException("订单创建失败: " + e.getMessage(), e);
+        }
     }
 
     /**
@@ -172,6 +200,39 @@ public class OrderService {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 删除订单（级联删除订单条目）
+     *
+     * 删除订单时会自动删除相关的订单条目，保证数据一致性
+     */
+    @Transactional
+    public boolean deleteOrder(String orderid) {
+        // 检查订单是否存在
+        OrderInfo order = orderInfoMapper.findByOrderid(orderid);
+        if (order == null) {
+            return false;
+        }
+
+        // 检查订单状态，只有特定状态的订单可以删除
+        if (order.getStatus() == 1) {
+            throw new RuntimeException("已受理的订单不能删除，请先取消订单");
+        }
+
+        try {
+            // 删除订单条目（由于数据库外键约束的CASCADE设置，会自动删除）
+            // 但为了确保数据一致性，我们手动删除
+            List<OrderEntry> orderEntries = orderEntryMapper.findByOrderid(orderid);
+            for (OrderEntry entry : orderEntries) {
+                orderEntryMapper.deleteById(entry.getId());
+            }
+
+            // 删除订单主信息
+            return orderInfoMapper.deleteById(order.getId()) > 0;
+        } catch (Exception e) {
+            throw new RuntimeException("删除订单失败: " + e.getMessage(), e);
+        }
     }
 
     /**

@@ -3,7 +3,9 @@ package tech.chhsich.backend.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
 import tech.chhsich.backend.entity.Ltype;
+import tech.chhsich.backend.entity.Menu;
 import tech.chhsich.backend.mapper.LtypeMapper;
+import tech.chhsich.backend.mapper.MenuMapper;
 
 import java.util.List;
 
@@ -14,14 +16,16 @@ public class CategoryService {
     private static final Integer CATEGORY_STATUS_DELETED = 1;
 
     private final LtypeMapper ltypeMapper;
+    private final MenuMapper menuMapper;
 
     /**
-     * Creates a CategoryService wired with the given LtypeMapper.
+     * Creates a CategoryService wired with the given LtypeMapper and MenuMapper.
      *
-     * The mapper is used for all category data access operations.
+     * The mappers are used for category data access operations and consistency checking.
      */
-    public CategoryService(LtypeMapper ltypeMapper) {
+    public CategoryService(LtypeMapper ltypeMapper, MenuMapper menuMapper) {
         this.ltypeMapper = ltypeMapper;
+        this.menuMapper = menuMapper;
     }
 
     /**
@@ -96,11 +100,19 @@ public class CategoryService {
 
     /**
      * 删除类别（逻辑删除）
+     *
+     * 在删除类别前检查是否有关联的菜品，如果有则抛出异常
      */
     public boolean deleteCategory(Long id) {
         Ltype category = ltypeMapper.findById(id);
         if (category == null) {
             return false;
+        }
+
+        // 检查是否有关联的菜品
+        List<Menu> associatedMenus = menuMapper.findByCategoryId(id);
+        if (associatedMenus != null && !associatedMenus.isEmpty()) {
+            throw new RuntimeException("无法删除该分类，存在" + associatedMenus.size() + "个关联的菜品。请先处理或重新分类这些菜品。");
         }
 
         category.setCateLock(CATEGORY_STATUS_DELETED);

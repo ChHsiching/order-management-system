@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
 import tech.chhsich.backend.entity.Menu;
 import tech.chhsich.backend.mapper.MenuMapper;
+import tech.chhsich.backend.service.CategoryService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,9 +18,11 @@ public class MenuService {
     private static final Integer PRODUCT_STATUS_NOT_RECOMMENDED = 0;
 
     private final MenuMapper menuMapper;
+    private final CategoryService categoryService;
 
-    public MenuService(MenuMapper menuMapper) {
+    public MenuService(MenuMapper menuMapper, CategoryService categoryService) {
         this.menuMapper = menuMapper;
+        this.categoryService = categoryService;
     }
 
     /**
@@ -161,8 +164,18 @@ public class MenuService {
 
     /**
      * 批量更新菜品类别
+     *
+     * 在更新类别前检查目标类别是否存在
      */
     public boolean batchUpdateCategory(List<Long> menuIds, Long newCategoryId) {
+        // 检查目标类别是否存在
+        if (newCategoryId != null) {
+            boolean categoryExists = categoryService.categoryExists(newCategoryId);
+            if (!categoryExists) {
+                throw new RuntimeException("目标分类不存在，无法更新菜品类别");
+            }
+        }
+
         for (Long menuId : menuIds) {
             Menu menu = menuMapper.selectById(menuId);
             if (menu != null) {
