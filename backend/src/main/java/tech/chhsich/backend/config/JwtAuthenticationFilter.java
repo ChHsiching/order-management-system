@@ -17,6 +17,7 @@ import tech.chhsich.backend.exception.AuthenticationException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * JWT认证过滤器
@@ -69,7 +70,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             // 6. 如果用户还未认证，则进行认证
             if (SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                // 从token中获取角色信息
+                Map<String, Object> claims = jwtUtil.getClaimsFromToken(token);
+                Integer role = claims != null && claims.containsKey("role") ? (Integer) claims.get("role") : null;
+
+                // 创建自定义的UserDetails，包含角色信息
+                UserDetails userDetails = org.springframework.security.core.userdetails.User
+                    .withUsername(username)
+                    .password("") // JWT认证不需要密码
+                    .authorities(role != null && role == 1 ? "ROLE_ADMIN" : "ROLE_USER")
+                    .build();
 
                 // 创建认证令牌
                 UsernamePasswordAuthenticationToken authenticationToken =
