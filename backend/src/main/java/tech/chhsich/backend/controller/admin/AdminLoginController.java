@@ -72,8 +72,11 @@ public class AdminLoginController {
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            // 5. 生成JWT令牌
-            String token = jwtUtil.generateToken(username);
+            // 5. 生成JWT令牌（包含角色信息）
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("role", admin.getRole());
+            claims.put("email", admin.getEmail());
+            String token = jwtUtil.generateToken(username, claims);
 
             // 6. 构建返回数据
             Map<String, Object> data = new HashMap<>();

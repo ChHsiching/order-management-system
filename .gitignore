@@ -12,3 +12,13 @@ CLAUDE.md
 *.iws
 *.ipr
 out/
+
+### Vue ###
+node_modules/
+dist/
+
+### Maven ###
+target/
+
+### Gradle ###
+build/
