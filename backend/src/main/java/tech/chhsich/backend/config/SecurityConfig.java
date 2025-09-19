@@ -3,6 +3,9 @@ package tech.chhsich.backend.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -10,18 +13,22 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 
+/**
+ * Spring Security配置类
+ * 配置JWT认证和权限控制
+ *
+ * @author chhsich
+ * @since 2025-09-19
+ */
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Value("${spring.security.user.name:admin}")
@@ -30,42 +37,44 @@ public class SecurityConfig {
     @Value("${spring.security.user.password:admin}")
     private String adminPassword;
 
+  
     /**
-     * Builds and returns the application's SecurityFilterChain.
+     * 构建并返回应用的SecurityFilterChain
      *
-     * Configures CSRF protection using a cookie-backed repository with the request attribute name "_csrf" and
-     * excludes CSRF checks for public endpoints such as user registration/login, menu/categories, and API docs.
-     * Disables Spring Security's CORS configuration to rely on WebConfig's global CORS settings, enforces stateless (JWT) session management,
-     * and defines route-based authorization:
-     * - Public: Swagger/API docs, /api/user/register, /api/user/login, /api/menu/**, /api/categories/**
-     * - Authenticated: /api/orders/** and all other unspecified routes
-     * - Admin-only: /api/admin/**
-     * Disables form login and HTTP Basic authentication, and applies security headers (XSS block, CSP "default-src 'self'", same-origin frame options).
+     * 配置JWT认证、CSRF保护、会话管理和路由授权：
+     * - 公开接口：Swagger文档、用户注册登录、菜单分类等
+     * - 需要认证的接口：订单、购物车等
+     * - 管理员接口：需要ADMIN角色
      *
-     * @return the configured SecurityFilterChain
-     * @throws Exception if configuring the HttpSecurity object fails
+     * @param http HttpSecurity配置对象
+     * @return 配置好的SecurityFilterChain
+     * @throws Exception 配置失败时抛出异常
      */
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // 创建CSRF token处理器
-        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();
-        requestHandler.setCsrfRequestAttributeName("_csrf");
-
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
-                // 启用CSRF保护，使用Cookie-based存储
+                // 配置CSRF保护 - 为JWT API端点豁免CSRF
                 .csrf(csrf -> csrf
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .csrfTokenRequestHandler(requestHandler)
-                        // 对公开API和需要认证的API豁免CSRF验证（前后端分离架构）
-                        .ignoringRequestMatchers("/api/user/register", "/api/user/login")
-                        .ignoringRequestMatchers("/api/menu/**", "/api/categories/**", "/api/cart/**", "/api/orders/**")
-                        .ignoringRequestMatchers("/admin/**", "/api/admin/**")
-                        .ignoringRequestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**")
+                        .ignoringRequestMatchers(
+                                "/api/**",
+                                "/admin/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/api-docs/**",
+                                "/swagger-ui.html",
+                                "/webjars/**",
+                                "/swagger-resources/**",
+                                "/swagger-config/**"
+                        )
                 )
-                // 配置CORS - 使用WebConfig中的全局CORS配置
+
+                // 禁用CORS，使用全局CORS配置
                 .cors(cors -> cors.disable())
+
                 // 设置无状态会话管理（JWT认证）
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                // 配置请求授权
                 .authorizeHttpRequests(authz -> authz
                         // 放行Swagger相关路径
                         .requestMatchers(
@@ -77,20 +86,31 @@ public class SecurityConfig {
                                 "/swagger-resources/**",
                                 "/swagger-config/**"
                         ).permitAll()
+
                         // 公开接口
                         .requestMatchers("/api/user/register", "/api/user/login").permitAll()
-                        .requestMatchers("/api/menu/**", "/api/categories/**").permitAll()
                         .requestMatchers("/api/admin/login", "/api/admin/info").permitAll()
+                        .requestMatchers("/api/menu/**", "/api/categories/**").permitAll()
+
                         // 需要认证的接口
                         .requestMatchers("/api/orders/**", "/api/cart/**").authenticated()
-                        // 其他管理员接口需要认证和ADMIN角色
-                        .requestMatchers("/api/admin/menuCategory/**").hasRole("ADMIN")
+                        .requestMatchers("/api/user/**").authenticated()
+
+                        // 管理员接口需要ADMIN角色
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        // 其他所有请求都需要认证
                         .anyRequest().authenticated()
                 )
-                // 启用basic认证用于测试
+
+                // 添加JWT认证过滤器
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+
+                // 禁用表单登录和HTTP Basic认证
                 .formLogin(form -> form.disable())
-                .httpBasic(httpBasic -> {})
+                .httpBasic(httpBasic -> httpBasic.disable())
+
                 // 添加安全headers
                 .headers(headers -> headers
                         .xssProtection(xss -> xss.headerValue(XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
@@ -102,9 +122,9 @@ public class SecurityConfig {
     }
 
     /**
-     * Provides a BCrypt-based PasswordEncoder for hashing and verifying user passwords.
+     * 提供BCrypt密码编码器
      *
-     * @return a PasswordEncoder implementation using BCrypt
+     * @return PasswordEncoder实例
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -112,9 +132,9 @@ public class SecurityConfig {
     }
 
     /**
-     * Provides an in-memory UserDetailsService with admin user from configuration.
+     * 提供内存中的UserDetailsService
      *
-     * @return a UserDetailsService with configured admin user
+     * @return 配置了管理员用户的UserDetailsService
      */
     @Bean
     public UserDetailsService userDetailsService() {
@@ -128,9 +148,9 @@ public class SecurityConfig {
     }
 
     /**
-     * Provides a DaoAuthenticationProvider configured with password encoder and user details service.
+     * 提供DaoAuthenticationProvider
      *
-     * @return a configured authentication provider
+     * @return 配置了密码编码器和用户详情服务的认证提供者
      */
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -141,13 +161,13 @@ public class SecurityConfig {
     }
 
     /**
-     * Provides an AuthenticationManager configured with the authentication provider.
+     * 提供AuthenticationManager
      *
-     * @return the authentication manager
-     * @throws Exception if configuration fails
+     * @return 配置了认证提供者的认证管理器
+     * @throws Exception 配置失败时抛出异常
      */
     @Bean
     public AuthenticationManager authenticationManager() throws Exception {
-        return new ProviderManager(authenticationProvider());
+        return new org.springframework.security.authentication.ProviderManager(authenticationProvider());
     }
 }

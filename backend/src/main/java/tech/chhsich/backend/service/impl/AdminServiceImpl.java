@@ -6,7 +6,7 @@ import tech.chhsich.backend.mapper.AdminMapper;
 import tech.chhsich.backend.entity.Administrator;
 import tech.chhsich.backend.entity.ResponseMessage;
 import tech.chhsich.backend.service.AdminService;
-import tech.chhsich.backend.utils.JwUtil;
+import tech.chhsich.backend.utils.JwtUtil;
 import tech.chhsich.backend.utils.Md5Util;
 
 import java.util.HashMap;
@@ -17,14 +17,16 @@ import java.util.Map;
 public class AdminServiceImpl implements AdminService {
 
     private final AdminMapper adminMapper;
+    private final JwtUtil jwtUtil;
 
     /**
      * Constructs an AdminServiceImpl with the provided AdminMapper dependency.
      *
      * The mapper is retained for data-store interactions performed by this service.
      */
-    public AdminServiceImpl(AdminMapper adminMapper) {
+    public AdminServiceImpl(AdminMapper adminMapper, JwtUtil jwtUtil) {
         this.adminMapper = adminMapper;
+        this.jwtUtil = jwtUtil;
     }
     
     /**
@@ -58,7 +60,7 @@ public class AdminServiceImpl implements AdminService {
             Map<String, Object> claims = new HashMap<>();
             claims.put("username", admin.getUsername());
             claims.put("role", admin.getRole());
-            String token = JwUtil.getToken(claims);
+            String token = jwtUtil.generateToken(admin.getUsername(), claims);
 
             // 创建安全的用户信息对象（不包含敏感信息）
             Map<String, Object> safeUserInfo = new HashMap<>();

@@ -118,7 +118,12 @@ springdoc:
     version: 1.0.0
     description: 基于Spring Boot 3.5.5开发的Web订餐管理系统
 
-# 11. 应用自定义配置
+# 11. JWT配置
+jwt:
+  secret: qwqw
+  expiration: 86400  # 24小时（秒）
+
+# 12. 应用自定义配置
 app:
   # 文件上传配置
   upload:
