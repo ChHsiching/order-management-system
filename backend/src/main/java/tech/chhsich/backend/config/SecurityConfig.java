@@ -53,8 +53,20 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         http
-                // 禁用CSRF保护（JWT无状态认证）
-                .csrf(csrf -> csrf.disable())
+                // 配置CSRF保护 - 为JWT API端点豁免CSRF
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers(
+                                "/api/**",
+                                "/admin/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**",
+                                "/api-docs/**",
+                                "/swagger-ui.html",
+                                "/webjars/**",
+                                "/swagger-resources/**",
+                                "/swagger-config/**"
+                        )
+                )
 
                 // 禁用CORS，使用全局CORS配置
                 .cors(cors -> cors.disable())
