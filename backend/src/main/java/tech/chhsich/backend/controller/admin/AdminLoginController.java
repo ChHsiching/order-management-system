@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import tech.chhsich.backend.entity.Administrator;
 import tech.chhsich.backend.entity.ResponseMessage;
 import tech.chhsich.backend.mapper.AdminMapper;
-import tech.chhsich.backend.utils.JwUtil;
+import tech.chhsich.backend.utils.JwtUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,10 +29,12 @@ public class AdminLoginController {
 
     private final AdminMapper adminMapper;
     private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
 
-    public AdminLoginController(AdminMapper adminMapper, AuthenticationManager authenticationManager) {
+    public AdminLoginController(AdminMapper adminMapper, AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         this.adminMapper = adminMapper;
         this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
     }
 
     /**
@@ -71,7 +73,7 @@ public class AdminLoginController {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             // 5. 生成JWT令牌
-            String token = JwUtil.generateToken(username);
+            String token = jwtUtil.generateToken(username);
 
             // 6. 构建返回数据
             Map<String, Object> data = new HashMap<>();

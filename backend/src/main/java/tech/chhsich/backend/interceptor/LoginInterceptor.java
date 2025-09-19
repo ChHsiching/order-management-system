@@ -8,12 +8,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import tech.chhsich.backend.entity.ResponseMessage;
-import tech.chhsich.backend.utils.JwUtil;
+import tech.chhsich.backend.utils.JwtUtil;
 
 import java.util.Map;
 
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
+
+    private final JwtUtil jwtUtil;
+
+    public LoginInterceptor(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
     @Override
     public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
@@ -40,7 +46,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 解析token，如果解析失败，返回错误结果（未登录）
         try {
             String token = jwt.substring(7); // 移除 "Bearer " 前缀
-            Map<String, Object> claims = JwUtil.parseToken(token);
+            Map<String, Object> claims = jwtUtil.getClaimsFromToken(token);
             
             // 将解析出的用户信息存储到ThreadLocal中，便于后续使用
             String username = (String) claims.get("username");
