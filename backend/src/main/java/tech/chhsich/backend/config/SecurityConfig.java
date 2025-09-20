@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -30,7 +31,6 @@ import org.springframework.security.web.header.writers.XXssProtectionHeaderWrite
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-  
     /**
      * 构建并返回应用的SecurityFilterChain
      *
@@ -69,6 +69,9 @@ public class SecurityConfig {
 
                 // 配置请求授权
                 .authorizeHttpRequests(authz -> authz
+                        // 放行OPTIONS请求（CORS预检）
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
                         // 放行Swagger相关路径
                         .requestMatchers(
                                 "/swagger-ui/**",
@@ -83,11 +86,21 @@ public class SecurityConfig {
                         // 放行actuator健康检查端点
                         .requestMatchers("/actuator/**").permitAll()
 
-                        // 公开接口 - 登录注册
+                        // 公开接口 - 登录注册（必须放在管理员接口规则之前）
                         .requestMatchers("/api/user/register").permitAll()
                         .requestMatchers("/api/user/login").permitAll()
                         .requestMatchers("/api/admin/login").permitAll()
+                        .requestMatchers("/api/admin/auth/login").permitAll()
                         .requestMatchers("/api/admin/info").permitAll()
+                        .requestMatchers("/admin/login").permitAll()
+                        .requestMatchers("/admin/auth/login").permitAll()
+                        .requestMatchers("/admin/info").permitAll()
+                        .requestMatchers("/WebOrderSystem/api/admin/login").permitAll()
+                        .requestMatchers("/WebOrderSystem/api/admin/auth/login").permitAll()
+                        .requestMatchers("/WebOrderSystem/api/admin/info").permitAll()
+                        .requestMatchers("/WebOrderSystem/admin/login").permitAll()
+                        .requestMatchers("/WebOrderSystem/admin/auth/login").permitAll()
+                        .requestMatchers("/WebOrderSystem/admin/info").permitAll()
 
                         // 公开接口 - 菜单相关
                         .requestMatchers("/api/menu/**").permitAll()
@@ -112,10 +125,28 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/change-password").authenticated()
                         .requestMatchers("/WebOrderSystem/api/user/change-password").authenticated()
 
-
-                        // 管理员接口需要ADMIN角色
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        // 管理员接口需要ADMIN角色（排除已公开的登录和信息接口）
+                        // 注意顺序：更具体的模式必须在前
+                        .requestMatchers("/api/admin/statistics/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/admins/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/menuCategory/**").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/menu/**").hasRole("ADMIN")
+                        .requestMatchers("/api/user/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/statistics/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/admins/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/menuCategory/**").hasRole("ADMIN")
+                        .requestMatchers("/admin/menu/**").hasRole("ADMIN")
+                        .requestMatchers("/user/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/WebOrderSystem/api/admin/statistics/**").hasRole("ADMIN")
+                        .requestMatchers("/WebOrderSystem/api/admin/admins/**").hasRole("ADMIN")
+                        .requestMatchers("/WebOrderSystem/api/admin/menuCategory/**").hasRole("ADMIN")
+                        .requestMatchers("/WebOrderSystem/api/admin/menu/**").hasRole("ADMIN")
+                        .requestMatchers("/WebOrderSystem/api/user/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/WebOrderSystem/admin/statistics/**").hasRole("ADMIN")
+                        .requestMatchers("/WebOrderSystem/admin/admins/**").hasRole("ADMIN")
+                        .requestMatchers("/WebOrderSystem/admin/menuCategory/**").hasRole("ADMIN")
+                        .requestMatchers("/WebOrderSystem/admin/menu/**").hasRole("ADMIN")
+                        .requestMatchers("/WebOrderSystem/user/admin/**").hasRole("ADMIN")
 
                         // 其他所有请求都需要认证
                         .anyRequest().authenticated()

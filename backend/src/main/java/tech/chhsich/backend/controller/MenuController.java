@@ -15,7 +15,7 @@ import tech.chhsich.backend.service.MenuService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/menu")
+@RequestMapping("/api/admin/menu")
 @Validated
 @Tag(name = "后台菜单管理", description = "后台菜单类别和菜品管理接口")
 public class MenuController {
