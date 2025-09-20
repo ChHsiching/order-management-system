@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -30,12 +29,6 @@ import org.springframework.security.web.header.writers.XXssProtectionHeaderWrite
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-
-    @Value("${spring.security.user.name:admin}")
-    private String adminUsername;
-
-    @Value("${spring.security.user.password:admin}")
-    private String adminPassword;
 
   
     /**
@@ -68,8 +61,8 @@ public class SecurityConfig {
                         )
                 )
 
-                // 禁用CORS，使用全局CORS配置
-                .cors(cors -> cors.disable())
+                // 启用CORS，使用全局CORS配置
+                .cors(cors -> {})
 
                 // 设置无状态会话管理（JWT认证）
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -87,14 +80,38 @@ public class SecurityConfig {
                                 "/swagger-config/**"
                         ).permitAll()
 
-                        // 公开接口
-                        .requestMatchers("/api/user/register", "/api/user/login").permitAll()
-                        .requestMatchers("/api/admin/login", "/api/admin/info").permitAll()
-                        .requestMatchers("/api/menu/**", "/api/categories/**").permitAll()
+                        // 放行actuator健康检查端点
+                        .requestMatchers("/actuator/**").permitAll()
+
+                        // 公开接口 - 登录注册
+                        .requestMatchers("/api/user/register").permitAll()
+                        .requestMatchers("/api/user/login").permitAll()
+                        .requestMatchers("/api/admin/login").permitAll()
+                        .requestMatchers("/api/admin/info").permitAll()
+
+                        // 公开接口 - 菜单相关
+                        .requestMatchers("/api/menu/**").permitAll()
+                        .requestMatchers("/api/categories/**").permitAll()
+                        .requestMatchers("/api/frontend/**").permitAll()
+                        .requestMatchers("/api/cart/**").permitAll()
+                        // 由于有context-path，也需要匹配完整路径
+                        .requestMatchers("/WebOrderSystem/api/menu/**").permitAll()
+                        .requestMatchers("/WebOrderSystem/api/categories/**").permitAll()
+                        .requestMatchers("/WebOrderSystem/api/frontend/**").permitAll()
+                        .requestMatchers("/WebOrderSystem/api/cart/**").permitAll()
 
                         // 需要认证的接口
-                        .requestMatchers("/api/orders/**", "/api/cart/**").authenticated()
-                        .requestMatchers("/api/user/**").authenticated()
+                        .requestMatchers("/api/orders/**").authenticated()
+                        .requestMatchers("/WebOrderSystem/api/orders/**").authenticated()
+
+                        // 用户接口，除了登录注册外都需要认证
+                        .requestMatchers("/api/user/me").authenticated()
+                        .requestMatchers("/WebOrderSystem/api/user/me").authenticated()
+                        .requestMatchers("/api/user/update").authenticated()
+                        .requestMatchers("/WebOrderSystem/api/user/update").authenticated()
+                        .requestMatchers("/api/user/change-password").authenticated()
+                        .requestMatchers("/WebOrderSystem/api/user/change-password").authenticated()
+
 
                         // 管理员接口需要ADMIN角色
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
@@ -121,53 +138,4 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * 提供BCrypt密码编码器
-     *
-     * @return PasswordEncoder实例
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
-
-    /**
-     * 提供内存中的UserDetailsService
-     *
-     * @return 配置了管理员用户的UserDetailsService
-     */
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails adminUser = User.builder()
-                .username(adminUsername)
-                .password(passwordEncoder().encode(adminPassword))
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(adminUser);
-    }
-
-    /**
-     * 提供DaoAuthenticationProvider
-     *
-     * @return 配置了密码编码器和用户详情服务的认证提供者
-     */
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-    /**
-     * 提供AuthenticationManager
-     *
-     * @return 配置了认证提供者的认证管理器
-     * @throws Exception 配置失败时抛出异常
-     */
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return new org.springframework.security.authentication.ProviderManager(authenticationProvider());
-    }
-}

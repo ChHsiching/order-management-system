@@ -54,7 +54,9 @@ public class MenuService {
      * @return a list of active Menu objects; never null (may be empty)
      */
     public List<Menu> getAllAvailableMenus() {
-        return menuMapper.findByProductLock(PRODUCT_STATUS_ACTIVE);
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("productlock", PRODUCT_STATUS_ACTIVE);
+        return menuMapper.selectList(queryWrapper);
     }
 
     /**
@@ -226,5 +228,18 @@ public class MenuService {
         }
 
         return menuMapper.selectList(queryWrapper);
+    }
+
+    /**
+     * 获取所有菜品分类
+     *
+     * 提供分类查询功能，为前台用户展示所有可用的菜品分类。
+     * 基于项目设计文档第6.3.1节系统主页面实现，
+     * 支持用户按分类浏览菜品。
+     *
+     * @return 所有菜品分类列表
+     */
+    public List<tech.chhsich.backend.entity.Ltype> getAllCategories() {
+        return categoryService.getAllCategories();
     }
 }

@@ -15,13 +15,13 @@ public interface ShoppingCartMapper extends BaseMapper<ShoppingCart> {
     @Select("SELECT * FROM shopping_cart WHERE username = #{username}")
     List<ShoppingCart> findByUsername(@Param("username") String username);
 
-    @Select("SELECT * FROM shopping_cart WHERE username = #{username} AND productid = #{productId}")
+    @Select("SELECT * FROM shopping_cart WHERE username = #{username} AND product_id = #{productId}")
     ShoppingCart findByUsernameAndProductId(@Param("username") String username, @Param("productId") Long productId);
 
-    @Update("UPDATE shopping_cart SET quantity = quantity + #{quantity}, updatetime = NOW() WHERE username = #{username} AND productid = #{productId}")
+    @Update("UPDATE shopping_cart SET quantity = quantity + #{quantity}, update_time = NOW() WHERE username = #{username} AND product_id = #{productId}")
     int updateQuantity(@Param("username") String username, @Param("productId") Long productId, @Param("quantity") Integer quantity);
 
-    @Select("DELETE FROM shopping_cart WHERE username = #{username}")
+    @Update("DELETE FROM shopping_cart WHERE username = #{username}")
     int deleteByUsername(@Param("username") String username);
 
     @Select("SELECT COUNT(*) FROM shopping_cart WHERE username = #{username}")

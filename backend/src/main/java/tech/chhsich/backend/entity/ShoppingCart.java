@@ -19,10 +19,10 @@ public class ShoppingCart {
     @TableField("username")
     private String username;
 
-    @TableField("productid")
+    @TableField("product_id")
     private Long productId;
 
-    @TableField("productname")
+    @TableField("product_name")
     private String productName;
 
     @TableField("price")
@@ -31,9 +31,9 @@ public class ShoppingCart {
     @TableField("quantity")
     private Integer quantity;
 
-    @TableField("createtime")
+    @TableField("create_time")
     private LocalDateTime createTime;
 
-    @TableField("updatetime")
+    @TableField("update_time")
     private LocalDateTime updateTime;
 }

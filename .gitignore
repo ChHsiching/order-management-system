@@ -3,6 +3,9 @@
 Claude.md
 CLAUDE.md
 
+### MCP ###
+.playwright-mcp/
+
 ### VS Code ###
 .vscode/
 
@@ -22,3 +25,16 @@ target/
 
 ### Gradle ###
 build/
+
+### Chore ###
+IMAGE_STORAGE_GUIDE.md
+.backdesk.pid
+.frontdesk.pid
+
+### Node ###
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+bun.lock

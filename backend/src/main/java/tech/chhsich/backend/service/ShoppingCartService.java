@@ -133,7 +133,7 @@ public class ShoppingCartService {
     public boolean removeFromCart(String username, Long productId) {
         QueryWrapper<ShoppingCart> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username)
-                   .eq("productid", productId);
+                   .eq("product_id", productId);
 
         return shoppingCartMapper.delete(queryWrapper) > 0;
     }
@@ -148,7 +148,9 @@ public class ShoppingCartService {
      * @return boolean 清空成功返回true，失败返回false
      */
     public boolean clearUserCart(String username) {
-        return shoppingCartMapper.deleteByUsername(username) > 0;
+        QueryWrapper<ShoppingCart> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        return shoppingCartMapper.delete(queryWrapper) > 0;
     }
 
     /**

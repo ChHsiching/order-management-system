@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import tech.chhsich.backend.entity.Menu;
 import tech.chhsich.backend.entity.ResponseMessage;
 import tech.chhsich.backend.service.MenuService;
-
 import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 前台菜单管理控制器
@@ -116,8 +118,31 @@ public class FrontendMenuController {
     public ResponseMessage getRecommendedMenus() {
         try {
             List<Menu> menus = menuService.getRecommendedMenus();
-            return ResponseMessage.success(menus);
+            System.out.println("DEBUG: 获取到 " + menus.size() + " 个推荐菜品");
+
+            // 手动转换为包含价格字段的Map列表
+            List<Map<String, Object>> result = new ArrayList<>();
+            for (Menu menu : menus) {
+                Map<String, Object> item = new HashMap<>();
+                item.put("id", menu.getId());
+                item.put("createTime", menu.getCreateTime());
+                item.put("imgPath", menu.getImgPath());
+                item.put("info", menu.getInfo());
+                item.put("name", menu.getName());
+                item.put("isRecommend", menu.getIsRecommend());
+                item.put("originalPrice", menu.getOriginalPrice());
+                item.put("hotPrice", menu.getHotPrice());
+                item.put("productLock", menu.getProductLock());
+                item.put("sales", menu.getSales());
+                item.put("categoryId", menu.getCategoryId());
+                result.add(item);
+
+                System.out.println("DEBUG: 菜品 " + menu.getName() + " 价格字段: originalPrice=" + menu.getOriginalPrice() + ", hotPrice=" + menu.getHotPrice());
+            }
+
+            return ResponseMessage.success(result);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseMessage.error("获取推荐菜品失败: " + e.getMessage());
         }
     }
@@ -171,6 +196,27 @@ public class FrontendMenuController {
             return ResponseMessage.success(menus);
         } catch (Exception e) {
             return ResponseMessage.error("获取热销菜品失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 获取所有菜品分类
+     *
+     * 提供分类查询功能，为前台用户展示所有可用的菜品分类。
+     * 基于项目设计文档第6.3.1节系统主页面实现，
+     * 支持用户按分类浏览菜品。
+     *
+     * @return ResponseMessage 包含分类列表的响应对象
+     */
+    @GetMapping("/categories")
+    @Operation(summary = "获取所有菜品分类", description = "获取系统中所有的菜品分类信息")
+    public ResponseMessage getAllCategories() {
+        try {
+            // 需要注入CategoryService
+            List<tech.chhsich.backend.entity.Ltype> categories = menuService.getAllCategories();
+            return ResponseMessage.success(categories);
+        } catch (Exception e) {
+            return ResponseMessage.error("获取分类失败: " + e.getMessage());
         }
     }
 }

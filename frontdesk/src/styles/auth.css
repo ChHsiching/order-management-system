@@ -1,0 +1,83 @@
+/* 认证页面统一样式 */
+
+.auth-container {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #f5f5f5;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.auth-header h2 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.auth-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.auth-footer p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Element Plus 组件样式覆盖 */
+.auth-container :deep(.el-card__header) {
+  padding: 24px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.auth-container :deep(.el-card__body) {
+  padding: 24px;
+}
+
+/* 表单样式优化 */
+.auth-container .el-form-item {
+  margin-bottom: 20px;
+}
+
+.auth-container .el-button {
+  height: 44px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 15px;
+  }
+
+  .auth-card {
+    max-width: 100%;
+  }
+
+  .auth-container :deep(.el-card__header),
+  .auth-container :deep(.el-card__body) {
+    padding: 20px;
+  }
+}

@@ -7,6 +7,8 @@ import tech.chhsich.backend.enums.OrderStatus;
 import tech.chhsich.backend.exception.OrderStatusTransitionException;
 import tech.chhsich.backend.service.OrderService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -95,6 +97,28 @@ public class OrderController {
     public ResponseEntity<List<OrderInfo>> getUserOrders(
             @Parameter(description = "用户名", required = true) @PathVariable String username) {
         List<OrderInfo> orders = orderService.getUserOrders(username);
+        return ResponseEntity.ok(orders);
+    }
+
+    /**
+     * Retrieve orders for the currently authenticated user.
+     *
+     * <p>Finds the username from the security context, looks up their orders,
+     * and returns the list. If no user is found or no orders exist, returns
+     * empty list.</p>
+     *
+     * @return ResponseEntity containing a list of OrderInfo for the current user
+     */
+    @Operation(summary = "获取当前用户订单", description = "获取当前登录用户的订单列表")
+    @ApiResponse(responseCode = "200", description = "获取成功")
+    @GetMapping
+    public ResponseEntity<List<OrderInfo>> getCurrentUserOrders() {
+        // 1. 获取当前认证用户信息
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = auth.getName();
+
+        // 2. 获取用户订单
+        List<OrderInfo> orders = orderService.getUserOrders(currentUsername);
         return ResponseEntity.ok(orders);
     }
 

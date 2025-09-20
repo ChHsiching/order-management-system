@@ -1,0 +1,87 @@
+/* 简化的颜色变量，适配Element Plus主题 */
+:root {
+  /* 基础颜色 */
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* 背景颜色 */
+  --color-background: #ffffff;
+  --color-background-soft: #f8f9fa;
+  --color-background-mute: #f2f3f5;
+
+  /* 文字颜色 */
+  --color-text: #303133;
+  --color-text-light: #606266;
+  --color-text-lighter: #909399;
+
+  /* 边框颜色 */
+  --color-border: #e4e7ed;
+  --color-border-light: #ebeef5;
+
+  /* 主题色 */
+  --color-primary: #409eff;
+  --color-success: #67c23a;
+  --color-warning: #e6a23c;
+  --color-danger: #f56c6c;
+
+  /* 间距 */
+  --section-gap: 160px;
+}
+
+/* 强制覆盖Element Plus的默认背景色 */
+body {
+  background-color: var(--color-background) !important;
+  color: var(--color-text) !important;
+}
+
+#app {
+  background-color: var(--color-background) !important;
+}
+
+/* 确保Element Plus组件背景色正确 */
+.el-card {
+  background-color: var(--color-white) !important;
+  color: var(--color-text) !important;
+}
+
+.el-menu {
+  background-color: var(--color-white) !important;
+}
+
+.el-header {
+  background-color: var(--color-white) !important;
+}
+
+.el-footer {
+  background-color: var(--color-background-soft) !important;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  line-height: 1.6;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

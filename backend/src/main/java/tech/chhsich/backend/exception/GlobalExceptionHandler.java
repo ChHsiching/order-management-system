@@ -2,12 +2,15 @@ package tech.chhsich.backend.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @ControllerAdvice
@@ -91,6 +94,49 @@ public class GlobalExceptionHandler {
         body.put("status", HttpStatus.BAD_REQUEST.value());
         body.put("error", "Bad Request");
         body.put("message", ex.getMessage());
+        body.put("path", request.getDescription(false));
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Handles MethodArgumentNotValidException (Spring Boot validation errors) and returns a structured 400 response.
+     *
+     * <p>The response body includes:
+     * <ul>
+     *   <li>timestamp: current LocalDateTime</li>
+     *   <li>status: 400</li>
+     *   <li>error: "Bad Request"</li>
+     *   <li>message: "Validation failed"</li>
+     *   <li>errors: array of field-specific error objects</li>
+     *   <li>path: request description</li>
+     * </ul>
+     * </p>
+     *
+     * @param ex the MethodArgumentNotValidException containing validation errors
+     * @param request the current web request
+     * @return a ResponseEntity with structured validation errors
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException ex, WebRequest request) {
+
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("error", "Bad Request");
+        body.put("message", "Validation failed");
+
+        // Extract field validation errors
+        List<Map<String, Object>> errors = new ArrayList<>();
+        ex.getBindingResult().getFieldErrors().forEach(fieldError -> {
+            Map<String, Object> errorDetail = new LinkedHashMap<>();
+            errorDetail.put("field", fieldError.getField());
+            errorDetail.put("defaultMessage", fieldError.getDefaultMessage());
+            errorDetail.put("rejectedValue", fieldError.getRejectedValue());
+            errors.add(errorDetail);
+        });
+        body.put("errors", errors);
         body.put("path", request.getDescription(false));
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);

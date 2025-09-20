@@ -24,7 +24,12 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")  // 修改为匹配所有路径
-                        .allowedOrigins("http://localhost:3000", "http://localhost:8080")
+                        .allowedOrigins(
+                            "http://localhost:3000",
+                            "http://localhost:8080",
+                            "http://localhost:5173",
+                            "http://localhost:5174"
+                        )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true)

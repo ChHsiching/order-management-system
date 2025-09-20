@@ -7,7 +7,19 @@
     </select>
 
     <select id="findByNewStuijianAndProductLock" resultType="tech.chhsich.backend.entity.Menu">
-        SELECT * FROM menu WHERE newstuijian = #{newStuijian} AND productlock = #{productLock}
+        SELECT id,
+               createtime as createTime,
+               imgpath as imgPath,
+               info5 as info,
+               name,
+               newstuijian as isRecommend,
+               price1 as originalPrice,
+               price2 as hotPrice,
+               productlock as productLock,
+               xiaoliang as sales,
+               cateid as categoryId
+        FROM menu
+        WHERE newstuijian = #{newStuijian} AND productlock = #{productLock}
     </select>
 
     <select id="findByProductLock" resultType="tech.chhsich.backend.entity.Menu">

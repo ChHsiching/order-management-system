@@ -64,6 +64,15 @@ public interface AdminMapper extends BaseMapper<Administrator> {
     int deleteMember(String username);
 
     /**
+     * Updates user profile information.
+     *
+     * @param user the Administrator object containing updated information
+     * @return the number of rows affected (1 if successful, 0 if failed)
+     */
+    @Update("UPDATE administrators SET email=#{email}, phone=#{phone}, password=#{password}, createtime=#{createTime} WHERE username=#{username}")
+    int updateUser(Administrator user);
+
+    /**
      * Retrieves an Administrator by username.
      *
      * @param username the username to search for

@@ -5,6 +5,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,10 +32,14 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
-    public JwtAuthenticationFilter(JwtUtil jwtUtil, UserDetailsService userDetailsService) {
+    public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
+    }
+
+    @Autowired
+    public void setUserDetailsService(@Lazy UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -136,24 +142,38 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         String contextPath = request.getContextPath();
 
-        // 移除上下文路径
-        if (path.startsWith(contextPath)) {
-            path = path.substring(contextPath.length());
-        }
+        // Debug logging
+        System.out.println("[JWT Filter] Path: " + path);
+        System.out.println("[JWT Filter] ContextPath: " + contextPath);
 
-        // 不需要验证的公开路径
-        return path.startsWith("/api/user/register") ||
-               path.startsWith("/api/user/login") ||
-               path.startsWith("/api/admin/login") ||
+        // 处理上下文路径，如果contextPath为空，则使用空字符串
+        String apiPrefix = contextPath.isEmpty() ? "/api" : contextPath + "/api";
+
+        System.out.println("[JWT Filter] API Prefix: " + apiPrefix);
+
+        // 检查是否是登录路径
+        boolean isLoginPath = path.startsWith(apiPrefix + "/user/login");
+        System.out.println("[JWT Filter] Is login path: " + isLoginPath);
+
+        // 不需要验证的公开路径（处理上下文路径）
+        boolean shouldNotFilter = path.startsWith(apiPrefix + "/user/register") ||
+               path.startsWith(apiPrefix + "/user/login") ||
+               path.startsWith(apiPrefix + "/admin/login") ||
                path.startsWith("/swagger-ui") ||
                path.startsWith("/v3/api-docs") ||
                path.startsWith("/api-docs") ||
                path.startsWith("/swagger-resources") ||
                path.startsWith("/webjars") ||
                path.startsWith("/actuator") ||
-               path.equals("/api/menu") ||
-               path.equals("/api/categories") ||
-               path.startsWith("/api/menu/") ||
-               path.startsWith("/api/categories/");
+               path.equals(apiPrefix + "/menu") ||
+               path.equals(apiPrefix + "/categories") ||
+               path.startsWith(apiPrefix + "/menu/") ||
+               path.startsWith(apiPrefix + "/categories/") ||
+               path.startsWith(apiPrefix + "/frontend/") ||
+               path.startsWith(apiPrefix + "/cart/");
+
+        System.out.println("[JWT Filter] Should not filter: " + shouldNotFilter);
+
+        return shouldNotFilter;
     }
 }
