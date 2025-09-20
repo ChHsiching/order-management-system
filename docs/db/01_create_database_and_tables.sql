@@ -89,6 +89,25 @@ CREATE TABLE `the_order_entry` (
     FOREIGN KEY (`orderid`) REFERENCES `cg_info`(`orderid`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单条目表';
 
+-- 表6：购物车表（新增，支持用户购物车功能）
+DROP TABLE IF EXISTS `shopping_cart`;
+CREATE TABLE `shopping_cart` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `username` VARCHAR(255) NOT NULL COMMENT '用户名',
+    `product_id` BIGINT NOT NULL COMMENT '商品ID',
+    `product_name` VARCHAR(255) NOT NULL COMMENT '商品名称',
+    `price` DOUBLE NOT NULL COMMENT '商品单价',
+    `quantity` INT NOT NULL DEFAULT 1 COMMENT '购买数量',
+    `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_user_product` (`username`, `product_id`),
+    INDEX `idx_username` (`username`),
+    INDEX `idx_product_id` (`product_id`),
+    FOREIGN KEY (`username`) REFERENCES `administrators`(`username`) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (`product_id`) REFERENCES `menu`(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='购物车表';
+
 -- 创建索引以提高查询性能
 CREATE INDEX `idx_menu_cateid` ON `menu`(`cateid`);
 CREATE INDEX `idx_menu_productlock` ON `menu`(`productlock`);

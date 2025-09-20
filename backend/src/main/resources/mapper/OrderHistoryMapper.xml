@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tech.chhsich.backend.mapper.OrderHistoryMapper">
+
+    <!-- 结果映射 -->
+    <resultMap id="OrderHistoryResultMap" type="tech.chhsich.backend.entity.OrderHistory">
+        <id column="id" property="id" />
+        <result column="order_id" property="orderId" />
+        <result column="from_status" property="fromStatus" />
+        <result column="to_status" property="toStatus" />
+        <result column="from_status_desc" property="fromStatusDesc" />
+        <result column="to_status_desc" property="toStatusDesc" />
+        <result column="change_reason" property="changeReason" />
+        <result column="operator" property="operator" />
+        <result column="operation_time" property="operationTime" />
+        <result column="remarks" property="remarks" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, order_id, from_status, to_status, from_status_desc, to_status_desc,
+        change_reason, operator, operation_time, remarks
+    </sql>
+
+    <!-- 创建订单历史记录表的SQL语句 -->
+    <update id="createOrderHistoryTable">
+        CREATE TABLE IF NOT EXISTS order_history (
+            id BIGINT AUTO_INCREMENT PRIMARY KEY,
+            order_id VARCHAR(50) NOT NULL COMMENT '订单ID',
+            from_status INT NOT NULL COMMENT '原状态代码',
+            to_status INT NOT NULL COMMENT '新状态代码',
+            from_status_desc VARCHAR(50) COMMENT '原状态描述',
+            to_status_desc VARCHAR(50) COMMENT '新状态描述',
+            change_reason VARCHAR(255) COMMENT '状态变更原因',
+            operator VARCHAR(50) COMMENT '操作人员',
+            operation_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '操作时间',
+            remarks TEXT COMMENT '备注',
+            INDEX idx_order_id (order_id),
+            INDEX idx_operation_time (operation_time),
+            INDEX idx_operator (operator),
+            INDEX idx_status (from_status, to_status)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单历史记录表';
+    </update>
+
+</mapper>

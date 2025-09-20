@@ -33,6 +33,17 @@ jobs:
   backend:
     name: Backend (Spring Boot)
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: 123456
+          MYSQL_DATABASE: web_order
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
+
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -42,6 +53,59 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
+
+      - name: Wait for MySQL
+        run: |
+          echo "Waiting for MySQL to be ready..."
+          for i in {1..30}; do
+            if mysql -h 127.0.0.1 -uroot -p123456 -e "SELECT 1" > /dev/null 2>&1; then
+              echo "MySQL is ready!"
+              break
+            fi
+            echo "Attempt $i: MySQL not ready yet..."
+            sleep 2
+          done
+          mysql -h 127.0.0.1 -uroot -p123456 -e "SELECT 1"
+
+      - name: Initialize database
+        run: |
+          if [ -f docs/db/01_create_database_and_tables.sql ]; then
+            echo "Initializing database..."
+            mysql -h 127.0.0.1 -uroot -p123456 < docs/db/01_create_database_and_tables.sql
+            echo "Database initialized successfully!"
+          else
+            echo "No database initialization script found, skipping..."
+          fi
+
+      - name: Create order history table
+        run: |
+          if [ -f docs/db/03_create_order_history_table.sql ]; then
+            echo "Creating order history table..."
+            mysql -h 127.0.0.1 -uroot -p123456 < docs/db/03_create_order_history_table.sql
+            echo "Order history table created successfully!"
+          else
+            echo "No order history table script found, skipping..."
+          fi
+
+      - name: Insert test data
+        run: |
+          if [ -f docs/db/03_insert_test_data.sql ]; then
+            echo "Inserting test data..."
+            mysql -h 127.0.0.1 -uroot -p123456 < docs/db/03_insert_test_data.sql
+            echo "Test data inserted successfully!"
+          else
+            echo "No test data script found, skipping..."
+          fi
+
+      - name: Verify test data
+        run: |
+          if [ -f docs/db/04_verify_test_data.sql ]; then
+            echo "Verifying test data..."
+            mysql -h 127.0.0.1 -uroot -p123456 < docs/db/04_verify_test_data.sql
+            echo "Test data verification completed!"
+          else
+            echo "No test data verification script found, skipping..."
+          fi
 
       - name: Build & Test (Maven)
         run: |

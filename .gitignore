@@ -1,3 +1,40 @@
 ### Claude ###
 .claude/
 Claude.md
+CLAUDE.md
+
+### MCP ###
+.playwright-mcp/
+
+### VS Code ###
+.vscode/
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+### Vue ###
+node_modules/
+dist/
+
+### Maven ###
+target/
+
+### Gradle ###
+build/
+
+### Chore ###
+IMAGE_STORAGE_GUIDE.md
+.backdesk.pid
+.frontdesk.pid
+
+### Node ###
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+bun.lock

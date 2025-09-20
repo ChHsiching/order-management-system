@@ -51,27 +51,15 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
-    default-property-inclusion: non_null  # 不序列化null值
+    default-property-inclusion: always  # 序列化所有字段
 
   # 6. Spring Security配置（项目已包含Security依赖）
-  security:
-    user:
-      name: admin     # 默认用户名
-      password: admin # 默认密码
-      roles: ADMIN    # 默认角色
+  # Default profile: no hardcoded basic user
 
 # 7. MyBatis-Plus配置（适配文档表CRUD，替代JPA）
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml  # Mapper XML文件路径（存储自定义SQL）
   type-aliases-package: tech.chhsich.backend.entity  # 实体类别名包（简化XML配置）
-  configuration:
-    map-underscore-to-camel-case: true  # 下划线转驼峰（如数据库imgpath→实体类imgPath）
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 打印SQL日志（调试表操作）
-    cache-enabled: true                 # 开启二级缓存
-    lazy-loading-enabled: true          # 开启延迟加载
-    multiple-result-sets-enabled: true  # 开启多结果集
-    use-column-label: true              # 使用列标签
-    auto-mapping-behavior: partial      # 自动映射策略
   global-config:
     db-config:
       id-type: AUTO          # 主键自增（匹配表主键规则）
@@ -80,6 +68,13 @@ mybatis-plus:
       logic-delete-field: deleted  # 逻辑删除字段
       logic-delete-value: 1        # 逻辑删除值
       logic-not-delete-value: 0    # 逻辑未删除值
+  configuration:
+    map-underscore-to-camel-case: true  # 下划线转驼峰（如数据库imgpath→实体类imgPath）
+    cache-enabled: false                # 默认关闭，按需在dev启用
+    lazy-loading-enabled: true          # 开启延迟加载
+    multiple-result-sets-enabled: true  # 开启多结果集
+    use-column-label: true              # 使用列标签
+    auto-mapping-behavior: partial      # 自动映射策略
 
 # 8. 日志配置（便于调试文档功能，如订单提交、菜品查询）
 logging:
@@ -106,7 +101,7 @@ management:
       base-path: /actuator
   endpoint:
     health:
-      show-details: when-authorized
+      show-details: always
 
 # 10. OpenAPI文档配置（项目已包含springdoc依赖）
 springdoc:
@@ -123,7 +118,12 @@ springdoc:
     version: 1.0.0
     description: 基于Spring Boot 3.5.5开发的Web订餐管理系统
 
-# 11. 应用自定义配置
+# 11. JWT配置
+jwt:
+  secret: qwqw
+  expiration: 86400  # 24小时（秒）
+
+# 12. 应用自定义配置
 app:
   # 文件上传配置
   upload:
@@ -152,6 +152,16 @@ spring:
     url: jdbc:mysql://localhost:3306/web_order?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&characterEncoding=utf8&useUnicode=true
     username: root
     password: 123456
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: ADMIN
+# 开发环境特定的MyBatis配置
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    cache-enabled: true
 logging:
   level:
     root: DEBUG
